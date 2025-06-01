@@ -19,13 +19,13 @@ def create_app():
         sets up the connection to your database 
         and prepares you to create models.
     '''
-    database = SQLAlchemy(app)
+    db = SQLAlchemy(app)
 
     '''
         enables database migrations, so when you change models, 
         you can update the database schema smoothly.
     '''
-    migrate = Migrate(app, database)
+    migrate = Migrate(app, db)
 
     '''
         it allows backend to accept requests from your frontend, 
