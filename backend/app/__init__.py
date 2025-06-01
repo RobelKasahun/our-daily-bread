@@ -4,6 +4,17 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from config import Config
 
+'''
+    sets up the connection to your database 
+    and prepares you to create models.
+'''
+db = SQLAlchemy()
+    
+'''
+    enables database migrations, so when you change models, 
+    you can update the database schema smoothly.
+'''
+migrate = Migrate()
 
 def create_app():
     # initialize Flask app
@@ -14,18 +25,10 @@ def create_app():
         load database uri, secret key, and track object modification
     '''
     app.config.from_object(Config)
-
-    '''
-        sets up the connection to your database 
-        and prepares you to create models.
-    '''
-    db = SQLAlchemy(app)
-
-    '''
-        enables database migrations, so when you change models, 
-        you can update the database schema smoothly.
-    '''
-    migrate = Migrate(app, db)
+    # initialize db
+    db.init_app(app)
+    # initialize migration
+    migrate.init_app(app, db)
 
     '''
         it allows backend to accept requests from your frontend, 
@@ -36,5 +39,8 @@ def create_app():
     '''
     # allows the front end to talk to the backend
     CORS(app)
+    
+    with app.app_context():
+        from app.models import User, Post, Comment, Like
     
     return app

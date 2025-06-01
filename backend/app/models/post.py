@@ -2,11 +2,11 @@ from app import db
 from datetime import datetime, timezone
 
 class Post(db.Model):
-    __table_name = 'posts'
+    __tablename__ = 'posts'
     
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    content = db.Column(db.String(db.Text, nullable=False))
+    content = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, onupdate=lambda: datetime.now(timezone.utc))
     comment_count = db.Column(db.Integer, default=0, nullable=False)
