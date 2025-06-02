@@ -25,6 +25,7 @@ def create_app():
         load database uri, secret key, and track object modification
     '''
     app.config.from_object(Config)
+    
     # initialize db
     db.init_app(app)
     # initialize migration
@@ -42,5 +43,8 @@ def create_app():
     
     with app.app_context():
         from app.models import User, Post, Comment, Like
+        # Register the blueprint with the app
+        from app.routes.auth_routes import auth_blueprint
+        app.register_blueprint(auth_blueprint, url_prefix='/auth')
     
     return app
