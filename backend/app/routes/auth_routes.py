@@ -43,6 +43,7 @@ def register():
     # save the user to the database
     db.session.commit()
     
+    # redirect to the login page
     return jsonify({'message': 'User registered successfully'}), 201
 
 @auth_blueprint.route('/login', methods=['POST'])
@@ -58,6 +59,8 @@ def login():
     # successful login if user with the email and password exists
     if user and check_password_hash(user.password_hash, password):
         access_token = create_access_token(identity=user.id)
+        
+        # redirect to the landing page
         return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
     else:
         # The user with email address does not exist
