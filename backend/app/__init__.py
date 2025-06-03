@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from config import Config
+import os
+from flask_jwt_extended import JWTManager
 
 '''
     sets up the connection to your database 
@@ -25,6 +27,8 @@ def create_app():
         load database uri, secret key, and track object modification
     '''
     app.config.from_object(Config)
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    jwt = JWTManager(app)
     
     # initialize db
     db.init_app(app)

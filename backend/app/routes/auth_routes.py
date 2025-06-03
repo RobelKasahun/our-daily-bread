@@ -2,6 +2,7 @@ from app import db
 from flask import request, Blueprint, jsonify
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
 
 # create Flask Blueprint named auth
 auth_blueprint = Blueprint('auth', __name__)
@@ -56,7 +57,8 @@ def login():
     
     # successful login if user with the email and password exists
     if user and check_password_hash(user.password_hash, password):
-        return jsonify({'message': 'Login successful'}), 200
+        access_token = create_access_token(identity=user.id)
+        return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
     else:
         # The user with email address does not exist
         return jsonify({'error': 'Invalid credentials'}), 401
