@@ -50,8 +50,10 @@ def create_app():
         # Register the blueprint with the app
         from app.routes.auth_routes import auth_blueprint
         from app.routes.profile_route import profile_blueprint
+        from app.routes.post_route import post_blueprint
         
         app.register_blueprint(auth_blueprint, url_prefix='/auth')
         app.register_blueprint(profile_blueprint, url_prefix='/profile')
+        app.register_blueprint(post_blueprint, url_prefix='/posts')
     
     return app
