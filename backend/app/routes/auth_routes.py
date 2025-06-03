@@ -3,6 +3,7 @@ from flask import request, Blueprint, jsonify
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # create Flask Blueprint named auth
 auth_blueprint = Blueprint('auth', __name__)
@@ -58,7 +59,7 @@ def login():
     
     # successful login if user with the email and password exists
     if user and check_password_hash(user.password_hash, password):
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=str(user.id))
         
         # redirect to the landing page
         return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
