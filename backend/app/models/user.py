@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime, timezone
+from sqlalchemy.sql import func
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -10,7 +11,7 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(512), nullable=False)
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     
     # relationships
     # user can write many posts
