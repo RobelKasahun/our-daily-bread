@@ -1,10 +1,11 @@
-from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
+from datetime import timedelta
 from flask_cors import CORS
 from config import Config
+from flask import Flask
 import os
-from flask_jwt_extended import JWTManager
 
 '''
     sets up the connection to your database 
@@ -28,6 +29,7 @@ def create_app():
     '''
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=45)
     jwt = JWTManager(app)
     
     # initialize db
@@ -51,9 +53,11 @@ def create_app():
         from app.routes.auth_routes import auth_blueprint
         from app.routes.profile_route import profile_blueprint
         from app.routes.post_route import post_blueprint
+        from app.routes.comment_routes import comment_blue_print
         
         app.register_blueprint(auth_blueprint, url_prefix='/auth')
         app.register_blueprint(profile_blueprint, url_prefix='/profile')
         app.register_blueprint(post_blueprint, url_prefix='/posts')
+        app.register_blueprint(comment_blue_print, url_prefix='/comments')
     
     return app

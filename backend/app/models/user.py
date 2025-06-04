@@ -11,14 +11,14 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(512), nullable=False)
-    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), server_default=func.now())
     
     # relationships
     # user can write many posts
-    posts = db.relationship('Post', backref='user', lazy=True)
+    posts = db.relationship('Post', backref='user', lazy=True, cascade='all, delete-orphan')
     
     # user can write many comments
-    comments = db.relationship('Comment', backref='user', lazy=True)
+    comments = db.relationship('Comment', backref='user', lazy=True, cascade='all, delete-orphan')
     
     # user can like many posts
-    likes = db.relationship('Like', backref='user', lazy=True)
+    likes = db.relationship('Like', backref='user', lazy=True, cascade='all, delete-orphan')

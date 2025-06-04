@@ -106,7 +106,6 @@ def delete_post(post_id):
 @post_blueprint.route('/<int:post_id>', methods=['PUT'])
 @jwt_required()
 def update_post(post_id):
-    print('*********** UPDATE ***********')
     # prepare the post using post_id
     post = Post.query.get(post_id)
     # get an id of the current logged in user
