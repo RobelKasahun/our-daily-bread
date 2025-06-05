@@ -10,7 +10,7 @@ auth_blueprint = Blueprint('auth', __name__)
 
 @auth_blueprint.route('/register', methods=['POST'])
 def register():
-    # get json data from react
+    # get form data
     data = request.get_json()
     
     if not data:
@@ -49,12 +49,12 @@ def register():
 
 @auth_blueprint.route('/login', methods=['POST'])
 def login():
-    # get the data
+    # get form data
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
     
-    # filter by email
+    # filter the user by email
     user = User.query.filter_by(email=email).first()
     
     # successful login if user with the email and password exists
