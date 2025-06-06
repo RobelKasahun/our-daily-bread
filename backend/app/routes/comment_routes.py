@@ -99,5 +99,26 @@ def update_comment(comment_id, post_id):
 @comment_blue_print.route('/<int:comment_id>', methods=['DELETE'])
 @jwt_required()
 def delete_comment(comment_id):
-    pass
+    
+    # filter the comment using the given id
+    comment = Comment.query.filter_by(id=comment_id).first()
+    # get the current logged in user
+    logged_in_user = int(get_jwt_identity())
+    
+    # comment associated with the given id is not dound
+    if not comment:
+        return jsonify({"error": "Comment not found"}), 404
+    
+    # comment can only be deleted by the user_id which must be equal to 
+    # the logged in user in order to delete the comment
+    if comment.user_id != logged_in_user:
+        return jsonify({"message": "Unauthorized to delete this comment"}), 403
+    
+    # delete the comment
+    db.session.delete(comment)
+    # save the change
+    db.session.commit()
+    
+    
+    return jsonify({"message": "Comment deleted successfully"}), 200
     
