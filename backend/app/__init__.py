@@ -54,10 +54,12 @@ def create_app():
         from app.routes.profile_route import profile_blueprint
         from app.routes.post_route import post_blueprint
         from app.routes.comment_routes import comment_blue_print
+        from app.routes.like_routes import like_blueprint
         
         app.register_blueprint(auth_blueprint, url_prefix='/auth')
         app.register_blueprint(profile_blueprint, url_prefix='/profile')
         app.register_blueprint(post_blueprint, url_prefix='/posts')
         app.register_blueprint(comment_blue_print, url_prefix='/comments')
+        app.register_blueprint(like_blueprint, url_prefix='/likes')
     
     return app

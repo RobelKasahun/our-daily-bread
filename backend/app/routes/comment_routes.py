@@ -42,8 +42,13 @@ def comments(post_id):
         if not post:
             return jsonify({'message': 'Post not found'}), 404
         
+        existing_comment = Comment.query.filter_by(user_id=current_user_id, post_id=post_id, content=content).first()
+        if existing_comment:
+            return jsonify({"message": "Duplicate comment not allowed."}), 400
+        
         # create an instance of comment 
         comment = Comment(content=content, user_id=current_user_id, post_id=post_id)
+        post.comment_count += 1
         
         # prepare the comment
         db.session.add(comment)
@@ -96,14 +101,19 @@ def update_comment(comment_id, post_id):
     )
         
 # delete a comment
-@comment_blue_print.route('/<int:comment_id>', methods=['DELETE'])
+@comment_blue_print.route('/<int:comment_id>/posts/<int:post_id>', methods=['DELETE'])
 @jwt_required()
-def delete_comment(comment_id):
+def delete_comment(comment_id, post_id):
     
     # filter the comment using the given id
     comment = Comment.query.filter_by(id=comment_id).first()
     # get the current logged in user
     logged_in_user = int(get_jwt_identity())
+    
+    # get the post that belongs to the post_id
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({'message': 'Post not found'}), 404
     
     # comment associated with the given id is not dound
     if not comment:
@@ -113,6 +123,8 @@ def delete_comment(comment_id):
     # the logged in user in order to delete the comment
     if comment.user_id != logged_in_user:
         return jsonify({"message": "Unauthorized to delete this comment"}), 403
+    
+    post.comment_count -= 1
     
     # delete the comment
     db.session.delete(comment)
