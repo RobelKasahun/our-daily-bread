@@ -11,6 +11,9 @@ def comments(post_id):
     if request.method == 'GET':
         # Get comments that belong to the post_id
         comments = Comment.query.filter_by(post_id=post_id).all()
+        if not comments:
+            return jsonify({'message': "Empty comments or not found."})
+        
         list_of_comments = []
         for comment in comments:
             current_comment = {
@@ -133,4 +136,3 @@ def delete_comment(comment_id, post_id):
     
     
     return jsonify({"message": "Comment deleted successfully"}), 200
-    
