@@ -3,7 +3,6 @@ from flask import request, Blueprint, jsonify
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # create Flask Blueprint named auth
 auth_blueprint = Blueprint('auth', __name__)
@@ -26,16 +25,19 @@ def register():
     if not all([first_name, last_name, username, email, password]):
         return jsonify({'error': 'Missing required fields'}), 400
     
-    # check username or email
-    if User.query.filter((User.username == username) | (User.email == email)).first():      # first() --> get the first matching
-        return jsonify({'error': 'Username or email already taken'}), 409
+    # check username or email    
+    existing_email = User.query.filter_by(email=email.lower()).first()
+    existing_username = User.query.filter_by(username=username.lower()).first()
+    
+    if existing_email or existing_username:
+        return jsonify({'error': 'An account with this email already exists. Please try logging in or use a different email.'}), 409
     
     # new user
     user = User(
         first_name=first_name, 
         last_name=last_name, 
         username=username, 
-        email=email,
+        email=email.lower(),
         password_hash=generate_password_hash(password)
     )
     
@@ -55,15 +57,21 @@ def login():
     password = data.get('password')
     
     # filter the user by email
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email.lower()).first()
     
     # successful login if user with the email and password exists
     if user and check_password_hash(user.password_hash, password):
         access_token = create_access_token(identity=str(user.id))
-        
         # redirect to the landing page
         return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
     else:
         # The user with email address does not exist
-        return jsonify({'error': 'Invalid credentials'}), 401
+        
+        # a user associated with the given email does not exist
+        if not user:
+            return jsonify({'error': 'Oops! That email doesn\'t match our records.'})
+        
+        # the given password with the password in the database does not match
+        if not check_password_hash(user.password_hash, password):
+            return jsonify({'error': 'Oops! That password doesn\'t match our records.'})
     
