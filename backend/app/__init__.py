@@ -50,11 +50,11 @@ def create_app():
     with app.app_context():
         from app.models import User, Post, Comment, Like
         # Register the blueprint with the app
-        from app.routes.auth_routes import auth_blueprint
+        from app.routes.auth_route import auth_blueprint
         from app.routes.profile_route import profile_blueprint
         from app.routes.post_route import post_blueprint
-        from app.routes.comment_routes import comment_blue_print
-        from app.routes.like_routes import like_blueprint
+        from app.routes.comment_route import comment_blue_print
+        from app.routes.like_route import like_blueprint
         
         app.register_blueprint(auth_blueprint, url_prefix='/auth')
         app.register_blueprint(profile_blueprint, url_prefix='/profile')

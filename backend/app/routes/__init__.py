@@ -1,4 +1,4 @@
-from .auth_routes import *
-from .comment_routes import *
+from .auth_route import *
+from .comment_route import *
 from .post_route import *
-from .like_routes import *
+from .like_route import *
