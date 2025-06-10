@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.models import Comment, Post
-from app import db
+from app.models import Comment
 from app.controllers.comment_controller import get_comments, create_comment, update, delete
 
 comment_blue_print = Blueprint('comment', __name__)

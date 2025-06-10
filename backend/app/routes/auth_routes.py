@@ -1,8 +1,6 @@
 from app import db
-from flask import request, Blueprint, jsonify
+from flask import request, Blueprint
 from app.models import User
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token
 from app.controllers.auth_controller import register_user, authenticate_user
 
 # create Flask Blueprint named auth
