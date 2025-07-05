@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
@@ -10,7 +10,13 @@ export default function SignIn() {
     password: "",
   });
 
-  // Update form state on input change
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      navigate("/posts", { replace: true });
+    }
+  }, [navigate]);
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -20,116 +26,110 @@ export default function SignIn() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/auth/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
 
-    const data = await response.json();
-    console.log(response.status);
-    if (response.ok) {
-      console.log("Registration successful!", data);
-      localStorage.setItem("access_token", data.access_token);
-      navigate("/posts");
-    } else {
-      console.error("Registration failed:", data.error);
-      setSigninErrorMessage(data.error);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      // Navigate to the Posts page on successfully sign in
+      if (response.ok) {
+        localStorage.setItem("access_token", data.access_token);
+        navigate("/posts", { replace: true }); // Don't allow back to login
+      } else {
+        setSigninErrorMessage(data.error || "Login failed");
+      }
+    } catch (error) {
+      setSigninErrorMessage("Network error");
     }
   };
 
   return (
     <>
       <Navbar />
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 items-center h-200 overflow-hidden">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 items-center">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            alt="Your Company"
             src="/images/holyshare-logo.png"
+            alt="HolyShare"
             className="mx-auto h-10 w-auto"
           />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold text-gray-900">
             Sign in to your account
           </h2>
         </div>
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSignIn}>
+          <form
+            className="space-y-6"
+            onSubmit={handleSignIn}
+            autoComplete="off"
+          >
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm font-medium text-gray-900"
               >
                 Email address
               </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="mt-2 block w-full rounded-md px-3 py-1.5 text-gray-900 shadow-sm outline outline-1 outline-gray-300 focus:outline-indigo-600"
+              />
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm/6 font-medium text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-900"
               >
-                Sign in
-              </button>
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="mt-2 block w-full rounded-md px-3 py-1.5 text-gray-900 shadow-sm outline outline-1 outline-gray-300 focus:outline-indigo-600"
+              />
             </div>
+
+            <button
+              type="submit"
+              className="w-full rounded-md bg-indigo-600 px-3 py-1.5 text-white font-semibold hover:bg-indigo-500"
+            >
+              Sign in
+            </button>
           </form>
 
-          <p className="mt-5 text-center text-sm/6 text-gray-500">
+          {signinErrorMessage && (
+            <p className="mt-4 text-center text-sm text-red-500">
+              {signinErrorMessage}
+            </p>
+          )}
+
+          <p className="mt-6 text-center text-sm text-gray-500">
             Not a member?{" "}
             <Link
               to="/register"
-              className="font-semibold text-indigo-600 hover:text-indigo-500"
+              className="text-indigo-600 hover:text-indigo-500 font-semibold"
             >
               Register
             </Link>
           </p>
-        </div>
-        <div>
-          <p className="text-center m-3 font-sans">{signinErrorMessage}</p>
         </div>
       </div>
     </>
