@@ -1,3 +1,5 @@
+import Navigationbar from "../components/Navigationbar";
+
 export default function Posts() {
   const handlePosts = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ export default function Posts() {
   };
   return (
     <>
+      <Navigationbar />
       <h1>POSTS</h1>
     </>
   );
