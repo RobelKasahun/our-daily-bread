@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [registrationErrorMessage, setRegistrationErrorMessage] = useState("");
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -20,7 +21,6 @@ export default function Register() {
     });
   };
 
-  // Example using fetch
   const handleRegister = async (e) => {
     e.preventDefault();
     const response = await fetch("http://127.0.0.1:8000/auth/register", {
@@ -33,10 +33,10 @@ export default function Register() {
 
     const data = await response.json();
     if (response.ok) {
-      console.log("Registration successful!", data);
       navigate("/signin");
     } else {
       console.error("Registration failed:", data.error);
+      setRegistrationErrorMessage(data.error);
     }
   };
 
@@ -191,6 +191,9 @@ export default function Register() {
               Sign In
             </Link>
           </p>
+        </div>
+        <div>
+          <p className="font-sans">{registrationErrorMessage}</p>
         </div>
       </div>
     </>

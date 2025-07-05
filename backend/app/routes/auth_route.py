@@ -20,9 +20,11 @@ def login():
     email = data.get('email')
     password = data.get('password')
     
+    print(data.get('email'), data.get('password'))
+    
     # filter the user by email
     user = User.query.filter_by(email=email.lower()).first()
-    print(user)
+    print(f'user: {user}')
     
     return authenticate_user(user=user, password=password)
     

@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [signinErrorMessage, setSigninErrorMessage] = useState("");
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,12 +29,14 @@ export default function SignIn() {
     });
 
     const data = await response.json();
-
+    console.log(response.status);
     if (response.ok) {
       console.log("Registration successful!", data);
+      localStorage.setItem("access_token", data.access_token);
       navigate("/posts");
     } else {
       console.error("Registration failed:", data.error);
+      setSigninErrorMessage(data.error);
     }
   };
 
@@ -51,7 +54,6 @@ export default function SignIn() {
             Sign in to your account
           </h2>
         </div>
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSignIn}>
             <div>
@@ -66,6 +68,8 @@ export default function SignIn() {
                   id="email"
                   name="email"
                   type="email"
+                  value={form.email}
+                  onChange={handleChange}
                   required
                   autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -95,6 +99,8 @@ export default function SignIn() {
                   id="password"
                   name="password"
                   type="password"
+                  value={form.password}
+                  onChange={handleChange}
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -112,7 +118,7 @@ export default function SignIn() {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
+          <p className="mt-5 text-center text-sm/6 text-gray-500">
             Not a member?{" "}
             <Link
               to="/register"
@@ -121,6 +127,9 @@ export default function SignIn() {
               Register
             </Link>
           </p>
+        </div>
+        <div>
+          <p className="text-center m-3 font-sans">{signinErrorMessage}</p>
         </div>
       </div>
     </>

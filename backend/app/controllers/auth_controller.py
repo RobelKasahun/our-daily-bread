@@ -55,8 +55,8 @@ def authenticate_user(user, password):
         
         # a user associated with the given email does not exist
         if not user:
-            return jsonify({'error': 'Oops! That email doesn\'t match our records.'})
+            return jsonify({'error': 'Oops! That email doesn\'t match our records.'}), 401
         
         # the given password with the password in the database does not match
         if not check_password_hash(user.password_hash, password):
-            return jsonify({'error': 'Oops! That password doesn\'t match our records.'})
+            return jsonify({'error': 'Oops! That password doesn\'t match our records.'}), 401
