@@ -1,8 +1,9 @@
-from flask import jsonify
+from flask import jsonify, redirect
 from app import db
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
+
 
 def register_user(data):
     if not data:

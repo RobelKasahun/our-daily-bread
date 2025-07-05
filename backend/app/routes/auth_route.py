@@ -13,7 +13,7 @@ def register():
     
     return register_user(data=data)
 
-@auth_blueprint.route('/login', methods=['POST'])
+@auth_blueprint.route('/signin', methods=['POST'])
 def login():
     # get form data
     data = request.get_json()
@@ -22,6 +22,7 @@ def login():
     
     # filter the user by email
     user = User.query.filter_by(email=email.lower()).first()
+    print(user)
     
     return authenticate_user(user=user, password=password)
     

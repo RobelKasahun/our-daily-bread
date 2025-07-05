@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Navbar from "../components/Navbar";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -32,6 +34,7 @@ export default function Register() {
     const data = await response.json();
     if (response.ok) {
       console.log("Registration successful!", data);
+      navigate("/signin");
     } else {
       console.error("Registration failed:", data.error);
     }
@@ -39,6 +42,7 @@ export default function Register() {
 
   return (
     <>
+      <Navbar />
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 items-center h-screen overflow-hidden">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
