@@ -6,7 +6,7 @@ export default function Posts() {
 
   const handlePosts = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/posts", {
+    const response = await fetch("http://localhost:8000/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export default function Posts() {
   };
   return (
     <>
-      <Navigationbar />
+      <Navigationbar showWriteButton={true}/>
       <h1>POSTS</h1>
     </>
   );

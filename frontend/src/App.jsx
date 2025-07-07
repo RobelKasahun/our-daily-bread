@@ -7,6 +7,7 @@ import Posts from "./pages/Posts.jsx";
 import { Navigate } from "react-router-dom";
 import SignOut from "./pages/SignOut.jsx";
 import PublicRoute from "./routes/PublicRoutes.jsx";
+import Post from "./pages/Post.jsx";
 
 function App() {
   return (
@@ -37,7 +38,8 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route path="/posts" element={<Posts />} />
+        <Route path="/contents" element={<Posts />} />
+        <Route path="/new-post" element={<Post />} />
       </Routes>
     </BrowserRouter>
   );

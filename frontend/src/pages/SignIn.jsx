@@ -28,7 +28,7 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/auth/signin", {
+      const response = await fetch("http://localhost:8000/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export default function SignIn() {
       // Navigate to the Posts page on successfully sign in
       if (response.ok) {
         localStorage.setItem("access_token", data.access_token);
-        navigate("/posts", { replace: true }); // Don't allow back to login
+        navigate("/contents", { replace: true }); // Don't allow back to login
       } else {
         setSigninErrorMessage(data.error || "Login failed");
       }

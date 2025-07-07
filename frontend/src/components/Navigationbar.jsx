@@ -10,13 +10,17 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
-const navigation = [{ name: "Write", href: "#", current: true }];
+const navigation = [{ name: "Write", href: "/new-post", current: true }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Navigationbar({
+  showSearchBar = true,
+  showWriteButton = false,
+  showPublishButton = false,
+}) {
   return (
     <Disclosure as="nav" className="text-white border-b border-white">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -49,33 +53,29 @@ export default function Example() {
                 </Link>
               </div>
 
-              <form className="mx-8">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
-                />
-              </form>
+              {showSearchBar && (
+                <form className="mx-8">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
+                  />
+                </form>
+              )}
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
-                    )}
+                {showWriteButton && (
+                  <Link
+                    to="/new-post"
+                    className="bg-gray-900 text-white text-gray-300 hover:bg-gray-700
+                  hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                   >
-                    {item.name}
-                  </a>
-                ))}
+                    Write
+                  </Link>
+                )}
               </div>
             </div>
 

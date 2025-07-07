@@ -21,9 +21,10 @@ def register_user(data):
     
     # check username or email    
     existing_email = User.query.filter_by(email=email.lower()).first()
-    existing_username = User.query.filter_by(username=username.lower()).first()
+    # existing_username = User.query.filter_by(username=username.lower()).first()
     
-    if existing_email or existing_username:
+    # if existing_email or existing_username:
+    if existing_email:
         return jsonify({'error': 'An account with this email already exists. Please try logging in or use a different email.'}), 409
     
     # new user
