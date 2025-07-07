@@ -6,7 +6,7 @@ export default function Posts() {
 
   const handlePosts = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/posts", {
+    const response = await fetch("http://127.0.0.1:8000/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -16,17 +16,22 @@ export default function Posts() {
 
     const data = await response.json();
     if (response.ok) {
-      console.log("Registration successful!", data);
+      console.log("Posts fetched successfully!", data);
       setPosts(data);
       console.log(posts);
     } else {
-      console.error("Registration failed:", data.error);
+      console.error("Failed to fetch posts:", data.error);
     }
   };
   return (
     <>
-      <Navigationbar showWriteButton={true}/>
+      <Navigationbar showWriteButton={true} />
       <h1>POSTS</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
     </>
   );
 }

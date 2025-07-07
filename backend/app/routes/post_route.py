@@ -6,20 +6,24 @@ from app import db
 
 post_blueprint = Blueprint('posts', __name__)
 
-@post_blueprint.route('/', methods=['GET', 'POST'])
+@post_blueprint.route('', methods=['GET', 'POST'])
 @jwt_required()
 def posts():
+    
     ''' Get all posts '''
     current_user = get_jwt_identity()
     
     if request.method == 'GET':
         # get all posts
+        print(f'GET/ posts')
         return get_posts()
     
     elif request.method == 'POST':
         # Create a new post
         # get the title and content
         post_data = request.get_json()
+        
+        print(f'POST/ posts')
         
         return create_post(post_data, current_user)
     else:

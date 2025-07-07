@@ -18,7 +18,7 @@ export default function Post() {
 
   const handlePost = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/posts", {
+    const response = await fetch("http://127.0.0.1:8000/posts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,12 +28,10 @@ export default function Post() {
     });
 
     const data = await response.json();
-    console.log(response.status);
-    console.log(localStorage.getItem("access_token"));
     if (response.ok) {
       navigate("/contents");
     } else {
-      console.error("Registration failed:", data.error);
+      console.error("Post failed:", data.error);
       //   setRegistrationErrorMessage(data.error);
     }
   };
