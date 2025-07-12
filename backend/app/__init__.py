@@ -29,8 +29,11 @@ def create_app():
     '''
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=1)
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
+    app.config['JWT_TOKEN_LOCATION'] = ['headers', 'cookies']
+    app.config['JWT_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+    
     jwt = JWTManager(app)
     
     # initialize db
@@ -46,7 +49,7 @@ def create_app():
         to talk to this Flask backend (usually on localhost:5000).
     '''
     # allows the front end to talk to the backend
-    CORS(app)
+    CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
     
     with app.app_context():
         from app.models import User, Post, Comment, Like

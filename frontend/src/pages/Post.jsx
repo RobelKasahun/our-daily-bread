@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigationbar from "../components/Navigationbar";
+import { apiRequest } from "../utils/api";
 
 export default function Post() {
   const navigate = useNavigate();
@@ -18,12 +19,8 @@ export default function Post() {
 
   const handlePost = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/posts", {
+    const response = await apiRequest("http://localhost:8000/posts", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
       body: JSON.stringify(post),
     });
 

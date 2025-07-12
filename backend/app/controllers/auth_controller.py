@@ -2,8 +2,7 @@ from flask import jsonify, redirect
 from app import db
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token
-
+from flask_jwt_extended import create_access_token, create_refresh_token, set_refresh_cookies
 
 def register_user(data):
     if not data:
@@ -49,11 +48,16 @@ def authenticate_user(user, password):
     # successful login if user with the email and password exists
     if user and check_password_hash(user.password_hash, password):
         access_token = create_access_token(identity=str(user.id))
+        refresh_token = create_refresh_token(identity=str(user.id))
+        
         # redirect to the landing page
-        return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
+        response = jsonify({'message': 'Login successful', 'access_token': access_token})
+        
+        set_refresh_cookies(response, refresh_token)
+        
+        return response, 200
     else:
         # The user with email address does not exist
-        
         # a user associated with the given email does not exist
         if not user:
             return jsonify({'error': 'Oops! That email doesn\'t match our records.'}), 401

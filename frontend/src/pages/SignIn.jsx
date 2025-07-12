@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 export default function SignIn() {
-  const navigate = useNavigate();
   const [signinErrorMessage, setSigninErrorMessage] = useState("");
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -13,7 +14,8 @@ export default function SignIn() {
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) {
-      navigate("/posts", { replace: true });
+      // current user authenticated successfully
+      navigate("/contents", { replace: true });
     }
   }, [navigate]);
 
@@ -28,7 +30,7 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/auth/signin", {
+      const response = await fetch("http://localhost:8000/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,6 +41,7 @@ export default function SignIn() {
       const data = await response.json();
 
       // Navigate to the Posts page on successfully sign in
+      console.log(response.status);
       if (response.ok) {
         localStorage.setItem("access_token", data.access_token);
         navigate("/contents", { replace: true }); // Don't allow back to login
