@@ -2,7 +2,7 @@ from flask import jsonify, redirect
 from app import db
 from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, create_refresh_token, set_refresh_cookies
+from flask_jwt_extended import create_access_token, create_refresh_token, set_refresh_cookies, set_access_cookies
 
 def register_user(data):
     if not data:
@@ -53,6 +53,7 @@ def authenticate_user(user, password):
         # redirect to the landing page
         response = jsonify({'message': 'Login successful', 'access_token': access_token})
         
+        set_access_cookies(response, access_token)
         set_refresh_cookies(response, refresh_token)
         
         return response, 200

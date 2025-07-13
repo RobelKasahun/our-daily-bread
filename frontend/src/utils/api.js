@@ -12,23 +12,26 @@ export const apiRequest = async (url, options = {}) => {
         credentials: "include", // for refresh token cookie
     });
 
+    console.log(`res.status: ${res.status}`);
+
     if (res.status === 401) {
         // Try refreshing the token
         const refreshed = await refreshAccessToken();
         if (refreshed) {
             // Retry the original request with new token
-            token = localStorage.getItem("access_token");
+            // token = localStorage.getItem("access_token");
             return await fetch(url, {
                 ...options,
                 headers: {
                     ...options.headers,
-                    Authorization: `Bearer ${token}`,
+                    // Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
             });
         } else {
             // Redirect to login or handle logout
+            console.log('Redirect to login or handle logout');
         }
     }
 
@@ -36,17 +39,17 @@ export const apiRequest = async (url, options = {}) => {
 };
 
 const refreshAccessToken = async () => {
-    const res = await fetch("http://127.0.0.1:8000/auth/refresh", {
+    console.log(`refreshAccessToken() invoked.`);
+    const res = await fetch("http://localhost:8000/auth/refresh", {
         method: "POST",
         credentials: "include",
     });
-
 
     console.log(`refreshAccessToken: ${res.ok}`);
 
     if (res.ok) {
         const data = await res.json();
-        localStorage.setItem("access_token", data.access_token);
+        // localStorage.setItem("access_token", data.access_token);
         return true;
     } else {
         console.warn("Refresh failed. User must log in again.");

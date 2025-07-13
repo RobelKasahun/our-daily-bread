@@ -13,7 +13,7 @@ export default function Posts() {
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         console.log("Posts fetched successfully!", data);
         setPosts(data);
@@ -25,6 +25,8 @@ export default function Posts() {
 
     handlePosts();
   }, []);
+
+  
   return (
     <>
       <Navigationbar showWriteButton={true} />

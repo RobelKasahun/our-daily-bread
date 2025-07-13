@@ -31,7 +31,8 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=1)
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
-    app.config['JWT_TOKEN_LOCATION'] = ['headers', 'cookies']
+    app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+    app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # For development
     app.config['JWT_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
     
     jwt = JWTManager(app)

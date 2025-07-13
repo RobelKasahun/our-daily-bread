@@ -1,8 +1,9 @@
+import sys
 from app import db
 from flask import jsonify, request, Blueprint
 from app.models import User
 from app.controllers.auth_controller import register_user, authenticate_user
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies
 
 # create Flask Blueprint named auth
 auth_blueprint = Blueprint('auth', __name__)
@@ -33,6 +34,9 @@ def login():
 @jwt_required(refresh=True)
 def refresh():
     identity = get_jwt_identity()
-    new_access_token = create_access_token(identity=identity)
-    return jsonify(access_token=new_access_token), 200
+    new_access_token = create_access_token(identity=str(identity))
+    response = jsonify(access_token=new_access_token)
+    print(f'type(identity): {identity}', file=sys.stdout, flush=True)
+    set_access_cookies(response, new_access_token)  # ✅ Set cookie again!
+    return response, 200
     
