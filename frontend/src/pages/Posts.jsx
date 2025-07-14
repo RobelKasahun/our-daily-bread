@@ -26,17 +26,13 @@ export default function Posts() {
     handlePosts();
   }, []);
 
-  
   return (
     <>
       <Navigationbar showWriteButton={true} />
-      <div className="container bg-green-200 p-3 mx-auto">
-        <h1>POSTS</h1>
-        <ul>
-          {posts.map((post) => (
-            <Card key={post.id} post={post} />
-          ))}
-        </ul>
+      <div className="container p-3 border border-gray-200 mx-auto w-[60%] my-4">
+        {posts.map((post) => (
+          <Card key={post.id} post={post} />
+        ))}
       </div>
     </>
   );
