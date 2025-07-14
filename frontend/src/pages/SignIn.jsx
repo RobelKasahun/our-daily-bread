@@ -44,7 +44,7 @@ export default function SignIn() {
       // Navigate to the Posts page on successfully sign in
       console.log(response.status);
       if (response.ok) {
-        // localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("access_token", data.access_token);
         navigate("/contents", { replace: true }); // Don't allow back to login
       } else {
         setSigninErrorMessage(data.error || "Login failed");

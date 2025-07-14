@@ -19,12 +19,12 @@ export const apiRequest = async (url, options = {}) => {
         const refreshed = await refreshAccessToken();
         if (refreshed) {
             // Retry the original request with new token
-            // token = localStorage.getItem("access_token");
+            token = localStorage.getItem("access_token");
             return await fetch(url, {
                 ...options,
                 headers: {
                     ...options.headers,
-                    // Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
@@ -49,7 +49,7 @@ const refreshAccessToken = async () => {
 
     if (res.ok) {
         const data = await res.json();
-        // localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("access_token", data.access_token);
         return true;
     } else {
         console.warn("Refresh failed. User must log in again.");
