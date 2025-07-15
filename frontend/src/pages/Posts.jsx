@@ -29,7 +29,7 @@ export default function Posts() {
   return (
     <>
       <Navigationbar showWriteButton={true} />
-      <div className="container p-3 border border-gray-200 mx-auto w-[60%] my-4">
+      <div className="container p-3 border border-gray-200 mx-auto w-[80%] my-4">
         {posts.map((post) => (
           <Card key={post.id} post={post} />
         ))}
