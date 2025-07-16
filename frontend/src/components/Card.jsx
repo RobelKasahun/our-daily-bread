@@ -1,3 +1,5 @@
+import { FaHeart, FaRegComment } from "react-icons/fa";
+
 export default function Card({ post, style }) {
   const formatDate = (dateString) => {
     const formattedDate = new Date(dateString).toLocaleString("en-US", {

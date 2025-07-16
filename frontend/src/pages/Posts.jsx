@@ -9,6 +9,8 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [users, setUsers] = useState([]);
 
+  const slicedPosts = posts.slice(0, 7);
+
   // load posts
   useEffect(() => {
     const handlePosts = async (e) => {
@@ -31,7 +33,7 @@ export default function Posts() {
   }, []);
 
   const getStyling = (index) => {
-    if (index == posts.length - 1) {
+    if (index == slicedPosts.length - 1) {
       return "card px-8 pt-8 pb-2 my-3";
     }
 
@@ -47,7 +49,7 @@ export default function Posts() {
           <div className="w-full md:w-3/4 lg:w-4/5">
             <Link to={"#"}>
               <div className="post">
-                {posts.map((post, index) => (
+                {slicedPosts.map((post, index) => (
                   <Card key={post.id} post={post} style={getStyling(index)} />
                 ))}
               </div>
