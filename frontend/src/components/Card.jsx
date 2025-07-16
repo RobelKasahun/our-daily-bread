@@ -12,17 +12,18 @@ export default function Card({ post, style }) {
         <h1 className="font-bold text-xl">{post.title}</h1>
       </div>
 
-      <div className="post-content">
-        Anyone who’s ever used a keyboard trying to get stuff done on a computer
-        should know the seven foundational data structures of...
-      </div>
+      <div className="post-content">{post.content.substring(0, 90)} ...</div>
 
       <div className="post-info">
         <p>
-          <span className="post-date text-sm text-gray-500">June 10, 2025</span>{" "}
-          <span className="post-likes text-sm text-gray-500">103 Likes</span>{" "}
+          <span className="post-date text-sm text-gray-500">
+            {post.created_at}
+          </span>{" "}
+          <span className="post-likes text-sm text-gray-500">
+            {post.like_count} Likes
+          </span>{" "}
           <span className="post-comments text-sm text-gray-500">
-            103 Comments
+            {post.comment_count} Comments
           </span>
         </p>
       </div>
