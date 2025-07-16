@@ -2,6 +2,8 @@ import Navigationbar from "../components/Navigationbar";
 import { useState, useEffect } from "react";
 import Card from "../components/Card";
 import { apiRequest } from "../utils/api";
+import Sidebar from "../components/Sidebar";
+import { Link } from "react-router-dom";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -26,13 +28,35 @@ export default function Posts() {
     handlePosts();
   }, []);
 
+  const getStyling = (index) => {
+    if (index == posts.length - 1) {
+      return "card px-8 pt-8 pb-2 my-3 w-200";
+    }
+
+    return "card border-b border-gray-200 px-8 pt-8 pb-2 my-3 w-200";
+  };
+
   return (
     <>
       <Navigationbar showWriteButton={true} />
-      <div className="container p-3 border border-gray-200 mx-auto w-[80%] my-4">
-        {posts.map((post) => (
-          <Card key={post.id} post={post} />
-        ))}
+      <div className="container mx-auto w-[95%] lg:w-[80%] xl:w-[76%] my-4">
+        <div className="flex flex-col md:flex-row gap-4 border border-gray-200">
+          {/* Posts Section */}
+          <div className="w-full md:w-3/4 lg:w-4/5">
+            <Link to={"#"}>
+              <div className="post">
+                {posts.map((post, index) => (
+                  <Card key={post.id} post={post} style={getStyling(index)} />
+                ))}
+              </div>
+            </Link>
+          </div>
+
+          {/* Sidebar */}
+          <div className="w-full md:w-1/4 lg:w-1/5">
+            <Sidebar />
+          </div>
+        </div>
       </div>
     </>
   );
