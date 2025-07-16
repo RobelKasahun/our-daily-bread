@@ -1,4 +1,16 @@
 export default function Card({ post, style }) {
+  const formatDate = (dateString) => {
+    const formattedDate = new Date(dateString).toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    return formattedDate;
+  };
   return (
     <div className={style}>
       <div className="post-author flex items-center">
@@ -17,7 +29,7 @@ export default function Card({ post, style }) {
       <div className="post-info">
         <p>
           <span className="post-date text-sm text-gray-500">
-            {post.created_at}
+            {formatDate(post.created_at)}
           </span>{" "}
           <span className="post-likes text-sm text-gray-500">
             {post.like_count} Likes

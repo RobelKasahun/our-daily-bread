@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState([]);
 
+  // load posts
   useEffect(() => {
     const handlePosts = async (e) => {
       const response = await apiRequest("http://localhost:8000/posts", {
@@ -30,10 +32,10 @@ export default function Posts() {
 
   const getStyling = (index) => {
     if (index == posts.length - 1) {
-      return "card px-8 pt-8 pb-2 my-3 w-200";
+      return "card px-8 pt-8 pb-2 my-3";
     }
 
-    return "card border-b border-gray-200 px-8 pt-8 pb-2 my-3 w-200";
+    return "card border-b border-gray-200 px-8 pt-8 pb-2 my-3";
   };
 
   return (
