@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState([]);
 
-  const slicedPosts = posts.slice(0, 7);
+  const slicedPosts = posts.slice(0, 7).reverse();
 
   // load posts
   useEffect(() => {
@@ -47,13 +47,18 @@ export default function Posts() {
         <div className="flex flex-col md:flex-row gap-4 border border-gray-200">
           {/* Posts Section */}
           <div className="w-full md:w-3/4 lg:w-4/5">
-            <Link to={"#"}>
-              <div className="post">
-                {slicedPosts.map((post, index) => (
-                  <Card key={post.id} post={post} style={getStyling(index)} />
-                ))}
-              </div>
-            </Link>
+            <div className="post">
+              {slicedPosts.map((post, index) => (
+                <Link to={"#"}>
+                  <Card
+                    key={post.id}
+                    user_id={post.user_id}
+                    post={post}
+                    style={getStyling(index)}
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* Sidebar */}
