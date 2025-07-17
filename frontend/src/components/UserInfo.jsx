@@ -27,10 +27,6 @@ export default function UserInfo({ userId }) {
     if (user) handleUser();
   }, [userId]);
 
-  const initials = `${user.first_name?.[0] ?? ""}${
-    user.last_name?.[0] ?? ""
-  }`.toUpperCase();
-
   return (
     <p>
       {user.first_name} {user.last_name}
