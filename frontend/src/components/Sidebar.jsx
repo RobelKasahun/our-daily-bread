@@ -40,7 +40,7 @@ export default function Sidebar() {
         <div className="followers my-5">
           <div class="mx-3">
             <h5 class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-              Writers to Follow
+              Who to Follow
             </h5>
           </div>
 
