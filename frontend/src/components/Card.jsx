@@ -1,6 +1,7 @@
-import { MdOutlineModeComment } from "react-icons/md";
 import UserInfo from "./UserInfo";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandsClapping, faComment } from "@fortawesome/free-solid-svg-icons";
 
 export default function Card({ post, style, user_id }) {
   const formatDate = (dateString) => {
@@ -15,36 +16,42 @@ export default function Card({ post, style, user_id }) {
   return (
     <div className={style}>
       <div className="post-author flex items-center">
-        <span className="inline-block mr-2 bg-indigo-100 p-3 rounded-full">
+        {/* <span className="inline-block mr-2 bg-indigo-100 p-3 rounded-full">
           {"Av"}
-        </span>
+        </span> */}
         <h2>
           <UserInfo userId={user_id} />
         </h2>
       </div>
 
       <div className="post-header">
-        <h1 className="font-bold text-xl">{post.title}</h1>
+        <h1 className="font-bold text-2xl mt-3">{post.title}</h1>
       </div>
 
-      <div className="post-content text-gray-500">
+      <div className="post-content text-gray-500 mt-2">
         {post.content.substring(0, 90)} ...
       </div>
 
       <div className="post-info">
-        <p>
+        <p className="mt-3">
           <span className="post-date text-sm text-gray-500 mr-4">
             {formatDate(post.created_at)}
           </span>{" "}
-          <span className="post-comments text-sm text-gray-500 mr-4">
-            {post.comment_count > 1
-              ? `${post.comment_count} comments`
-              : `${post.comment_count} comment`}
+          <FontAwesomeIcon
+            icon={faComment}
+            size="lg"
+            className="text-gray-500"
+          />
+          <span className="post-comments text-sm text-gray-500 ml-1 mr-4">
+            {post.comment_count}
           </span>{" "}
-          <span className="post-likes text-sm text-gray-500">
-            {post.like_count > 1
-              ? `${post.like_count} Likes`
-              : `${post.like_count} Like`}
+          <FontAwesomeIcon
+            icon={faHandsClapping}
+            size="lg"
+            className="text-gray-500"
+          />
+          <span className="post-likes text-sm text-gray-500 ml-1">
+            {post.like_count}
           </span>
         </p>
       </div>

@@ -9,7 +9,7 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState([]);
 
-  const slicedPosts = posts.slice(0, 7).reverse();
+  const slicedPosts = posts.slice(0, posts.length).reverse();
 
   // load posts
   useEffect(() => {
@@ -34,10 +34,10 @@ export default function Posts() {
 
   const getStyling = (index) => {
     if (index == slicedPosts.length - 1) {
-      return "card px-8 pt-8 pb-2 my-3";
+      return "card px-8 pt-8 pb-2 my-3 pb-8";
     }
 
-    return "card border-b border-gray-200 px-8 pt-8 pb-2 my-3";
+    return "card border-b border-gray-200 px-8 pt-8 pb-2 my-3 pb-8";
   };
 
   return (
