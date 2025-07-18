@@ -33,18 +33,19 @@ export default function Posts() {
   }, []);
 
   const getStyling = (index) => {
+    const responsiveStyle =
+      "w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8";
     if (index == slicedPosts.length - 1) {
-      return "card px-8 pt-8 pb-2 my-3 pb-8";
+      return `card px-8 pt-8 pb-2 my-3 pb-8 w-160 ${responsiveStyle}`;
     }
-
-    return "card border-b border-gray-200 px-8 pt-8 pb-2 my-3 pb-8";
+    return `card px-8 pt-8 pb-2 my-3 pb-8 ${responsiveStyle}`;
   };
 
   return (
     <>
       <Navigationbar showWriteButton={true} />
-      <div className="container mx-auto w-[95%] lg:w-[80%] xl:w-[76%] my-4">
-        <div className="flex flex-col md:flex-row gap-4 border border-gray-200">
+      <div className="container bg-indigo-200 mx-auto w-[95%] lg:w-[80%] xl:w-[76%] my-4">
+        <div className="flex flex-col md:flex-row gap-4 border-l border-r border-gray-200">
           {/* Posts Section */}
           <div className="w-full md:w-3/4 lg:w-4/5">
             <div className="post">

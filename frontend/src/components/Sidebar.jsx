@@ -20,7 +20,7 @@ export default function Sidebar() {
       <div className="relative w-full h-full max-w-[20rem] flex-col border-l border-gray-200 p-4 text-gray-700">
         <div className="saved-stories">
           <div className="mx-3">
-            <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h5 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Recently Saved
             </h5>
           </div>
@@ -39,7 +39,7 @@ export default function Sidebar() {
 
         <div className="followers my-5">
           <div className="mx-3">
-            <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h5 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Who to Follow
             </h5>
           </div>
@@ -58,7 +58,7 @@ export default function Sidebar() {
 
         <div className="topic-for-you">
           <div className="mx-3">
-            <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h5 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Topics for You
             </h5>
           </div>
