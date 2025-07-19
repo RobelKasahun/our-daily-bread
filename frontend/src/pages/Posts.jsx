@@ -51,7 +51,7 @@ export default function Posts() {
           <div className="w-full md:w-3/4 lg:w-4/5">
             <div className="post">
               {slicedPosts.map((post, index) => (
-                <Link to={"#"}>
+                <Link to={`/contents/${post.id}`}>
                   <Card
                     key={post.id}
                     user_id={post.user_id}
