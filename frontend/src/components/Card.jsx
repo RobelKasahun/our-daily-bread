@@ -14,7 +14,7 @@ export default function Card({ post, style, user_id }) {
     return formattedDate;
   };
   return (
-    <div className="card-wrapper border-b border-gray-200 w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="card-wrapper w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
       <div className={style}>
         <div className="post-author flex items-center">
           {/* <span className="inline-block mr-2 bg-indigo-100 p-3 rounded-full">

@@ -4,6 +4,7 @@ import Card from "../components/Card";
 import { apiRequest } from "../utils/api";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -38,13 +39,13 @@ export default function Posts() {
     if (index == slicedPosts.length - 1) {
       return `card px-8 pt-8 pb-2 my-3 pb-8 w-160 ${responsiveStyle}`;
     }
-    return `card px-8 pt-8 pb-2 my-3 pb-8 ${responsiveStyle}`;
+    return `card border-b border-gray-200 px-8 pt-8 pb-2 my-3 pb-8 ${responsiveStyle}`;
   };
 
   return (
     <>
       <Navigationbar showWriteButton={true} />
-      <div className="container bg-indigo-200 mx-auto w-[95%] lg:w-[80%] xl:w-[76%] my-4">
+      <div className="container mx-auto w-[95%] lg:w-[80%] xl:w-[76%]">
         <div className="flex flex-col md:flex-row gap-4 border-l border-r border-gray-200">
           {/* Posts Section */}
           <div className="w-full md:w-3/4 lg:w-4/5">
@@ -68,6 +69,7 @@ export default function Posts() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

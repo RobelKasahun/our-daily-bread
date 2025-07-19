@@ -14,22 +14,39 @@ export default function Sidebar() {
     "Hashtag - Based Search",
   ];
 
-  const writers = [];
+  const authors = [
+    "Ali Abdaal",
+    "Thomas Frank",
+    "Sahil Bloom",
+    "Nat Eliason",
+    "Lenny Rachitsky",
+    "Amanda Natividad",
+    "Julian Shapiro",
+    "James Clear",
+    "Steph Smith",
+    "David Perell",
+    "Paul Graham",
+    "Morgan Housel",
+    "Packy McCormick",
+    "Zain Kahn",
+    "Tobi Lutke",
+  ];
+
   return (
     <div className="sidebar float-right h-full">
       <div className="relative w-full h-full max-w-[20rem] flex-col border-l border-gray-200 p-4 text-gray-700">
         <div className="saved-stories">
           <div className="mx-3">
-            <h5 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h2 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Recently Saved
-            </h5>
+            </h2>
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
             {topics.map((topic) => (
               <div
                 role="button"
-                className="flex items-center w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                className="flex items-center text-sm w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
               >
                 <Link to={"#"}>{topic}</Link>
               </div>
@@ -39,18 +56,18 @@ export default function Sidebar() {
 
         <div className="followers my-5">
           <div className="mx-3">
-            <h5 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h2 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Who to Follow
-            </h5>
+            </h2>
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {topics.map((topic) => (
+            {authors.map((author) => (
               <div
                 role="button"
-                className="flex items-center w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                className="flex items-center text-sm w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
               >
-                <Link to={"#"}>{topic}</Link>
+                <Link to={"#"}>{author}</Link>
               </div>
             ))}
           </nav>
@@ -58,16 +75,16 @@ export default function Sidebar() {
 
         <div className="topic-for-you">
           <div className="mx-3">
-            <h5 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h2 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Topics for You
-            </h5>
+            </h2>
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
             {topics.map((topic) => (
               <div
                 role="button"
-                className="flex items-center w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                className="flex items-center text-sm w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
               >
                 <Link to={"#"}>{topic}</Link>
               </div>
