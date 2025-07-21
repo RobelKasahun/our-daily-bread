@@ -22,3 +22,13 @@ class User(db.Model):
     
     # user can like many posts
     likes = db.relationship('Like', backref='user', lazy=True, cascade='all, delete-orphan')
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'username': self.username,
+            'email': self.email,
+            'created_at': self.created_at
+        }

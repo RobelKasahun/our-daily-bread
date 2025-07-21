@@ -67,6 +67,6 @@ def create_app():
         app.register_blueprint(post_blueprint, url_prefix='/posts')
         app.register_blueprint(comment_blue_print, url_prefix='/comments')
         app.register_blueprint(like_blueprint, url_prefix='/likes')
-        app.register_blueprint(user_blueprint, url_prefix='/user')
+        app.register_blueprint(user_blueprint, url_prefix='/users')
     
     return app
