@@ -8,6 +8,7 @@ import {
   faComment,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
+import UserInfo from "../components/UserInfo";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
@@ -52,7 +53,9 @@ export default function PostDetails() {
             {post.title}
           </h1>
           <p className="text-sm w-100 my-5">
-            <span className="author-name">Robel K Ayelew</span>
+            <span className="author-name">
+              <UserInfo userId={post.user_id} />
+            </span>
             <span className="follow">
               <form action="#" className="inline-block ml-5">
                 <button className="follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer">

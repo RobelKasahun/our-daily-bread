@@ -28,7 +28,7 @@ export default function UserInfo({ userId }) {
   }, [userId]);
 
   return (
-    <p>
+    <p className="inline-block">
       {user.first_name} {user.last_name}
     </p>
   );
