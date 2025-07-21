@@ -6,28 +6,7 @@ user_blueprint = Blueprint('users', __name__)
 
 @user_blueprint.route('', methods=['GET'])
 @jwt_required()
-def get_users():
-    '''
-        # Get all posts
-        posts = Post.query.all()
-        list_of_posts = []
-        for post in posts:
-            current_post = {
-                'id': post.id,
-                'title': post.title, 
-                'content': post.content, 
-                'created_at': post.created_at, 
-                'updated_at': post.updated_at, 
-                'comment_count': post.comment_count, 
-                'like_count': post.like_count, 
-                'user_id': post.user_id
-            }
-            
-            list_of_posts.append(current_post)
-            
-        return jsonify(list_of_posts), 200
-    '''
-    
+def get_users():  
     if request.method == 'GET':
         users = User.query.all()
         
