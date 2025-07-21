@@ -16,7 +16,6 @@ export default function Sidebar() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Users fetched successfully!", data);
         setAuthors(data);
       } else {
         console.error("Failed to fetch users:", data.error);
@@ -36,7 +35,6 @@ export default function Sidebar() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Posts fetched successfully!", data);
         setPosts(data);
       } else {
         console.error("Failed to fetch posts:", data.error);

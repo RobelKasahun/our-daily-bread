@@ -12,8 +12,6 @@ export const apiRequest = async (url, options = {}) => {
         credentials: "include", // for refresh token cookie
     });
 
-    console.log(`res.status: ${res.status}`);
-
     if (res.status === 401) {
         // Try refreshing the token
         const refreshed = await refreshAccessToken();
@@ -31,7 +29,6 @@ export const apiRequest = async (url, options = {}) => {
             });
         } else {
             // Redirect to login or handle logout
-            console.log('Redirect to login or handle logout');
         }
     }
 
@@ -44,8 +41,6 @@ const refreshAccessToken = async () => {
         method: "POST",
         credentials: "include",
     });
-
-    console.log(`refreshAccessToken: ${res.ok}`);
 
     if (res.ok) {
         const data = await res.json();

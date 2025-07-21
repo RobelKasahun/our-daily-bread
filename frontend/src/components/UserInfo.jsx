@@ -8,7 +8,7 @@ export default function UserInfo({ userId }) {
   useEffect(() => {
     const handleUser = async (e) => {
       const response = await apiRequest(
-        `http://localhost:8000/user/${userId}`,
+        `http://localhost:8000/users/${userId}`,
         {
           method: "GET",
         }
@@ -17,7 +17,6 @@ export default function UserInfo({ userId }) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("User fetched successfully!", data);
         setUser(data);
       } else {
         console.error("Failed to fetch user:", data.error);
@@ -28,7 +27,7 @@ export default function UserInfo({ userId }) {
   }, [userId]);
 
   return (
-    <p className="inline-block">
+    <p className="inline-block text-sm">
       {user.first_name} {user.last_name}
     </p>
   );

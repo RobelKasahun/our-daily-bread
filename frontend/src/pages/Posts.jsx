@@ -22,9 +22,7 @@ export default function Posts() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Posts fetched successfully!", data);
         setPosts(data);
-        console.log(posts);
       } else {
         console.error("Failed to fetch posts:", data.error);
       }
@@ -51,7 +49,7 @@ export default function Posts() {
           <div className="w-full md:w-3/4 lg:w-4/5">
             <div className="post">
               {slicedPosts.map((post, index) => (
-                <Link to={`/contents/${post.id}`}>
+                <Link to={`/contents/${post.id}`} key={post.id}>
                   <Card
                     key={post.id}
                     user_id={post.user_id}
