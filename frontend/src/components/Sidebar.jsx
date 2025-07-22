@@ -44,6 +44,24 @@ export default function Sidebar() {
     handlePosts();
   }, []);
 
+  const handleFollow = async (author_id) => {
+    const response = await apiRequest(
+      `http://localhost:8000/followers/${author_id}`,
+      {
+        method: "POST",
+        credentials: "include", // includes JWT cookies
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Successful following...");
+    } else {
+      console.error("Failed to follow:", author_id, data.error);
+    }
+  };
+
   return (
     <div className="sidebar float-right h-full">
       <div className="relative w-full h-full max-w-[20rem] flex-col border-l border-gray-200 p-4 text-gray-700">
@@ -83,7 +101,7 @@ export default function Sidebar() {
                 role="button"
                 className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
               >
-                <Link to={"#"} key={author.id}>
+                <Link to={`/followers/${author.id}`} key={author.id}>
                   {author.first_name} {author.last_name}
                 </Link>
                 <button
@@ -111,7 +129,7 @@ export default function Sidebar() {
                 role="button"
                 className="flex items-center text-sm w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
               >
-                <Link to={`/contents/${post.id}`}>
+                <Link to={`#`}>
                   <h1 className="font-bold text-black">{post.title}</h1>
                 </Link>
               </div>

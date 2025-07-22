@@ -5,16 +5,22 @@ import { apiRequest } from "../utils/api";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import CircleLoader from "react-spinners/CircleLoader";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const slicedPosts = posts.slice(0, posts.length).reverse();
 
   // load posts
   useEffect(() => {
     const handlePosts = async (e) => {
+      setLoading(true);
+
+      // ⏳ Fake delay
+      // await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 seconds
+
       const response = await apiRequest("http://localhost:8000/posts", {
         method: "GET",
       });
@@ -26,6 +32,8 @@ export default function Posts() {
       } else {
         console.error("Failed to fetch posts:", data.error);
       }
+
+      setLoading(false);
     };
 
     handlePosts();
@@ -47,6 +55,11 @@ export default function Posts() {
         <div className="flex flex-col md:flex-row gap-4 border-l border-r border-gray-200">
           {/* Posts Section */}
           <div className="w-full md:w-3/4 lg:w-4/5">
+            {loading && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+                <CircleLoader loading size={100} speedMultiplier={2} />
+              </div>
+            )}
             <div className="post">
               {slicedPosts.map((post, index) => (
                 <Link to={`/contents/${post.id}`} key={post.id}>
