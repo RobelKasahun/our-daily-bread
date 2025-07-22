@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../utils/api";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
@@ -82,6 +83,8 @@ export default function Sidebar() {
     }
   };
 
+  const notify = () => toast("Wow so easy !");
+
   return (
     <div className="sidebar float-right h-full">
       <div className="relative w-full h-full max-w-[20rem] flex-col border-l border-gray-200 p-4 text-gray-700">
@@ -119,21 +122,39 @@ export default function Sidebar() {
             {authors.map(
               (author) =>
                 author.id !== current_user["current_user"] && (
-                  <div
-                    key={author.id}
-                    role="button"
-                    className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
-                  >
-                    <Link to={`/followers/${author.id}`} key={author.id}>
-                      {author.first_name} {author.last_name}
-                    </Link>
-                    <button
-                      onClick={() => handleFollow(author.id)}
-                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
+                  <>
+                    <div
+                      key={author.id}
+                      role="button"
+                      className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
                     >
-                      Follow
-                    </button>
-                  </div>
+                      <Link to={`/followers/${author.id}`} key={author.id}>
+                        {author.first_name} {author.last_name}
+                      </Link>
+                      <button
+                        onClick={() => {
+                          handleFollow(author.id);
+                          notify();
+                        }}
+                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
+                      >
+                        Follow
+                      </button>
+                    </div>
+                    <ToastContainer
+                      position="top-center"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick={false}
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="light"
+                      transition={Bounce}
+                    />
+                  </>
                 )
             )}
           </nav>
