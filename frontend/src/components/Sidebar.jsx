@@ -7,6 +7,7 @@ export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
   const [posts, setPosts] = useState([]);
   const [current_user, setCurrentUser] = useState(-1);
+  const [followedIds, setFollowedIds] = useState([]);
 
   // load users
   useEffect(() => {
@@ -85,6 +86,30 @@ export default function Sidebar() {
 
   const notify = () => toast("Wow so easy !");
 
+  useEffect(() => {
+    const fetchFollowedIds = async () => {
+      const response = await fetch(
+        "http://localhost:8000/followers/following/ids",
+        {
+          method: "GET",
+          credentials: "include", // to send cookies for JWT
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setFollowedIds(data.following_ids); // now you can compare these
+        console.log("success following_ids");
+      } else {
+        console.error("Failed to fetch following ids");
+        // console.error("❌ Network or server error:", error);
+      }
+    };
+
+    fetchFollowedIds();
+  }, []);
+
   return (
     <div className="sidebar float-right h-full">
       <div className="relative w-full h-full max-w-[20rem] flex-col border-l border-gray-200 p-4 text-gray-700">
@@ -131,15 +156,28 @@ export default function Sidebar() {
                       <Link to={`/followers/${author.id}`} key={author.id}>
                         {author.first_name} {author.last_name}
                       </Link>
-                      <button
-                        onClick={() => {
-                          handleFollow(author.id);
-                          notify();
-                        }}
-                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
-                      >
-                        Follow
-                      </button>
+
+                      {followedIds.includes(author.id) ? (
+                        <button
+                          onClick={() => {
+                            handleFollow(author.id);
+                            notify();
+                          }}
+                          className="px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-700 cursor-pointer"
+                        >
+                          Following
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            handleFollow(author.id);
+                            notify();
+                          }}
+                          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
+                        >
+                          Follow
+                        </button>
+                      )}
                     </div>
                     <ToastContainer
                       position="top-center"

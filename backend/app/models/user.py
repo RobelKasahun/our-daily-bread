@@ -32,3 +32,19 @@ class User(db.Model):
             'email': self.email,
             'created_at': self.created_at
         }
+    
+    # List of authors the user following 
+    following = db.relationship(
+        'Follow',
+        foreign_keys='Follow.follower_id',
+        backref='follower',
+        lazy='dynamic'
+    )
+    
+    # List of authors the user followed by
+    followers = db.relationship(
+        'Follow',
+        foreign_keys='Follow.followed_id',
+        backref='followed',
+        lazy='dynamic'
+    )
