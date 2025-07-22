@@ -5,6 +5,12 @@ from app.models import User
 
 user_blueprint = Blueprint('users', __name__)
 
+@user_blueprint.route('/current', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user = int(get_jwt_identity())
+    return jsonify({'current_user': current_user}), 200
+
 @user_blueprint.route('', methods=['GET'])
 @jwt_required()
 def get_users():  

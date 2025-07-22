@@ -18,9 +18,6 @@ export default function Posts() {
     const handlePosts = async (e) => {
       setLoading(true);
 
-      // ⏳ Fake delay
-      // await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 seconds
-
       const response = await apiRequest("http://localhost:8000/posts", {
         method: "GET",
       });

@@ -5,6 +5,7 @@ import { apiRequest } from "../utils/api";
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [current_user, setCurrentUser] = useState(-1);
 
   // load users
   useEffect(() => {
@@ -42,6 +43,25 @@ export default function Sidebar() {
     };
 
     handlePosts();
+  }, []);
+
+  // Get current user
+  useEffect(() => {
+    const handleCurrentUser = async () => {
+      const response = await apiRequest("http://localhost:8000/users/current", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCurrentUser(data);
+      } else {
+        console.error("Failed to fetch current user:", data.error);
+      }
+    };
+
+    handleCurrentUser();
   }, []);
 
   const handleFollow = async (author_id) => {
@@ -92,26 +112,30 @@ export default function Sidebar() {
             <h2 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Who to Follow
             </h2>
+            {/* {author.id !== current_user["current_user"] && true} */}
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {authors.map((author) => (
-              <div
-                key={author.id}
-                role="button"
-                className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
-              >
-                <Link to={`/followers/${author.id}`} key={author.id}>
-                  {author.first_name} {author.last_name}
-                </Link>
-                <button
-                  onClick={() => handleFollow(author.id)}
-                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
-                >
-                  Follow
-                </button>
-              </div>
-            ))}
+            {authors.map(
+              (author) =>
+                author.id !== current_user["current_user"] && (
+                  <div
+                    key={author.id}
+                    role="button"
+                    className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
+                  >
+                    <Link to={`/followers/${author.id}`} key={author.id}>
+                      {author.first_name} {author.last_name}
+                    </Link>
+                    <button
+                      onClick={() => handleFollow(author.id)}
+                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
+                    >
+                      Follow
+                    </button>
+                  </div>
+                )
+            )}
           </nav>
         </div>
 
