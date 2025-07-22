@@ -2,6 +2,7 @@ from flask import jsonify, Blueprint, request
 from app.models import User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import User
+
 user_blueprint = Blueprint('users', __name__)
 
 @user_blueprint.route('', methods=['GET'])

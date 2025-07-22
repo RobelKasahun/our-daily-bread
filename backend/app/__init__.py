@@ -61,6 +61,7 @@ def create_app():
         from app.routes.comment_route import comment_blue_print
         from app.routes.like_route import like_blueprint
         from app.routes.user_route import user_blueprint
+        from app.routes.follow_route import follow_blueprint
         
         app.register_blueprint(auth_blueprint, url_prefix='/auth')
         app.register_blueprint(profile_blueprint, url_prefix='/profile')
@@ -68,5 +69,6 @@ def create_app():
         app.register_blueprint(comment_blue_print, url_prefix='/comments')
         app.register_blueprint(like_blueprint, url_prefix='/likes')
         app.register_blueprint(user_blueprint, url_prefix='/users')
+        app.register_blueprint(follow_blueprint, url_prefix='/followers')
     
     return app
