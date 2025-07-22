@@ -61,7 +61,7 @@ export default function Sidebar() {
                 role="button"
                 className="flex items-center text-sm w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
               >
-                <Link to={"#"}>
+                <Link to={`/contents/${post.id}`}>
                   <h1 className="font-bold text-black">{post.title}</h1>
                 </Link>
               </div>
@@ -111,7 +111,7 @@ export default function Sidebar() {
                 role="button"
                 className="flex items-center text-sm w-full p-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
               >
-                <Link to={"#"}>
+                <Link to={`/contents/${post.id}`}>
                   <h1 className="font-bold text-black">{post.title}</h1>
                 </Link>
               </div>

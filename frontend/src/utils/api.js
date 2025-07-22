@@ -36,7 +36,6 @@ export const apiRequest = async (url, options = {}) => {
 };
 
 const refreshAccessToken = async () => {
-    console.log(`refreshAccessToken() invoked.`);
     const res = await fetch("http://localhost:8000/auth/refresh", {
         method: "POST",
         credentials: "include",

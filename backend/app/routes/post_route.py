@@ -15,15 +15,12 @@ def posts():
     
     if request.method == 'GET':
         # get all posts
-        print(f'GET/ posts')
         return get_posts()
     
     elif request.method == 'POST':
         # Create a new post
         # get the title and content
         post_data = request.get_json()
-        
-        print(f'POST/ posts')
         
         return create_post(post_data, current_user)
     else:

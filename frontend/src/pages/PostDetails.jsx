@@ -52,7 +52,7 @@ export default function PostDetails() {
           <h1 className="text-5xl w-200 font-bold box-content text-start">
             {post.title}
           </h1>
-          <p className="text-sm w-100 my-5">
+          <div className="text-sm w-100 my-5">
             <span className="author-name">
               <UserInfo userId={post.user_id} />
             </span>
@@ -66,7 +66,7 @@ export default function PostDetails() {
             <span className="created_at ml-5">
               {formatDate(post.created_at)}
             </span>
-          </p>
+          </div>
         </div>
         <div className="claps-comments-wrapper">
           <div className="post-info border-y border-gray-200">
