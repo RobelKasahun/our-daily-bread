@@ -180,8 +180,6 @@ export default function Sidebar() {
                           onClick={() => {
                             // follow author.id
                             handleUnFollow(author.id);
-                            // Update UI state when a new author's id is added
-                            // setFollowedIds((prev) => [...prev, author.id]);
                             // Remove author.id from followedIds
                             setFollowedIds((prev) =>
                               prev.filter((id) => id !== author.id)
