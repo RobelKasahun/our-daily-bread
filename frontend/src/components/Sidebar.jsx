@@ -9,6 +9,10 @@ export default function Sidebar() {
   const [current_user, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
 
+  const handleIsButtonClicked = () => {
+    setIsButtonClicked(true);
+  };
+
   // load users
   useEffect(() => {
     const handleUsers = async (e) => {
@@ -103,7 +107,6 @@ export default function Sidebar() {
         console.log("success following_ids");
       } else {
         console.error("Failed to fetch following ids");
-        // console.error("❌ Network or server error:", error);
       }
     };
 
@@ -159,19 +162,18 @@ export default function Sidebar() {
 
                       {followedIds.includes(author.id) ? (
                         <button
-                          onClick={() => {
-                            handleFollow(author.id);
-                            notify();
-                          }}
-                          className="px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-700 cursor-pointer"
+                          onClick={() => {}}
+                          className={`px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-700 cursor-pointer`}
                         >
                           Following
                         </button>
                       ) : (
                         <button
                           onClick={() => {
+                            // follow author.id
                             handleFollow(author.id);
-                            notify();
+                            // Update UI state when a new author's id is added
+                            setFollowedIds((prev) => [...prev, author.id]);
                           }}
                           className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
                         >
