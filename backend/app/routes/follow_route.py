@@ -45,3 +45,25 @@ def follow(user_id):
     db.session.commit()
     
     return jsonify({"message": "Followed successfully"}), 200
+
+
+@follow_blueprint.route('/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def unfollow(user_id):
+    # Get the current logged in user's id
+    current_logged_in_user = int(get_jwt_identity())
+    
+    # get the first match where the current logged user following the user_id
+    follow = Follow.query.filter_by(follower_id=current_logged_in_user, followed_id=user_id).first()
+    
+    # The current logged in user is not following such user_id
+    if not follow:
+        return jsonify({"error": "Follow relationship not found"}), 404
+    
+    # unfollow or delete the relationship
+    db.session.delete(follow)
+    # save the change
+    db.session.commit()
+    
+    # successfully unfollowd user_id
+    return jsonify({"message": "Unfollowed successfully"}), 200

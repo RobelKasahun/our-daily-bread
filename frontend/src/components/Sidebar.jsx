@@ -9,10 +9,6 @@ export default function Sidebar() {
   const [current_user, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
 
-  const handleIsButtonClicked = () => {
-    setIsButtonClicked(true);
-  };
-
   // load users
   useEffect(() => {
     const handleUsers = async (e) => {
@@ -85,6 +81,25 @@ export default function Sidebar() {
       console.log("Successful following...");
     } else {
       console.error("Failed to follow:", author_id, data.error);
+    }
+  };
+
+  const handleUnFollow = async (author_id) => {
+    console.log("author_id:", author_id);
+    const response = await apiRequest(
+      `http://localhost:8000/followers/${author_id}`,
+      {
+        method: "DELETE",
+        credentials: "include", // includes JWT cookies
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Successful unfollowing...");
+    } else {
+      console.error("Failed to unfollow:", author_id, data.error);
     }
   };
 
@@ -162,7 +177,16 @@ export default function Sidebar() {
 
                       {followedIds.includes(author.id) ? (
                         <button
-                          onClick={() => {}}
+                          onClick={() => {
+                            // follow author.id
+                            handleUnFollow(author.id);
+                            // Update UI state when a new author's id is added
+                            // setFollowedIds((prev) => [...prev, author.id]);
+                            // Remove author.id from followedIds
+                            setFollowedIds((prev) =>
+                              prev.filter((id) => id !== author.id)
+                            );
+                          }}
                           className={`px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-700 cursor-pointer`}
                         >
                           Following
@@ -181,19 +205,6 @@ export default function Sidebar() {
                         </button>
                       )}
                     </div>
-                    <ToastContainer
-                      position="top-center"
-                      autoClose={5000}
-                      hideProgressBar={false}
-                      newestOnTop={false}
-                      closeOnClick={false}
-                      rtl={false}
-                      pauseOnFocusLoss
-                      draggable
-                      pauseOnHover
-                      theme="light"
-                      transition={Bounce}
-                    />
                   </>
                 )
             )}
