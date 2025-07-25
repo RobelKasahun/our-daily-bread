@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../utils/api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
+import _ from 'lodash';   // for shaffling a list
 
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
@@ -11,6 +12,7 @@ export default function Sidebar() {
 
   const slicedPosts = posts.slice(0, 7);
   const slicedAuthors = authors.slice(0, 7);
+  const topicsForYou = _.shuffle(slicedPosts);
 
   // load users
   useEffect(() => {
@@ -227,7 +229,7 @@ export default function Sidebar() {
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {slicedPosts.map((post) => (
+            {topicsForYou.map((post) => (
               <div
                 key={post.id}
                 role="button"
