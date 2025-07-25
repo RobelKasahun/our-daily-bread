@@ -9,6 +9,9 @@ export default function Sidebar() {
   const [current_user, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
 
+  const slicedPosts = posts.slice(0, 7);
+  const slicedAuthors = authors.slice(0, 7);
+
   // load users
   useEffect(() => {
     const handleUsers = async (e) => {
@@ -20,6 +23,7 @@ export default function Sidebar() {
 
       if (response.ok) {
         setAuthors(data);
+        console.log(`slicedAuthors.length: ${authors.length}`);
       } else {
         console.error("Failed to fetch users:", data.error);
       }
@@ -139,7 +143,7 @@ export default function Sidebar() {
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {posts.map((post) => (
+            {slicedPosts.map((post) => (
               <div
                 key={post.id}
                 role="button"
@@ -150,6 +154,9 @@ export default function Sidebar() {
                 </Link>
               </div>
             ))}
+            <Link to={"#"} className="text-sm p-1">
+              See all ({posts.length})
+            </Link>
           </nav>
         </div>
 
@@ -162,7 +169,7 @@ export default function Sidebar() {
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {authors.map(
+            {slicedAuthors.map(
               (author) =>
                 author.id !== current_user["current_user"] && (
                   <>
@@ -206,6 +213,9 @@ export default function Sidebar() {
                   </>
                 )
             )}
+            <Link to={"#"} className="text-sm p-1">
+              See all ({authors.length})
+            </Link>
           </nav>
         </div>
 
@@ -217,7 +227,7 @@ export default function Sidebar() {
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {posts.map((post) => (
+            {slicedPosts.map((post) => (
               <div
                 key={post.id}
                 role="button"
@@ -228,6 +238,9 @@ export default function Sidebar() {
                 </Link>
               </div>
             ))}
+            <Link to={"#"} className="text-sm p-1">
+              See all ({posts.length})
+            </Link>
           </nav>
         </div>
       </div>
