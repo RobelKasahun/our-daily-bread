@@ -16,6 +16,25 @@ export default function PostDetails() {
   const [followedIds, setFollowedIds] = useState([]);
   const [currentUser, setCurrentUser] = useState(-1);
 
+  // save posts
+  const handleSavingPost = async (post_id) => {
+    const response = await fetch(
+      `http://localhost:8000/posts/save/${post_id}`,
+      {
+        method: "POST",
+        credentials: "include", // to send cookies for JWT
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("success saving post");
+    } else {
+      console.error("Failed to save the post");
+    }
+  };
+
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
@@ -190,12 +209,18 @@ export default function PostDetails() {
               <span className="post-likes text-sm text-gray-500 ml-1">
                 {post.like_count}
               </span>{" "}
-              <FontAwesomeIcon
-                title="Save"
-                icon={faBookmark}
-                className="ml-2 text-gray-500 cursor-pointer"
-                style={{ color: "F2F2F2" }}
-              />
+              <button
+                onClick={() => {
+                  handleSavingPost(post.id);
+                }}
+              >
+                <FontAwesomeIcon
+                  title="Save"
+                  icon={faBookmark}
+                  className="ml-2 text-gray-500 cursor-pointer"
+                  style={{ color: "F2F2F2" }}
+                />
+              </button>
             </p>
           </div>
         </div>

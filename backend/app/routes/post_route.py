@@ -2,9 +2,35 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.controllers.post_controller import get_posts, create_post, update, delete
 from app.models import Post
+from app.models import SavedPost
 from app import db
 
 post_blueprint = Blueprint('posts', __name__)
+
+@post_blueprint.route('/save/<int:post_id>', methods=['POST'])
+@jwt_required()
+def save_post(post_id):
+    # logged in user
+    current_user_id = int(get_jwt_identity())
+    
+    # get post
+    post = Post.query.get(post_id)
+    
+    if not post:
+        return jsonify({'error': 'Post not found.'}), 404
+    
+    # get the first post found from the database
+    existing_post = SavedPost.query.filter_by(user_id=current_user_id, post_id=post_id).first()
+    if existing_post:
+        return jsonify({'message': 'Post has been saved already.'}), 200
+    
+    saved_post = SavedPost(user_id=current_user_id, post_id=post_id)
+    # add saved post to database
+    db.session.add(saved_post)
+    # save the change
+    db.session.commit()
+    
+    return jsonify({'message': 'Post has been saved successfully'}), 200
 
 @post_blueprint.route('', methods=['GET', 'POST'])
 @jwt_required()
