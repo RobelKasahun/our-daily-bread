@@ -9,6 +9,7 @@ import SignOut from "./pages/SignOut.jsx";
 import PublicRoute from "./routes/PublicRoutes.jsx";
 import Post from "./pages/Post.jsx";
 import PostDetails from "./pages/PostDetails.jsx";
+import SavedPosts from "./pages/SavedPosts.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -41,6 +42,7 @@ function App() {
         <Route path="/contents" element={<Posts />} />
         <Route path="/new-post" element={<Post />} />
         <Route path="/contents/:id" element={<PostDetails />} />
+        <Route path="/saved-posts" element={<SavedPosts />} />
       </Routes>
     </BrowserRouter>
   );

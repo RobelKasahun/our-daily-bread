@@ -32,6 +32,23 @@ def save_post(post_id):
     
     return jsonify({'message': 'Post has been saved successfully'}), 200
 
+@post_blueprint.route('/saved', methods=['GET'])
+@jwt_required()
+def saved_posts():
+    current_logged_user = int(get_jwt_identity())
+    # get all saved posts
+    saved_posts = SavedPost.query.filter_by(user_id=current_logged_user).all()
+    # store all the saved posts ids
+    saved_posts_ids = [ids.post_id for ids in saved_posts]
+    
+    # get all the saved post using their ids
+    saved_posts = []
+    for post_id in saved_posts_ids:
+        saved_posts.append(get_post(post_id)[0].get_json())
+        
+    return jsonify(saved_posts), 200
+    
+
 @post_blueprint.route('', methods=['GET', 'POST'])
 @jwt_required()
 def posts():

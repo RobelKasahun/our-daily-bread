@@ -2,16 +2,18 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../utils/api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
-import _ from 'lodash';   // for shaffling a list
+import _ from "lodash"; // for shaffling a list
 
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
   const [posts, setPosts] = useState([]);
   const [current_user, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
+  const [savedPosts, setSavedPosts] = useState([]);
 
   const slicedPosts = posts.slice(0, 7);
   const slicedAuthors = authors.slice(0, 7);
+  const slicedSavedPosts = savedPosts.slice(0, 7);
   const topicsForYou = _.shuffle(slicedPosts);
 
   // load users
@@ -53,6 +55,25 @@ export default function Sidebar() {
     handlePosts();
   }, []);
 
+  // Get all the saved posts
+  useEffect(() => {
+    const handleSavedPosts = async () => {
+      const response = await apiRequest(`http://localhost:8000/posts/saved`, {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSavedPosts(data);
+      } else {
+        console.error("Failed to fetch saved posts:", data.error);
+      }
+    };
+
+    handleSavedPosts();
+  }, []);
+
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
@@ -72,6 +93,7 @@ export default function Sidebar() {
     handleCurrentUser();
   }, []);
 
+  // handle follow
   const handleFollow = async (author_id) => {
     const response = await apiRequest(
       `http://localhost:8000/followers/${author_id}`,
@@ -90,6 +112,7 @@ export default function Sidebar() {
     }
   };
 
+  // handle unfollow
   const handleUnFollow = async (author_id) => {
     console.log("author_id:", author_id);
     const response = await apiRequest(
@@ -111,6 +134,7 @@ export default function Sidebar() {
 
   const notify = () => toast("Wow so easy !");
 
+  // Get all followed ids
   useEffect(() => {
     const fetchFollowedIds = async () => {
       const response = await fetch(
@@ -145,7 +169,7 @@ export default function Sidebar() {
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            {slicedPosts.map((post) => (
+            {slicedSavedPosts.map((post) => (
               <div
                 key={post.id}
                 role="button"
@@ -156,8 +180,8 @@ export default function Sidebar() {
                 </Link>
               </div>
             ))}
-            <Link to={"#"} className="text-sm p-1">
-              See all ({posts.length})
+            <Link to={"/saved-posts"} className="text-sm p-1">
+              See all ({savedPosts.length})
             </Link>
           </nav>
         </div>
