@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import Post
 from app.controllers.like_controller import like_post
 
-like_blueprint = Blueprint('like', __name__)
+like_blueprint = Blueprint('likes', __name__)
 
 @like_blueprint.route('/<int:post_id>', methods=['POST'])
 @jwt_required()

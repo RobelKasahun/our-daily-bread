@@ -17,7 +17,7 @@ export default function PostDetails() {
   const [followedIds, setFollowedIds] = useState([]);
   const [currentUser, setCurrentUser] = useState(-1);
   const [savedPostsIds, setSavedPostsIds] = useState([]);
-
+  const [likesPostsIds, setLikesPostsIds] = useState([]);
   // Get all the saved posts
   useEffect(() => {
     const handleSavedPosts = async () => {
@@ -37,26 +37,6 @@ export default function PostDetails() {
 
     handleSavedPosts();
   }, []);
-
-  const notifySavedPost = () => {
-    const toastId = "save-success";
-
-    if (!toast.isActive(toastId)) {
-      toast.success("Post saved!", {
-        toastId,
-      });
-    }
-  };
-
-  const notifySavedPostAlready = () => {
-    const toastId = "already-saved";
-
-    if (!toast.isActive(toastId)) {
-      toast.info("Post already saved", {
-        toastId,
-      });
-    }
-  };
 
   // save posts
   const handleSavingPost = async (post_id) => {
@@ -136,6 +116,20 @@ export default function PostDetails() {
     fetchPost();
   }, [id]);
 
+  // http://localhost:8000/likes/80
+  const handleLikePost = async (post_id) => {
+    const res = await apiRequest(`http://localhost:8000/likes/${post_id}`, {
+      method: "POST",
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+    } else {
+      console.error("Error loading post:", data.error);
+    }
+  };
+
   if (!post) return <div className="p-4">Loading...</div>;
 
   const handleFollow = async (author_id) => {
@@ -184,6 +178,26 @@ export default function PostDetails() {
     return formattedDate;
   };
 
+  const notify = (message) => {
+    const toastId = "save-success";
+
+    if (!toast.isActive(toastId)) {
+      toast.success(message, {
+        toastId,
+      });
+    }
+  };
+
+  const notifyAlready = (message) => {
+    const toastId = "already-saved";
+
+    if (!toast.isActive(toastId)) {
+      toast.info(message, {
+        toastId,
+      });
+    }
+  };
+
   return (
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
@@ -206,6 +220,7 @@ export default function PostDetails() {
                     setFollowedIds((prev) =>
                       prev.filter((id) => id !== post.user_id)
                     );
+                    notify("Successful unfollowing...");
                   }}
                   className="inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer"
                 >
@@ -218,6 +233,7 @@ export default function PostDetails() {
                     handleFollow(post.user_id);
                     // Update UI state when a new author's id is added
                     setFollowedIds((prev) => [...prev, post.user_id]);
+                    notify("Successful following...");
                   }}
                   className={`inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer`}
                 >
@@ -241,12 +257,23 @@ export default function PostDetails() {
               <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
                 {post.comment_count}
               </span>{" "}
-              <FontAwesomeIcon
-                title="Like / Clap"
-                icon={faHandsClapping}
-                size="lg"
-                className="text-gray-500 cursor-pointer"
-              />
+              <button
+                onClick={() => {
+                  handleLikePost(post.id);
+                  {
+                    !likesPostsIds.includes(post.id)
+                      ? notify("Post Liked!")
+                      : notifyAlready("Post liked already!");
+                  }
+                }}
+              >
+                <FontAwesomeIcon
+                  title="Like / Clap"
+                  icon={faHandsClapping}
+                  size="lg"
+                  className="text-gray-500 cursor-pointer"
+                />
+              </button>
               <span className="post-likes text-sm text-gray-500 ml-1">
                 {post.like_count}
               </span>{" "}
@@ -255,8 +282,8 @@ export default function PostDetails() {
                   handleSavingPost(post.id);
                   {
                     !savedPostsIds.includes(post.id)
-                      ? notifySavedPost()
-                      : notifySavedPostAlready();
+                      ? notify("Post saved!")
+                      : notifyAlready("Post already saved");
                   }
                 }}
               >
@@ -271,7 +298,7 @@ export default function PostDetails() {
           </div>
           <ToastContainer
             position="top-center"
-            autoClose={5000}
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick={false}
