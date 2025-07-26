@@ -9,12 +9,54 @@ import {
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import UserInfo from "../components/UserInfo";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
   const [post, setPost] = useState(null);
   const [followedIds, setFollowedIds] = useState([]);
   const [currentUser, setCurrentUser] = useState(-1);
+  const [savedPostsIds, setSavedPostsIds] = useState([]);
+
+  // Get all the saved posts
+  useEffect(() => {
+    const handleSavedPosts = async () => {
+      const response = await apiRequest(`http://localhost:8000/posts/saved`, {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // extract all ids of the saved posts
+        setSavedPostsIds(data.map((post) => post.id));
+      } else {
+        console.error("Failed to fetch saved posts ids:", data.error);
+      }
+    };
+
+    handleSavedPosts();
+  }, []);
+
+  const notifySavedPost = () => {
+    const toastId = "save-success";
+
+    if (!toast.isActive(toastId)) {
+      toast.success("Post saved!", {
+        toastId,
+      });
+    }
+  };
+
+  const notifySavedPostAlready = () => {
+    const toastId = "already-saved";
+
+    if (!toast.isActive(toastId)) {
+      toast.info("Post already saved", {
+        toastId,
+      });
+    }
+  };
 
   // save posts
   const handleSavingPost = async (post_id) => {
@@ -29,7 +71,7 @@ export default function PostDetails() {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("success saving post");
+      // success saving post"
     } else {
       console.error("Failed to save the post");
     }
@@ -68,7 +110,6 @@ export default function PostDetails() {
 
       if (response.ok) {
         setFollowedIds(data.following_ids); // now you can compare these
-        console.log("success following_ids");
       } else {
         console.error("Failed to fetch following ids");
       }
@@ -145,7 +186,7 @@ export default function PostDetails() {
 
   return (
     <>
-      <Navigationbar showWriteButton={true} />
+      <Navigationbar showWriteButton={true} showSearchBar={false} />
       <div className="container mt-10 mx-auto w-[1060px] w-[95%] lg:w-[80%] xl:w-[55%] p-8">
         <div className="post-headers">
           <h1 className="text-5xl w-200 font-bold box-content text-start">
@@ -212,6 +253,11 @@ export default function PostDetails() {
               <button
                 onClick={() => {
                   handleSavingPost(post.id);
+                  {
+                    !savedPostsIds.includes(post.id)
+                      ? notifySavedPost()
+                      : notifySavedPostAlready();
+                  }
                 }}
               >
                 <FontAwesomeIcon
@@ -223,6 +269,19 @@ export default function PostDetails() {
               </button>
             </p>
           </div>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
         </div>
         <div className="post-content-wrapper w-[1000px] mt-5">
           <p className="text-justify whitespace-pre-wrap py-5 pr-5">

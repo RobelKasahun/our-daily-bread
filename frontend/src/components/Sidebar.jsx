@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../utils/api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
-import _ from "lodash"; // for shaffling a list
+import _ from "lodash"; // for shuffling a list
 
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
