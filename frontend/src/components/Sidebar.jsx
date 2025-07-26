@@ -239,7 +239,7 @@ export default function Sidebar() {
                   </>
                 )
             )}
-            <Link to={"#"} className="text-sm p-1">
+            <Link to={"/writers"} className="text-sm p-1">
               See all ({authors.length})
             </Link>
           </nav>
