@@ -19,7 +19,7 @@ export default function PostDetails() {
   const [currentUser, setCurrentUser] = useState(-1);
   const [savedPostsIds, setSavedPostsIds] = useState([]);
   const [likesPostsIds, setLikesPostsIds] = useState([]);
-  const [showResponses, setShowResponses] = useState(true);
+  const [showResponses, setShowResponses] = useState(false);
   const [responseData, setResponseData] = useState("");
   const [postResponses, setPostResponses] = useState([]);
 
