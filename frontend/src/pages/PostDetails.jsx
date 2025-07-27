@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
+import { method } from "lodash";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
@@ -18,6 +19,65 @@ export default function PostDetails() {
   const [currentUser, setCurrentUser] = useState(-1);
   const [savedPostsIds, setSavedPostsIds] = useState([]);
   const [likesPostsIds, setLikesPostsIds] = useState([]);
+  const [showResponses, setShowResponses] = useState(true);
+  const [responseData, setResponseData] = useState("");
+  const [postResponses, setPostResponses] = useState([]);
+
+  const toggleResponses = () => setShowResponses((prev) => !prev);
+
+  // Get all comments that belongs to the post_id
+  useEffect(() => {
+    const handlePostResponses = async () => {
+      const response = await apiRequest(
+        `http://localhost:8000/comments/${id}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("All responses has been loaded that belongs to", id);
+        setPostResponses(data);
+      } else {
+        console.error(
+          `Failed to load all the responses that belongs to post_id with post id: ${id}`,
+          data.error
+        );
+      }
+    };
+
+    handlePostResponses();
+  }, []);
+
+  console.log(responseData.length);
+
+  // leave comment on a post
+  const handlePostResponse = async (post_id) => {
+    const response = await apiRequest(
+      `http://localhost:8000/comments/${post_id}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          content: responseData,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Response has been made");
+      setResponseData("");
+    } else {
+      console.error(
+        `Failed to leave a response on post with post id: ${post_id}`,
+        data.error
+      );
+    }
+  };
+
   // Get all the saved posts
   useEffect(() => {
     const handleSavedPosts = async () => {
@@ -248,12 +308,14 @@ export default function PostDetails() {
         <div className="claps-comments-wrapper">
           <div className="post-info border-y border-gray-200">
             <p className="p-2">
-              <FontAwesomeIcon
-                title="Leave Comment"
-                icon={faComment}
-                size="lg"
-                className="text-gray-500 cursor-pointer"
-              />
+              <button onClick={toggleResponses}>
+                <FontAwesomeIcon
+                  title="Leave Comment"
+                  icon={faComment}
+                  size="lg"
+                  className="text-gray-500 cursor-pointer"
+                />
+              </button>
               <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
                 {post.comment_count}
               </span>{" "}
@@ -316,6 +378,47 @@ export default function PostDetails() {
           </p>
         </div>
       </div>
+
+      {/* Responses Section */}
+      {showResponses && (
+        <div className="fixed top-0 right-0 w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4">
+          <h1 className="text-lg font-semibold text-black mb-4">
+            Responses {"13"}
+          </h1>
+          <textarea
+            required
+            name="comment"
+            className="w-full p-2 border border-gray-200 rounded resize-none h-44 text-sm"
+            value={responseData}
+            onChange={(e) => setResponseData(e.target.value)}
+            placeholder="What are your thoughts?"
+          ></textarea>
+          <div className="flex justify-end">
+            <button
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer text-sm"
+              onClick={() => {
+                handlePostResponse(post.id);
+              }}
+            >
+              Respond
+            </button>
+          </div>
+
+          <div className="mt-9">
+            {postResponses.map((response) => (
+              <div key={response.id} className="mb-1 p-3 bg-white shadow">
+                <p className="text-sm text-gray-700">
+                  <span className="mr-3 font-bold">
+                    <UserInfo userId={response.user_id} />
+                  </span>
+                  {formatDate(response.created_at)}
+                </p>
+                <p className="text-sm text-gray-800">{response.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }

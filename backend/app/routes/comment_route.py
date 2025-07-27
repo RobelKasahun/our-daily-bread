@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import Comment
 from app.controllers.comment_controller import get_comments, create_comment, update, delete
 
-comment_blue_print = Blueprint('comment', __name__)
+comment_blue_print = Blueprint('comments', __name__)
 
 @comment_blue_print.route('/<int:post_id>', methods=['GET', 'POST'])
 @jwt_required()

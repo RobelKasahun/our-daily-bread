@@ -48,7 +48,7 @@ export default function Navigationbar({
                   <span className="sr-only">HolyShare</span>
                   <img
                     alt=""
-                    src={"images/holyshare-logo.png"}
+                    src={"../images/holyshare-logo.png"}
                     className="h-8 w-auto"
                   />
                 </Link>
