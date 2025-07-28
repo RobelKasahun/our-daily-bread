@@ -226,14 +226,16 @@ export default function PostDetails() {
     }
   };
 
+  // date and time formatter
   const formatDate = (dateString) => {
-    const formattedDate = new Date(dateString).toLocaleString("en-US", {
+    return new Date(dateString).toLocaleString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
     });
-
-    return formattedDate;
   };
 
   const notify = (message) => {
@@ -380,8 +382,9 @@ export default function PostDetails() {
       {/* Responses Section */}
       {showResponses && (
         <div className="fixed top-0 right-0 w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4">
-          <h1 className="text-lg font-semibold text-black mb-4">
-            Responses {"13"}
+          <h1 className="text-lg font-semibold mb-4 pb-4 border-b border-gray-200">
+            Responses{" "}
+            {"(" + (postResponses.length > 0 ? postResponses.length : 0) + ")"}
           </h1>
           <textarea
             required
@@ -403,17 +406,18 @@ export default function PostDetails() {
           </div>
 
           <div className="mt-9">
-            {postResponses.map((response) => (
-              <div key={response.id} className="mb-1 p-3 bg-white shadow">
-                <p className="text-sm text-gray-700">
-                  <span className="mr-3 font-bold">
-                    <UserInfo userId={response.user_id} />
-                  </span>
-                  {formatDate(response.created_at)}
-                </p>
-                <p className="text-sm text-gray-800">{response.content}</p>
-              </div>
-            ))}
+            {postResponses.length > 0 &&
+              postResponses.map((response) => (
+                <div key={response.id} className="mb-1 p-3 bg-white shadow">
+                  <p className="text-sm text-gray-700">
+                    <span className="mr-3 font-bold">
+                      <UserInfo userId={response.user_id} />
+                    </span>
+                    {formatDate(response.created_at)}
+                  </p>
+                  <p className="text-sm text-gray-800">{response.content}</p>
+                </div>
+              ))}
           </div>
         </div>
       )}
