@@ -147,7 +147,7 @@ export default function PostDetails() {
       const data = await response.json();
 
       if (response.ok) {
-        setFollowedIds(data.following_ids); // now you can compare these
+        setFollowedIds(data.following_ids);
       } else {
         console.error("Failed to fetch following ids");
       }

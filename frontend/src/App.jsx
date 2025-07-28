@@ -11,6 +11,8 @@ import Post from "./pages/Post.jsx";
 import PostDetails from "./pages/PostDetails.jsx";
 import SavedPosts from "./pages/SavedPosts.jsx";
 import Writers from "./pages/Writers.jsx";
+import Profile from "./pages/Profile.jsx";
+import Story from "./pages/Story.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -45,6 +47,8 @@ function App() {
         <Route path="/contents/:id" element={<PostDetails />} />
         <Route path="/saved-posts" element={<SavedPosts />} />
         <Route path="/writers" element={<Writers />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/your-stories" element={<Story />} />
       </Routes>
     </BrowserRouter>
   );

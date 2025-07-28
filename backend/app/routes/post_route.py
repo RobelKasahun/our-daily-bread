@@ -89,6 +89,20 @@ def get_post(post_id):
         'user_id': post.user_id
     }), 200
     
+# Get all posts that are associated to the given user id
+@post_blueprint.route('/all', methods=['GET'])
+@jwt_required()
+def get_all_posts():
+    current_logged_in_user = int(get_jwt_identity())
+    
+    posts = Post.query.filter_by(user_id=current_logged_in_user).all()
+    
+    list_of_posts = []
+    for post in posts:
+        list_of_posts.append(get_post(post.id)[0].get_json())
+    
+    return jsonify(list_of_posts), 200
+    
     
 # update a post
 @post_blueprint.route('/<int:post_id>', methods=['PUT'])
