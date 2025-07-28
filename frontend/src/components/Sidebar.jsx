@@ -27,7 +27,6 @@ export default function Sidebar() {
 
       if (response.ok) {
         setAuthors(data);
-        console.log(`slicedAuthors.length: ${authors.length}`);
       } else {
         console.error("Failed to fetch users:", data.error);
       }
@@ -149,7 +148,7 @@ export default function Sidebar() {
 
       if (response.ok) {
         setFollowedIds(data.following_ids); // now you can compare these
-        console.log("success following_ids");
+        // console.log("success following_ids");
       } else {
         console.error("Failed to fetch following ids");
       }
@@ -198,7 +197,7 @@ export default function Sidebar() {
             {slicedAuthors.map(
               (author) =>
                 author.id !== current_user["current_user"] && (
-                  <>
+                  <div key={author.id}>
                     <div
                       key={author.id}
                       role="button"
@@ -236,7 +235,7 @@ export default function Sidebar() {
                         </button>
                       )}
                     </div>
-                  </>
+                  </div>
                 )
             )}
             <Link to={"/writers"} className="text-sm p-1">

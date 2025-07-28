@@ -124,7 +124,7 @@ export default function Writers() {
             {authors.map(
               (author) =>
                 author.id !== current_user["current_user"] && (
-                  <>
+                  <div key={author.id}>
                     <div
                       key={author.id}
                       role="button"
@@ -162,7 +162,7 @@ export default function Writers() {
                         </button>
                       )}
                     </div>
-                  </>
+                  </div>
                 )
             )}
           </nav>

@@ -51,8 +51,6 @@ export default function PostDetails() {
     handlePostResponses();
   }, []);
 
-  console.log(responseData.length);
-
   // leave comment on a post
   const handlePostResponse = async (post_id) => {
     const response = await apiRequest(
