@@ -190,7 +190,6 @@ export default function Sidebar() {
             <h2 className="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
               Who to Follow
             </h2>
-            {/* {author.id !== current_user["current_user"] && true} */}
           </div>
 
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">

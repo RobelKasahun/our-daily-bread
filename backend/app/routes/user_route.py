@@ -39,6 +39,6 @@ def get_user(user_id):
     if not user:
         return jsonify({'user_not_found_message': 'User Not Found'}), 404
     
-    return jsonify({'first_name': user.first_name, 'last_name': user.last_name}), 200
+    return jsonify({'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'username': user.username, 'email': user.email}), 200
     
     

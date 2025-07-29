@@ -65,7 +65,7 @@ export default function Story() {
       <Navigationbar showWriteButton={true} />
       <div className="container mx-auto w-[95%] lg:w-[80%] xl:w-[76%]">
         <div className="stories bg-gray-200 p-5">
-          <h1 className="text-4xl">Your Stories</h1>
+          <h1 className="text-4xl">Your Writings</h1>
         </div>
         <div className="flex flex-col md:flex-row gap-4 border-l border-r border-gray-200">
           {/* Posts Section */}
