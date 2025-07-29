@@ -49,7 +49,7 @@ function App() {
         <Route path="/writers" element={<Writers />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/your-stories" element={<Story />} />
-        <Route path="/users/:userId" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

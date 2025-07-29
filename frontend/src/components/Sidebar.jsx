@@ -202,7 +202,7 @@ export default function Sidebar() {
                       role="button"
                       className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
                     >
-                      <Link to={`/followers/${author.id}`} key={author.id}>
+                      <Link to={`/profile/${author.id}`} key={author.id}>
                         {author.first_name} {author.last_name}
                       </Link>
 

@@ -195,7 +195,6 @@ export default function PostDetails() {
       `http://localhost:8000/followers/${author_id}`,
       {
         method: "POST",
-        credentials: "include", // includes JWT cookies
       }
     );
 
@@ -213,7 +212,6 @@ export default function PostDetails() {
       `http://localhost:8000/followers/${author_id}`,
       {
         method: "DELETE",
-        credentials: "include", // includes JWT cookies
       }
     );
 

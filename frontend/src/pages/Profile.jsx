@@ -3,7 +3,7 @@ import Navigationbar from "../components/Navigationbar";
 import Card from "../components/Card";
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { apiRequest } from "../utils/api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import _ from "lodash"; // for shuffling a list
@@ -11,8 +11,8 @@ import CircleLoader from "react-spinners/CircleLoader";
 import UserInfo from "../components/UserInfo";
 
 export default function Profile() {
+  const { userId } = useParams();
   const [user, setUser] = useState(null);
-  const [authors, setAuthors] = useState([]);
   const [posts, setPosts] = useState([]);
   const [current_user, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
@@ -20,13 +20,35 @@ export default function Profile() {
 
   const slicedPosts = posts.slice(0, 7);
 
+  // Get current user
+  useEffect(() => {
+    const handleCurrentUser = async () => {
+      const response = await apiRequest("http://localhost:8000/users/current", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCurrentUser(data.current_user);
+      } else {
+        console.error("Failed to fetch current user:", data.error);
+      }
+    };
+
+    handleCurrentUser();
+  }, []);
+
   // Get a user
   useEffect(() => {
     const handleUser = async () => {
-      if (!current_user || current_user["current_user"] === -1) return;
+      if (!current_user || current_user === undefined || current_user === -1)
+        return;
+
+      console.log(`current_user: ${current_user}`);
 
       const response = await apiRequest(
-        `http://localhost:8000/users/${current_user["current_user"]}`,
+        `http://localhost:8000/users/${current_user}`,
         {
           method: "GET",
         }
@@ -49,7 +71,7 @@ export default function Profile() {
     const handlePosts = async (e) => {
       setLoading(true);
 
-      const response = await apiRequest("http://localhost:8000/posts/all", {
+      const response = await apiRequest(`http://localhost:8000/posts/all`, {
         method: "GET",
       });
 
@@ -67,32 +89,13 @@ export default function Profile() {
     handlePosts();
   }, []);
 
-  // Get current user
-  useEffect(() => {
-    const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
-        method: "GET",
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setCurrentUser(data);
-      } else {
-        console.error("Failed to fetch current user:", data.error);
-      }
-    };
-
-    handleCurrentUser();
-  }, []);
-
   const notify = () => toast("Wow so easy !");
 
   // Get all followed ids
   useEffect(() => {
     const fetchFollowingIds = async () => {
       const response = await fetch(
-        "http://localhost:8000/followers/following/ids",
+        `http://localhost:8000/followers/following/ids`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -134,16 +137,17 @@ export default function Profile() {
               </div>
             )}
             <div className="post">
-              {slicedPosts.map((post, index) => (
-                <Link to={`/contents/${post.id}`} key={post.id}>
-                  <Card
-                    key={post.id}
-                    user_id={post.user_id}
-                    post={post}
-                    style={getStyling(index)}
-                  />
-                </Link>
-              ))}
+              {slicedPosts.length > 0 &&
+                slicedPosts.map((post, index) => (
+                  <Link to={`/contents/${post.id}`} key={post.id}>
+                    <Card
+                      key={post.id}
+                      user_id={post.user_id}
+                      post={post}
+                      style={getStyling(index)}
+                    />
+                  </Link>
+                ))}
             </div>
           </div>
 
@@ -154,7 +158,7 @@ export default function Profile() {
               </div>
 
               <div className="username mx-3">
-                {<UserInfo userId={current_user["current_user"]} />}
+                {<UserInfo userId={userId} />}
               </div>
 
               <div className="followers my-5">
@@ -165,25 +169,26 @@ export default function Profile() {
                 </div>
 
                 <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-                  {followedIds.map(
-                    (author) =>
-                      author.id !== current_user["current_user"] && (
-                        <div key={author}>
-                          <div
-                            key={author}
-                            role="button"
-                            className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
-                          >
-                            <Link to={`/users/${author}`} key={author}>
-                              <UserInfo userId={author} />
-                            </Link>
+                  {followedIds.length > 0 &&
+                    followedIds.map(
+                      (author) =>
+                        author.id !== current_user && (
+                          <div key={author}>
+                            <div
+                              key={author}
+                              role="button"
+                              className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100"
+                            >
+                              <Link to={`/profile/${author}`} key={author}>
+                                <UserInfo userId={author} />
+                              </Link>
+                            </div>
                           </div>
-                        </div>
-                      )
-                  )}
-                  <Link to={"/writers"} className="text-sm p-1">
+                        )
+                    )}
+                  {/* <Link to={"/writers"} className="text-sm p-1">
                     See all ({followedIds.length})
-                  </Link>
+                  </Link> */}
                 </nav>
               </div>
             </div>
