@@ -9,6 +9,7 @@ user_blueprint = Blueprint('users', __name__)
 @jwt_required()
 def get_current_user():
     current_user = int(get_jwt_identity())
+    print(f'current_user: {current_user}')
     return jsonify({'current_user': current_user}), 200
 
 @user_blueprint.route('', methods=['GET'])

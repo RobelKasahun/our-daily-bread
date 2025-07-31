@@ -90,12 +90,12 @@ def get_post(post_id):
     }), 200
     
 # Get all posts that are associated to the given user id
-@post_blueprint.route('/all', methods=['GET'])
+@post_blueprint.route('/all/<int:user_id>', methods=['GET'])
 @jwt_required()
-def get_all_posts():
-    current_logged_in_user = int(get_jwt_identity())
+def get_all_posts(user_id):
+    # current_logged_in_user = int(get_jwt_identity())
     
-    posts = Post.query.filter_by(user_id=current_logged_in_user).all()
+    posts = Post.query.filter_by(user_id=user_id).all()
     
     list_of_posts = []
     for post in posts:

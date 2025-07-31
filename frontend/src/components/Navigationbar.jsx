@@ -10,6 +10,8 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { useState, useEffect } from "react";
+import { apiRequest } from "../utils/api";
 
 const navigation = [{ name: "Write", href: "/new-post", current: true }];
 
@@ -22,6 +24,26 @@ export default function Navigationbar({
   showWriteButton = false,
   showPublishButton = false,
 }) {
+  const [currentUser, setCurrentUser] = useState(-1);
+  // Get current user
+  useEffect(() => {
+    const handleCurrentUser = async () => {
+      const response = await apiRequest("http://localhost:8000/users/current", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCurrentUser(data.current_user);
+      } else {
+        console.error("Failed to fetch current user:", data.error);
+      }
+    };
+
+    handleCurrentUser();
+  }, []);
+
   return (
     <Disclosure as="nav" className="text-white border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -99,7 +121,7 @@ export default function Navigationbar({
               >
                 <MenuItem>
                   <Link
-                    to="/profile"
+                    to={`/profile/${currentUser}`}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Profile

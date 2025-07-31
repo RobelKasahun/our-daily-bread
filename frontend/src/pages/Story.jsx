@@ -29,15 +29,20 @@ export default function Story() {
     handleCurrentUser();
   }, []);
 
+  console.log(`currentUserId: ${currentUserId}`);
+
   // load posts
   useEffect(() => {
     //   do not fetch posts if the current user's id is -1
     // if (currentUserId == -1) return;
 
     const handlePosts = async () => {
-      const response = await apiRequest(`http://localhost:8000/posts/all`, {
-        method: "GET",
-      });
+      const response = await apiRequest(
+        `http://localhost:8000/posts/all/${currentUserId}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data = await response.json();
 

@@ -6,10 +6,10 @@ from app import db
 
 follow_blueprint = Blueprint('followers', __name__)
 
-@follow_blueprint.route('/following/ids', methods=['GET'])
+@follow_blueprint.route('/following/ids/<int:user_id>', methods=['GET'])
 @jwt_required()
-def get_following_ids():
-    user_id = int(get_jwt_identity())
+def get_following_ids(user_id):
+    # user_id = int(get_jwt_identity())
     
     # Query only followed user IDs
     follow_entries = Follow.query.filter_by(follower_id=user_id).all()

@@ -14,11 +14,11 @@ export default function Profile() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [current_user, setCurrentUser] = useState(-1);
+  const [currentUser, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const slicedPosts = posts.slice(0, 7);
+  // const slicedPosts = posts.slice(0, 7);
 
   // Get current user
   useEffect(() => {
@@ -42,10 +42,8 @@ export default function Profile() {
   // Get a user
   useEffect(() => {
     const handleUser = async () => {
-      if (!current_user || current_user === undefined || current_user === -1)
+      if (!currentUser || currentUser === undefined || currentUser === -1)
         return;
-
-      console.log(`current_user: ${current_user}`);
 
       const response = await apiRequest(
         `http://localhost:8000/users/${current_user}`,
@@ -71,9 +69,12 @@ export default function Profile() {
     const handlePosts = async (e) => {
       setLoading(true);
 
-      const response = await apiRequest(`http://localhost:8000/posts/all`, {
-        method: "GET",
-      });
+      const response = await apiRequest(
+        `http://localhost:8000/posts/all/${userId}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data = await response.json();
 
@@ -87,15 +88,16 @@ export default function Profile() {
     };
 
     handlePosts();
-  }, []);
+  }, [userId]);
 
   const notify = () => toast("Wow so easy !");
 
   // Get all followed ids
   useEffect(() => {
+    if (!currentUser || currentUser === undefined || currentUser === -1) return;
     const fetchFollowingIds = async () => {
       const response = await fetch(
-        `http://localhost:8000/followers/following/ids`,
+        `http://localhost:8000/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -112,12 +114,12 @@ export default function Profile() {
     };
 
     fetchFollowingIds();
-  }, []);
+  }, [currentUser]);
 
   const getStyling = (index) => {
     const responsiveStyle =
       "w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8";
-    if (index == slicedPosts.length - 1) {
+    if (index == posts.length - 1) {
       return `card px-8 pt-8 pb-2 my-3 pb-8 w-160 ${responsiveStyle}`;
     }
     return `card border-b border-gray-200 px-8 pt-8 pb-2 my-3 pb-8 ${responsiveStyle}`;
@@ -136,9 +138,9 @@ export default function Profile() {
                 <CircleLoader loading size={100} speedMultiplier={2} />
               </div>
             )}
-            <div className="post">
-              {slicedPosts.length > 0 &&
-                slicedPosts.map((post, index) => (
+            <div className="post h-full">
+              {posts.length > 0 ? (
+                posts.map((post, index) => (
                   <Link to={`/contents/${post.id}`} key={post.id}>
                     <Card
                       key={post.id}
@@ -147,7 +149,13 @@ export default function Profile() {
                       style={getStyling(index)}
                     />
                   </Link>
-                ))}
+                ))
+              ) : (
+                <div className="h-full flex justify-center items-center text-sm">
+                  <p className="mr-1">There are no posts written by</p>
+                  <UserInfo userId={userId} />.
+                </div>
+              )}
             </div>
           </div>
 
@@ -172,7 +180,7 @@ export default function Profile() {
                   {followedIds.length > 0 &&
                     followedIds.map(
                       (author) =>
-                        author.id !== current_user && (
+                        author.id !== currentUser && (
                           <div key={author}>
                             <div
                               key={author}

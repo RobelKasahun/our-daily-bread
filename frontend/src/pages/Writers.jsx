@@ -5,14 +5,15 @@ import Navigationbar from "../components/Navigationbar";
 
 export default function Writers() {
   const [authors, setAuthors] = useState([]);
-  const [current_user, setCurrentUser] = useState(-1);
+  const [currentUser, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
 
   // Get all followed ids
   useEffect(() => {
+    if (!currentUser || currentUser === undefined || currentUser === -1) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
-        "http://localhost:8000/followers/following/ids",
+        `http://localhost:8000/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -30,7 +31,8 @@ export default function Writers() {
     };
 
     fetchFollowedIds();
-  }, []);
+  }, [currentUser]);
+
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
@@ -41,7 +43,7 @@ export default function Writers() {
       const data = await response.json();
 
       if (response.ok) {
-        setCurrentUser(data);
+        setCurrentUser(data.current_user);
       } else {
         console.error("Failed to fetch current user:", data.error);
       }
@@ -123,7 +125,7 @@ export default function Writers() {
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
             {authors.map(
               (author) =>
-                author.id !== current_user["current_user"] && (
+                author.id !== currentUser && (
                   <div key={author.id}>
                     <div
                       key={author.id}

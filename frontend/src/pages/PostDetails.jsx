@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { apiRequest } from "../utils/api";
 import Navigationbar from "../components/Navigationbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UserInfo from "../components/UserInfo";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import {
   faHandsClapping,
   faComment,
   faBookmark,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import UserInfo from "../components/UserInfo";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import { method } from "lodash";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
@@ -125,7 +125,7 @@ export default function PostDetails() {
       const data = await response.json();
 
       if (response.ok) {
-        setCurrentUser(data);
+        setCurrentUser(data.current_user);
       } else {
         console.error("Failed to fetch current user:", data.error);
       }
@@ -268,7 +268,7 @@ export default function PostDetails() {
             <span className="author-name">
               <UserInfo userId={post.user_id} />
             </span>
-            {currentUser["current_user"] != post.user_id &&
+            {currentUser != post.user_id &&
               (followedIds.includes(post.user_id) ? (
                 <button
                   onClick={() => {
@@ -305,7 +305,7 @@ export default function PostDetails() {
         </div>
         <div className="claps-comments-wrapper">
           <div className="post-info border-y border-gray-200">
-            <p className="p-2">
+            <div className="p-2">
               <button onClick={toggleResponses}>
                 <FontAwesomeIcon
                   title="Leave Comment"
@@ -337,24 +337,40 @@ export default function PostDetails() {
               <span className="post-likes text-sm text-gray-500 ml-1">
                 {post.like_count}
               </span>{" "}
-              <button
-                onClick={() => {
-                  handleSavingPost(post.id);
-                  {
-                    !savedPostsIds.includes(post.id)
-                      ? notify("Post saved!")
-                      : notifyAlready("Post already saved");
-                  }
-                }}
-              >
-                <FontAwesomeIcon
-                  title="Save"
-                  icon={faBookmark}
-                  className="ml-2 text-gray-500 cursor-pointer"
-                  style={{ color: "F2F2F2" }}
-                />
-              </button>
-            </p>
+              <div className="float-right">
+                <button
+                  onClick={() => {
+                    handleSavingPost(post.id);
+                    {
+                      !savedPostsIds.includes(post.id)
+                        ? notify("Post saved!")
+                        : notifyAlready("Post already saved");
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon
+                    title="Save"
+                    icon={faBookmark}
+                    className="text-gray-500 cursor-pointer"
+                    style={{ color: "F2F2F2" }}
+                  />
+                </button>
+
+                {/* show the delete button on posts that belongs the current user */}
+                {currentUser === post.user_id && (
+                  <button onClick={() => {}}>
+                    <FontAwesomeIcon
+                      title="Save"
+                      icon={faTrash}
+                      className="ml-2 text-gray-500 cursor-pointer"
+                      style={{ color: "F2F2F2" }}
+                    />
+                  </button>
+                )}
+
+                <p>{currentUser != post.userId}</p>
+              </div>
+            </div>
           </div>
           <ToastContainer
             position="top-center"

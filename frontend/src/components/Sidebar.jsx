@@ -7,7 +7,7 @@ import _ from "lodash"; // for shuffling a list
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [current_user, setCurrentUser] = useState(-1);
+  const [currentUser, setCurrentUser] = useState(-1);
   const [followedIds, setFollowedIds] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
 
@@ -82,8 +82,10 @@ export default function Sidebar() {
 
       const data = await response.json();
 
+      console.log("CURRENT USER RESPONSE:", response.status, data); // ✅ debug log
+
       if (response.ok) {
-        setCurrentUser(data);
+        setCurrentUser(data.current_user);
       } else {
         console.error("Failed to fetch current user:", data.error);
       }
@@ -135,9 +137,10 @@ export default function Sidebar() {
 
   // Get all followed ids
   useEffect(() => {
+    if (!currentUser || currentUser === undefined || currentUser === -1) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
-        "http://localhost:8000/followers/following/ids",
+        `http://localhost:8000/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -155,7 +158,7 @@ export default function Sidebar() {
     };
 
     fetchFollowedIds();
-  }, []);
+  }, [currentUser]);
 
   return (
     <div className="sidebar float-right h-full">
@@ -195,7 +198,7 @@ export default function Sidebar() {
           <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
             {slicedAuthors.map(
               (author) =>
-                author.id !== current_user["current_user"] && (
+                author.id !== currentUser && (
                   <div key={author.id}>
                     <div
                       key={author.id}
