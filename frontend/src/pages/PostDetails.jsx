@@ -11,6 +11,7 @@ import {
   faComment,
   faBookmark,
   faTrash,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { method } from "lodash";
@@ -379,24 +380,32 @@ export default function PostDetails() {
                   />
                 </button>
 
-                {/* show the delete button on posts that belongs the current user */}
+                {/* show the delete and edit buttons on posts that belongs the current user */}
                 {currentUser === post.user_id && (
-                  <button
-                    onClick={() => {
-                      deletePost(post.id);
-                      console.log(post.id);
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      title="Save"
-                      icon={faTrash}
-                      className="ml-2 text-gray-500 cursor-pointer"
-                      style={{ color: "F2F2F2" }}
-                    />
-                  </button>
+                  <>
+                    <button onClick={() => {}}>
+                      <FontAwesomeIcon
+                        title="Save"
+                        icon={faEdit}
+                        className="ml-2 text-gray-500 cursor-pointer"
+                        style={{ color: "F2F2F2" }}
+                      />
+                    </button>
+                    <button
+                      onClick={() => {
+                        deletePost(post.id);
+                        console.log(post.id);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        title="Save"
+                        icon={faTrash}
+                        className="ml-2 text-gray-500 cursor-pointer"
+                        style={{ color: "F2F2F2" }}
+                      />
+                    </button>
+                  </>
                 )}
-
-                <p>{currentUser != post.userId}</p>
               </div>
             </div>
           </div>
@@ -451,12 +460,12 @@ export default function PostDetails() {
             {postResponses.length > 0 &&
               postResponses.map((response) => (
                 <div key={response.id} className="mb-1 p-3 bg-white shadow">
-                  <p className="text-sm text-gray-700">
+                  <div className="text-sm text-gray-700">
                     <span className="mr-3 font-bold">
                       <UserInfo userId={response.user_id} />
                     </span>
                     {formatDate(response.created_at)}
-                  </p>
+                  </div>
                   <p className="text-sm text-gray-800">{response.content}</p>
                 </div>
               ))}

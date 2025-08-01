@@ -27,8 +27,8 @@ export default function UserInfo({ userId }) {
   }, [userId]);
 
   return (
-    <p className="inline-block text-sm">
+    <div className="inline-block text-sm">
       {user.first_name} {user.last_name}
-    </p>
+    </div>
   );
 }
