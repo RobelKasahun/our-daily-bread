@@ -1,10 +1,11 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { apiRequest } from "../utils/api";
 import Navigationbar from "../components/Navigationbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
+
 import {
   faHandsClapping,
   faComment,
@@ -12,16 +13,19 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { method } from "lodash";
+
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
   const [post, setPost] = useState(null);
   const [followedIds, setFollowedIds] = useState([]);
-  const [currentUser, setCurrentUser] = useState(-1);
+  const [currentUser, setCurrentUser] = useState(null);
   const [savedPostsIds, setSavedPostsIds] = useState([]);
   const [likesPostsIds, setLikesPostsIds] = useState([]);
   const [showResponses, setShowResponses] = useState(false);
   const [responseData, setResponseData] = useState("");
   const [postResponses, setPostResponses] = useState([]);
+  const navigate = useNavigate();
 
   const toggleResponses = () => setShowResponses((prev) => !prev);
 
@@ -135,9 +139,10 @@ export default function PostDetails() {
   }, []);
 
   useEffect(() => {
+    if (currentUser === null) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
-        "http://localhost:8000/followers/following/ids",
+        `http://localhost:8000/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -154,7 +159,7 @@ export default function PostDetails() {
     };
 
     fetchFollowedIds();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -221,6 +226,24 @@ export default function PostDetails() {
       console.log("Successful unfollowing...");
     } else {
       console.error("Failed to unfollow:", author_id, data.error);
+    }
+  };
+
+  const deletePost = async (post_id) => {
+    const response = await apiRequest(
+      `http://localhost:8000/posts/${post_id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // when successfully deleted, navigate to the contents page
+      navigate("/contents", { replace: true });
+    } else {
+      console.error("Failed to delete post:", author_id, data.error);
     }
   };
 
@@ -358,7 +381,12 @@ export default function PostDetails() {
 
                 {/* show the delete button on posts that belongs the current user */}
                 {currentUser === post.user_id && (
-                  <button onClick={() => {}}>
+                  <button
+                    onClick={() => {
+                      deletePost(post.id);
+                      console.log(post.id);
+                    }}
+                  >
                     <FontAwesomeIcon
                       title="Save"
                       icon={faTrash}

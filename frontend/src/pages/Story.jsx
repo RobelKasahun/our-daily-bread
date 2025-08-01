@@ -8,7 +8,7 @@ import Card from "../components/Card";
 
 export default function Story() {
   const [posts, setPosts] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState(-1);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   // Get current user
   useEffect(() => {
@@ -29,12 +29,10 @@ export default function Story() {
     handleCurrentUser();
   }, []);
 
-  console.log(`currentUserId: ${currentUserId}`);
-
   // load posts
   useEffect(() => {
-    //   do not fetch posts if the current user's id is -1
-    // if (currentUserId == -1) return;
+    //   currentUserId must be set to the current user ID
+    if (currentUserId === null) return;
 
     const handlePosts = async () => {
       const response = await apiRequest(
@@ -54,7 +52,7 @@ export default function Story() {
     };
 
     handlePosts();
-  }, []);
+  }, [currentUserId]);
 
   const getStyling = (index) => {
     const responsiveStyle =

@@ -82,8 +82,6 @@ export default function Sidebar() {
 
       const data = await response.json();
 
-      console.log("CURRENT USER RESPONSE:", response.status, data); // ✅ debug log
-
       if (response.ok) {
         setCurrentUser(data.current_user);
       } else {

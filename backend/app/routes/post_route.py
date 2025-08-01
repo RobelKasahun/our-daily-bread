@@ -121,10 +121,11 @@ def update_post(post_id):
 @post_blueprint.route('/<int:post_id>', methods=['DELETE'])
 @jwt_required()
 def delete_post(post_id):
-    # get post using post_id
-    post = Post.query.get(post_id)
     # get the logged in user id
     logged_in_user = int(get_jwt_identity())
+    
+    # get post using post_id
+    post = Post.query.get(post_id)
     
     # delete a post
     return delete(post, logged_in_user)
