@@ -125,7 +125,16 @@ export default function SignIn() {
             </p>
           )}
 
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <div className="text-sm mt-4 text-center">
+            <Link
+              to="#"
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
+          <p className="text-center text-sm text-gray-500">
             Not a member?{" "}
             <Link
               to="/register"
