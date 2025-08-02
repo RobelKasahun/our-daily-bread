@@ -375,7 +375,6 @@ export default function PostDetails() {
                       title="Save"
                       icon={faBookmark}
                       className="text-gray-500 cursor-pointer"
-                      style={{ color: "F2F2F2" }}
                     />
                   )}
                 </button>
