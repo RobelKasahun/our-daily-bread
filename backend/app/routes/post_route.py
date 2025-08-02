@@ -70,7 +70,7 @@ def posts():
         return jsonify({'message': ''})
     
     
-# read post by id
+# get a post by id
 @post_blueprint.route('/<int:post_id>', methods=['GET'])
 @jwt_required()
 def get_post(post_id):

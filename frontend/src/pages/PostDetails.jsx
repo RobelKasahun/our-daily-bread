@@ -43,7 +43,6 @@ export default function PostDetails() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("All responses has been loaded that belongs to", id);
         setPostResponses(data);
       } else {
         console.error(
@@ -180,7 +179,6 @@ export default function PostDetails() {
     fetchPost();
   }, [id]);
 
-  // http://localhost:8000/likes/80
   const handleLikePost = async (post_id) => {
     const res = await apiRequest(`http://localhost:8000/likes/${post_id}`, {
       method: "POST",
@@ -352,7 +350,7 @@ export default function PostDetails() {
                 }}
               >
                 <FontAwesomeIcon
-                  title="Like / Clap"
+                  title="Clap"
                   icon={faHandsClapping}
                   size="lg"
                   className="text-gray-500 cursor-pointer"
@@ -372,23 +370,29 @@ export default function PostDetails() {
                     }
                   }}
                 >
-                  <FontAwesomeIcon
-                    title="Save"
-                    icon={faBookmark}
-                    className="text-gray-500 cursor-pointer"
-                    style={{ color: "F2F2F2" }}
-                  />
+                  {currentUser !== post.user_id && (
+                    <FontAwesomeIcon
+                      title="Save"
+                      icon={faBookmark}
+                      className="text-gray-500 cursor-pointer"
+                      style={{ color: "F2F2F2" }}
+                    />
+                  )}
                 </button>
 
                 {/* show the delete and edit buttons on posts that belongs the current user */}
                 {currentUser === post.user_id && (
                   <>
-                    <button onClick={() => {}}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate(`/edit-post/${post.id}`);
+                      }}
+                    >
                       <FontAwesomeIcon
-                        title="Save"
+                        title="Edit"
                         icon={faEdit}
                         className="ml-2 text-gray-500 cursor-pointer"
-                        style={{ color: "F2F2F2" }}
                       />
                     </button>
                     <button

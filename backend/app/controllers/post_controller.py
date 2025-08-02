@@ -86,7 +86,7 @@ def update(post, logged_in_user):
         return jsonify({'message': 'Post title and contents are required.'}), 400
     
     # non duplicate title and content
-    if post.title.lower() != title.lower() and post.content.lower() != content.lower():
+    if post.title.lower() != title.lower() or post.content.lower() != content.lower():
         # update the title
         if title:
             post.title = title

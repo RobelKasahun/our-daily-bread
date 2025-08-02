@@ -13,6 +13,8 @@ import SavedPosts from "./pages/SavedPosts.jsx";
 import Writers from "./pages/Writers.jsx";
 import Profile from "./pages/Profile.jsx";
 import Story from "./pages/Story.jsx";
+import EditPost from "./pages/EditPost.jsx";
+
 function App() {
   return (
     <BrowserRouter>
@@ -49,6 +51,7 @@ function App() {
         <Route path="/writers" element={<Writers />} />
         <Route path="/your-stories" element={<Story />} />
         <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="/edit-post/:postId" element={<EditPost />} />
       </Routes>
     </BrowserRouter>
   );
