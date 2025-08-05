@@ -11,14 +11,16 @@ def get_comments(comments):
         current_comment = {
             'id': comment.id, 
             'content': comment.content, 
-            'created_at': comment.created_at, 
-            'updated_at': comment.updated_at, 
+            'created_at': comment.created_at.isoformat() if comment.created_at else None, 
+            'updated_at': comment.updated_at.isoformat() if comment.updated_at else None, 
             'user_id': comment.user_id, 
             'post_id': comment.post_id
             }
+        
+        print(f'comment.created_at: {comment.created_at}')
         list_of_comments.append(current_comment)
     
-    return jsonify(list_of_comments)
+    return jsonify(list_of_comments), 200
 
 
 def create_comment(content, post_id, current_user_id):
@@ -45,7 +47,14 @@ def create_comment(content, post_id, current_user_id):
         # store the comment in the database
         db.session.commit()
         
-        return jsonify({'message': 'Comment added successfully', 'comment_id': comment.id}), 201
+        return jsonify({
+        'id': comment.id,
+        'content': comment.content,
+        'created_at': comment.created_at,
+        'updated_at': comment.updated_at,
+        'user_id': comment.user_id,
+        'post_id': comment.post_id
+    }), 201
     
     
 

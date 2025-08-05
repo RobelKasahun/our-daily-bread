@@ -10,7 +10,6 @@ import CircleLoader from "react-spinners/CircleLoader";
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const slicedPosts = posts.slice(0, posts.length).reverse();
 
   // load posts

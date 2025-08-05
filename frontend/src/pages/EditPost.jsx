@@ -6,6 +6,7 @@ import { apiRequest } from "../utils/api";
 export default function Post() {
   const navigate = useNavigate();
   const { postId } = useParams();
+  const [editErrorMessage, setEditErrorMessage] = useState("");
 
   const [post, setPost] = useState({
     title: "",
@@ -68,6 +69,7 @@ export default function Post() {
     } else {
       // failed to edit post
       console.error(`failed to edit post: ${data.error}`);
+      setEditErrorMessage(data.error);
     }
   };
 
@@ -116,6 +118,12 @@ export default function Post() {
           </button>
         </form>
       </div>
+
+      {editErrorMessage.length !== 0 && (
+        <div>
+          <p className="text-sm text-center">{editErrorMessage}</p>
+        </div>
+      )}
     </>
   );
 }

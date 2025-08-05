@@ -1,7 +1,7 @@
 import UserInfo from "./UserInfo";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandsClapping, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 
 export default function Card({ post, style, user_id }) {
   const formatDate = (dateString) => {
@@ -47,7 +47,7 @@ export default function Card({ post, style, user_id }) {
               {post.comment_count}
             </span>{" "}
             <FontAwesomeIcon
-              icon={faHandsClapping}
+              icon={faHeart}
               size="lg"
               className="text-gray-500"
             />

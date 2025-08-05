@@ -5,13 +5,15 @@ import Navigationbar from "../components/Navigationbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import {
-  faHandsClapping,
+  faHeart,
   faComment,
   faBookmark,
   faTrash,
   faEdit,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { method } from "lodash";
@@ -70,7 +72,8 @@ export default function PostDetails() {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Response has been made");
+      // Add new response to list
+      setPostResponses((prevResponses) => [...prevResponses, data]);
       setResponseData("");
     } else {
       console.error(
@@ -282,6 +285,14 @@ export default function PostDetails() {
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
       <div className="container mt-10 mx-auto w-[1060px] w-[95%] lg:w-[80%] xl:w-[55%] p-8">
+        <Link to={"/contents"}>
+          <FontAwesomeIcon
+            title="Back"
+            icon={faArrowLeft}
+            className="ml-2 text-gray-500 cursor-pointer mb-10 text-3xl relative right-13"
+            style={{ color: "#06100d" }}
+          />
+        </Link>
         <div className="post-headers">
           <h1 className="text-5xl w-200 font-bold box-content text-start">
             {post.title}
@@ -337,21 +348,25 @@ export default function PostDetails() {
                 />
               </button>
               <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
-                {post.comment_count}
+                {postResponses.length > 0 ? postResponses.length : 0}
               </span>{" "}
               <button
                 onClick={() => {
                   handleLikePost(post.id);
                   {
                     !likesPostsIds.includes(post.id)
-                      ? notify("Post Liked!")
-                      : notifyAlready("Post liked already!");
+                      ? notify("Post Loved!!")
+                      : notifyAlready("Post loved already!");
                   }
+                  setPost((prev) => ({
+                    ...prev,
+                    like_count: prev.like_count + 1,
+                  }));
                 }}
               >
                 <FontAwesomeIcon
                   title="Clap"
-                  icon={faHandsClapping}
+                  icon={faHeart}
                   size="lg"
                   className="text-gray-500 cursor-pointer"
                 />
@@ -362,12 +377,13 @@ export default function PostDetails() {
               <div className="float-right">
                 <button
                   onClick={() => {
-                    handleSavingPost(post.id);
                     {
                       !savedPostsIds.includes(post.id)
                         ? notify("Post saved!")
                         : notifyAlready("Post already saved");
                     }
+
+                    handleSavingPost(post.id);
                   }}
                 >
                   {currentUser !== post.user_id && (
@@ -404,7 +420,6 @@ export default function PostDetails() {
                         title="Save"
                         icon={faTrash}
                         className="ml-2 text-gray-500 cursor-pointer"
-                        style={{ color: "F2F2F2" }}
                       />
                     </button>
                   </>
@@ -453,6 +468,7 @@ export default function PostDetails() {
               className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer text-sm"
               onClick={() => {
                 handlePostResponse(post.id);
+                setResponseData((prev) => [...prev, post.user_id]);
               }}
             >
               Respond
@@ -463,11 +479,23 @@ export default function PostDetails() {
             {postResponses.length > 0 &&
               postResponses.map((response) => (
                 <div key={response.id} className="mb-1 p-3 bg-white shadow">
-                  <div className="text-sm text-gray-700">
-                    <span className="mr-3 font-bold">
-                      <UserInfo userId={response.user_id} />
-                    </span>
-                    {formatDate(response.created_at)}
+                  <div className="text-sm text-gray-700 flex justify-between">
+                    <div>
+                      <span className="mr-3 font-bold">
+                        <UserInfo userId={response.user_id} />
+                      </span>
+                      {formatDate(response.created_at)}
+                    </div>
+                    {response.user_id === currentUser && (
+                      <button onClick={() => {}}>
+                        <FontAwesomeIcon
+                          title="Save"
+                          icon={faTrash}
+                          className="ml-2 text-gray-500 cursor-pointer"
+                          style={{ color: "#06100d" }}
+                        />
+                      </button>
+                    )}
                   </div>
                   <p className="text-sm text-gray-800">{response.content}</p>
                 </div>

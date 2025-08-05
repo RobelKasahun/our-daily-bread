@@ -12,6 +12,9 @@ def comments(post_id):
         # Get comments that belong to the post_id
         comments = Comment.query.filter_by(post_id=post_id).all()
         
+        
+        print("GET GET GET")
+        
         # get comments associated with the post_id
         return get_comments(comments)
     
@@ -23,6 +26,9 @@ def comments(post_id):
         
         # get the comment data
         content = data.get('content')
+        
+        
+        print('POST POST POST')
         
         # create comment
         return create_comment(content, post_id, current_user_id)
