@@ -1,9 +1,37 @@
 import UserInfo from "./UserInfo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
+import { apiRequest } from "../utils/api";
 
 export default function Card({ post, style, user_id }) {
+  const [postResponses, setPostResponses] = useState([]);
+
+  // Get all comments that belongs to the post_id
+  useEffect(() => {
+    const handlePostResponses = async () => {
+      const response = await apiRequest(
+        `http://localhost:8000/comments/${post.id}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setPostResponses(data);
+      } else {
+        console.error(
+          `Failed to load all the responses that belongs to post_id with post id: ${id}`,
+          data.error
+        );
+      }
+    };
+
+    handlePostResponses();
+  }, []);
+  
   const formatDate = (dateString) => {
     const formattedDate = new Date(dateString).toLocaleString("en-US", {
       month: "short",
@@ -44,7 +72,7 @@ export default function Card({ post, style, user_id }) {
               className="text-gray-500"
             />
             <span className="post-comments text-sm text-gray-500 ml-1 mr-4">
-              {post.comment_count}
+              {postResponses.length}
             </span>{" "}
             <FontAwesomeIcon
               icon={faHeart}

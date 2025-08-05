@@ -10,7 +10,7 @@ class Like(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id', ondelete='CASCADE'), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), server_default=func.now())
 
-    # Optional: add a uniqueness constraint so a user can like a post only once
+    # add a uniqueness constraint so a user can like a post only once
     __table_args__ = (
         db.UniqueConstraint('user_id', 'post_id', name='unique_user_post_like'),
     )
