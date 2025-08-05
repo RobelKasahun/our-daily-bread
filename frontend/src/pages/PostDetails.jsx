@@ -28,6 +28,7 @@ export default function PostDetails() {
   const [showResponses, setShowResponses] = useState(false);
   const [responseData, setResponseData] = useState("");
   const [postResponses, setPostResponses] = useState([]);
+
   const navigate = useNavigate();
 
   const toggleResponses = () => setShowResponses((prev) => !prev);
@@ -45,7 +46,13 @@ export default function PostDetails() {
       const data = await response.json();
 
       if (response.ok) {
-        setPostResponses(data);
+        if (Array.isArray(data)) {
+          // data is of type Array
+          setPostResponses(data);
+        } else {
+          //
+          setPostResponses([]);
+        }
       } else {
         console.error(
           `Failed to load all the responses that belongs to post_id with post id: ${id}`,

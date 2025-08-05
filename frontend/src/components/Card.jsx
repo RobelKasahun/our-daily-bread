@@ -31,7 +31,7 @@ export default function Card({ post, style, user_id }) {
 
     handlePostResponses();
   }, []);
-  
+
   const formatDate = (dateString) => {
     const formattedDate = new Date(dateString).toLocaleString("en-US", {
       month: "short",
@@ -72,7 +72,7 @@ export default function Card({ post, style, user_id }) {
               className="text-gray-500"
             />
             <span className="post-comments text-sm text-gray-500 ml-1 mr-4">
-              {postResponses.length}
+              {postResponses.length > 0 ? postResponses.length : 0}
             </span>{" "}
             <FontAwesomeIcon
               icon={faHeart}
