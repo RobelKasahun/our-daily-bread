@@ -256,6 +256,31 @@ export default function PostDetails() {
     }
   };
 
+  const deleteResponse = async (commentId, postId) => {
+    // commentId/postId
+    const response = await apiRequest(
+      `http://localhost:8000/comments/posts/${postId}/comments/${commentId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setPostResponses((prev) =>
+        prev.filter((comment) => comment.id !== commentId)
+      );
+    } else {
+      console.error(
+        "Failed to delete the comment:",
+        commentId,
+        postId,
+        data.error
+      );
+    }
+  };
+
   // date and time formatter
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString("en-US", {
@@ -494,7 +519,11 @@ export default function PostDetails() {
                       {formatDate(response.created_at)}
                     </div>
                     {response.user_id === currentUser && (
-                      <button onClick={() => {}}>
+                      <button
+                        onClick={() => {
+                          deleteResponse(response.id, response.post_id);
+                        }}
+                      >
                         <FontAwesomeIcon
                           title="Save"
                           icon={faTrash}

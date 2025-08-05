@@ -41,12 +41,12 @@ def update_comment(comment_id, post_id):
 
 
 # delete a comment
-@comment_blue_print.route('/<int:comment_id>/posts/<int:post_id>', methods=['DELETE'])
+@comment_blue_print.route('/posts/<int:post_id>/comments/<int:comment_id>', methods=['DELETE'])
 @jwt_required()
-def delete_comment(comment_id, post_id):
+def delete_comment(post_id, comment_id):
     
     # filter the comment using the given id
-    comment = Comment.query.filter_by(id=comment_id, post_id=post_id).first()
+    comment = Comment.query.filter_by(post_id=post_id, id=comment_id).first()
     
     # get the current logged in user
     logged_in_user = int(get_jwt_identity())

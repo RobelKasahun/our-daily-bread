@@ -16,8 +16,6 @@ def get_comments(comments):
             'user_id': comment.user_id, 
             'post_id': comment.post_id
             }
-        
-        print(f'comment.created_at: {comment.created_at}')
         list_of_comments.append(current_comment)
     
     return jsonify(list_of_comments), 200
