@@ -43,18 +43,18 @@ export default function EditResponseModal({
         <textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="w-full h-32 border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full h-32 border rounded-md p-2 border-gray-200 focus:outline-none focus:ring focus:ring-blue-300"
         />
         <div className="flex justify-end space-x-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={onSave}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
           >
             Edit Response
           </button>
