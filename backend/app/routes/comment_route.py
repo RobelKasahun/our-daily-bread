@@ -29,11 +29,11 @@ def comments(post_id):
 
 
 # update a comment
-@comment_blue_print.route('/<int:comment_id>/posts/<int:post_id>', methods=['PUT'])
+@comment_blue_print.route('/posts/<int:post_id>/comments/<int:comment_id>', methods=['PUT'])
 @jwt_required()
-def update_comment(comment_id, post_id):
+def update_comment(post_id, comment_id):
     # get the comment
-    comment = Comment.query.filter_by(id=comment_id, post_id=post_id).first()
+    comment = Comment.query.filter_by(post_id=post_id, id=comment_id).first()
     logged_in_user = int(get_jwt_identity())
     
     # update a comment 

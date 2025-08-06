@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
+import EditResponseModal from "../components/EditResponseModal";
 
 import {
   faHeart,
@@ -14,6 +15,7 @@ import {
   faTrash,
   faEdit,
   faArrowLeft,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { method } from "lodash";
@@ -28,6 +30,9 @@ export default function PostDetails() {
   const [showResponses, setShowResponses] = useState(false);
   const [responseData, setResponseData] = useState("");
   const [postResponses, setPostResponses] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [postResponse, setPostResponse] = useState("");
+  const [commentId, setCommentId] = useState(-1);
 
   const navigate = useNavigate();
 
@@ -281,6 +286,43 @@ export default function PostDetails() {
     }
   };
 
+  const editResponse = async (postId, commentId) => {
+    const response = await apiRequest(
+      `http://localhost:8000/comments/posts/${postId}/comments/${commentId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          content: postResponse,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(`data = ${data}`);
+
+    if (response.ok) {
+      // Update the response in the local state immediately
+      setPostResponses((prevResponses) =>
+        prevResponses.map((response) =>
+          response.id === commentId
+            ? { ...response, content: postResponse }
+            : response
+        )
+      );
+      return true;
+    } else {
+      console.error("Failed to update response");
+      return false;
+    }
+  };
+
+  const handleSave = async () => {
+    // Save logic (API call)
+    const successResponse = await editResponse(id, commentId);
+    if (successResponse) setIsModalOpen(false);
+  };
+
   // date and time formatter
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString("en-US", {
@@ -519,23 +561,47 @@ export default function PostDetails() {
                       {formatDate(response.created_at)}
                     </div>
                     {response.user_id === currentUser && (
-                      <button
-                        onClick={() => {
-                          deleteResponse(response.id, response.post_id);
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          title="Save"
-                          icon={faTrash}
-                          className="ml-2 text-gray-500 cursor-pointer"
-                          style={{ color: "#06100d" }}
-                        />
-                      </button>
+                      <div>
+                        <button
+                          onClick={() => {
+                            deleteResponse(response.id, response.post_id);
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            title="Delete"
+                            icon={faTrash}
+                            className="ml-2 text-gray-500 cursor-pointer"
+                            style={{ color: "#06100d" }}
+                          />
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setIsModalOpen(true);
+                            setCommentId(response.id);
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            title="Edit"
+                            icon={faPenToSquare}
+                            className="ml-2 text-gray-500 cursor-pointer"
+                            style={{ color: "#06100d" }}
+                          />
+                        </button>
+                      </div>
                     )}
                   </div>
                   <p className="text-sm text-gray-800">{response.content}</p>
                 </div>
               ))}
+
+            <EditResponseModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onSave={handleSave}
+              value={postResponse}
+              setValue={setPostResponse}
+            />
           </div>
         </div>
       )}
