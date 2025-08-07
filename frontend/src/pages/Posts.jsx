@@ -10,7 +10,9 @@ import CircleLoader from "react-spinners/CircleLoader";
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const slicedPosts = posts.slice(0, posts.length).reverse();
+  const [query, setQuery] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState(posts);
+  const slicedPosts = filteredPosts.slice(0, filteredPosts.length).reverse();
 
   // load posts
   useEffect(() => {
@@ -35,6 +37,13 @@ export default function Posts() {
     handlePosts();
   }, []);
 
+  useEffect(() => {
+    const filteredResults = posts.filter((post) =>
+      post.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredPosts(filteredResults);
+  }, [query, posts]);
+
   const getStyling = (index) => {
     const responsiveStyle =
       "w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8";
@@ -46,7 +55,11 @@ export default function Posts() {
 
   return (
     <>
-      <Navigationbar showWriteButton={true} />
+      <Navigationbar
+        showWriteButton={true}
+        setSearchResults={setPosts}
+        setQuery={setQuery}
+      />
       <div className="container mx-auto w-[95%] lg:w-[80%] xl:w-[76%]">
         <div className="flex flex-col md:flex-row gap-4 border-l border-r border-gray-200">
           {/* Posts Section */}

@@ -24,7 +24,6 @@ export default function Writers() {
 
       if (response.ok) {
         setFollowedIds(data.following_ids); // now you can compare these
-        console.log("success following_ids");
       } else {
         console.error("Failed to fetch following ids");
       }
@@ -62,7 +61,6 @@ export default function Writers() {
 
       if (response.ok) {
         setAuthors(data);
-        console.log(`slicedAuthors.length: ${authors.length}`);
       } else {
         console.error("Failed to fetch users:", data.error);
       }
@@ -132,7 +130,7 @@ export default function Writers() {
                       role="button"
                       className="flex items-center justify-between w-full p-1 text-sm rounded-lg hover:bg-blue-100 border-b border-gray-200"
                     >
-                      <Link to={`/followers/${author.id}`} key={author.id}>
+                      <Link to={`/profile/${author.id}`} key={author.id}>
                         {author.first_name} {author.last_name}
                       </Link>
 

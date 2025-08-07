@@ -20,11 +20,14 @@ function classNames(...classes) {
 }
 
 export default function Navigationbar({
+  setQuery,
   showSearchBar = true,
   showWriteButton = false,
   showPublishButton = false,
 }) {
   const [currentUser, setCurrentUser] = useState(-1);
+  const [input, setInput] = useState("");
+
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
@@ -43,6 +46,12 @@ export default function Navigationbar({
 
     handleCurrentUser();
   }, []);
+
+  const handleSearchInputChange = (e) => {
+    const value = e.target.value;
+    setInput(value);
+    setQuery(value);
+  };
 
   return (
     <Disclosure as="nav" className="text-white border-b border-gray-200">
@@ -81,6 +90,8 @@ export default function Navigationbar({
                   <input
                     type="text"
                     placeholder="Search"
+                    value={input}
+                    onChange={handleSearchInputChange}
                     className="w-full border border-gray-300 rounded-md px-4 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
                   />
                 </form>
