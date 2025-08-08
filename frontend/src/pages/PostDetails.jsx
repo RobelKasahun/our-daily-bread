@@ -220,7 +220,7 @@ export default function PostDetails() {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Successful following...");
+      // Successful following
     } else {
       console.error("Failed to follow:", post.user_id, data.error);
     }
@@ -237,7 +237,7 @@ export default function PostDetails() {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Successful unfollowing...");
+      // Successful unfollowing
     } else {
       console.error("Failed to unfollow:", author_id, data.error);
     }
