@@ -53,6 +53,33 @@ export default function Posts() {
     return `card border-b border-gray-200 px-8 pt-8 pb-2 my-3 pb-8 ${responsiveStyle}`;
   };
 
+  // syncLikeCounts
+  useEffect(() => {
+    const syncLikeCounts = async () => {
+      try {
+        const res = await apiRequest(
+          `http://localhost:8000/posts/api/sync_like_counts`,
+          {
+            method: "PUT",
+          }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+          // After syncing counts, fetch fresh posts
+          await handlePosts();
+        } else {
+          console.error("Failed to sync like counts");
+        }
+      } catch (error) {
+        console.error("Error syncing like counts:", error);
+      }
+    };
+
+    syncLikeCounts();
+  }, []);
+
   return (
     <>
       <Navigationbar

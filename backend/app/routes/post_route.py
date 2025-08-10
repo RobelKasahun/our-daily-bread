@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.controllers.post_controller import get_posts, create_post, update, delete
-from app.models import Post
+from app.models import Post, Like
 from app.models import SavedPost
 from app import db
 
@@ -129,3 +129,19 @@ def delete_post(post_id):
     
     # delete a post
     return delete(post, logged_in_user)
+
+@post_blueprint.route('/api/sync_like_counts', methods=['PUT'])
+@jwt_required()
+def sync_like_counts():
+    # all posts
+    posts = Post.query.all()
+    for post in posts:
+        # get the current like count
+        count = Like.query.filter_by(post_id=post.id).count()
+        # update the post like count
+        post.like_count = count
+    
+    # save the change
+    db.session.commit()
+    
+    return jsonify({"message": "Like counts synced successfully"}), 200

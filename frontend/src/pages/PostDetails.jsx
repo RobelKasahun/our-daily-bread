@@ -7,7 +7,6 @@ import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
 import EditResponseModal from "../components/EditResponseModal";
-
 import {
   faHeart,
   faComment,
@@ -214,6 +213,8 @@ export default function PostDetails() {
 
     fetchPostLikingIds(id);
   }, [id]);
+
+  console.log(`likesPostsIds: ${likesPostsIds}`);
 
   const handleLikePost = async (post_id) => {
     const res = await apiRequest(`http://localhost:8000/likes/${post_id}`, {
