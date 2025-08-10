@@ -130,7 +130,7 @@ export default function PostDetails() {
     if (response.ok) {
       // success saving post"
     } else {
-      console.error("Failed to save the post");
+      console.log("Failed to save the post");
     }
   };
 
@@ -194,6 +194,27 @@ export default function PostDetails() {
     fetchPost();
   }, [id]);
 
+  useEffect(() => {
+    const fetchPostLikingIds = async (post_id) => {
+      const res = await apiRequest(
+        `http://localhost:8000/likes/${post_id}/liking_ids`,
+        {
+          method: "GET",
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setLikesPostsIds(data);
+      } else {
+        console.error("Error loading liking user ids:", data.error);
+      }
+    };
+
+    fetchPostLikingIds(id);
+  }, [id]);
+
   const handleLikePost = async (post_id) => {
     const res = await apiRequest(`http://localhost:8000/likes/${post_id}`, {
       method: "POST",
@@ -202,6 +223,7 @@ export default function PostDetails() {
     const data = await res.json();
 
     if (res.ok) {
+      // post has been liked
     } else {
       console.error("Error loading post:", data.error);
     }
@@ -427,15 +449,26 @@ export default function PostDetails() {
               <button
                 onClick={() => {
                   handleLikePost(post.id);
-                  {
-                    !likesPostsIds.includes(post.id)
-                      ? notify("Post Loved!!")
-                      : notifyAlready("Post loved already!");
+                  if (likesPostsIds.includes(currentUser)) {
+                    setLikesPostsIds((prev) =>
+                      prev.filter((id) => id !== currentUser)
+                    );
+                    setPost((prev) => ({
+                      ...prev,
+                      like_count: prev.like_count > 0 ? prev.like_count - 1 : 0,
+                    }));
+
+                    notifyAlready("Post unliked");
+                  } else {
+                    setLikesPostsIds((prev) => [...prev, currentUser]);
+
+                    setPost((prev) => ({
+                      ...prev,
+                      like_count: prev.like_count + 1,
+                    }));
+
+                    notify(`Success! post liked`);
                   }
-                  setPost((prev) => ({
-                    ...prev,
-                    like_count: prev.like_count + 1,
-                  }));
                 }}
               >
                 <FontAwesomeIcon
