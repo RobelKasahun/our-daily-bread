@@ -214,8 +214,6 @@ export default function PostDetails() {
     fetchPostLikingIds(id);
   }, [id]);
 
-  console.log(`likesPostsIds: ${likesPostsIds}`);
-
   const handleLikePost = async (post_id) => {
     const res = await apiRequest(`http://localhost:8000/likes/${post_id}`, {
       method: "POST",

@@ -15,25 +15,25 @@ export default function Posts() {
   const slicedPosts = filteredPosts.slice(0, filteredPosts.length).reverse();
 
   // load posts
+  const handlePosts = async (e) => {
+    setLoading(true);
+
+    const response = await apiRequest("http://localhost:8000/posts", {
+      method: "GET",
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setPosts(data);
+    } else {
+      console.error("Failed to fetch posts:", data.error);
+    }
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const handlePosts = async (e) => {
-      setLoading(true);
-
-      const response = await apiRequest("http://localhost:8000/posts", {
-        method: "GET",
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setPosts(data);
-      } else {
-        console.error("Failed to fetch posts:", data.error);
-      }
-
-      setLoading(false);
-    };
-
     handlePosts();
   }, []);
 
