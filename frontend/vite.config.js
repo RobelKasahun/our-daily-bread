@@ -1,11 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import path from "path";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-
+  resolve: {
+    alias: {
+      '@fortawesome/fontawesome-svg-core': path.resolve(__dirname, 'node_modules/@fortawesome/fontawesome-svg-core'),
+    },
+  },
   optimizeDeps: {
     include: [
       "@fortawesome/fontawesome-svg-core",
@@ -13,11 +17,9 @@ export default defineConfig({
       "@fortawesome/react-fontawesome",
     ],
   },
-
-  // optional: try removing this if it causes problems
   build: {
     rollupOptions: {
       external: ["@fortawesome/fontawesome-svg-core"],
     },
   },
-})
+});
