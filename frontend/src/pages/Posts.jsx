@@ -53,7 +53,7 @@ export default function Posts() {
     return `card border-b border-gray-200 px-8 pt-8 pb-2 my-3 pb-8 ${responsiveStyle}`;
   };
 
-  // syncLikeCounts
+  // Sync likes counts
   useEffect(() => {
     const syncLikeCounts = async () => {
       try {
@@ -78,6 +78,33 @@ export default function Posts() {
     };
 
     syncLikeCounts();
+  }, []);
+
+  // sync comment counts
+  useEffect(() => {
+    const syncCommentCounts = async () => {
+      try {
+        const response = await apiRequest(
+          `http://localhost:8000/posts/api/sync_comment_counts`,
+          {
+            method: "PUT",
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // After syncing counts, fetch fresh posts
+          await handlePosts();
+        } else {
+          console.error("Failed to sync comment counts");
+        }
+      } catch (error) {
+        console.error(`Error syncing comment counts: ${error}`);
+      }
+    };
+
+    syncCommentCounts();
   }, []);
 
   return (

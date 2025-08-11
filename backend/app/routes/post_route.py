@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.controllers.post_controller import get_posts, create_post, update, delete
-from app.models import Post, Like
+from app.models import Post, Like, Comment
 from app.models import SavedPost
 from app import db
 
@@ -145,3 +145,16 @@ def sync_like_counts():
     db.session.commit()
     
     return jsonify({"message": "Like counts synced successfully"}), 200
+
+@post_blueprint.route('/api/sync_comment_counts', methods=['PUT'])
+@jwt_required()
+def sync_comment_counts():
+    posts = Post.query.all()
+    for post in posts:
+        # get the current comment count
+        count = Comment.query.filter_by(post_id=post.id).count()
+        post.comment_count = count
+        
+    db.session.commit()
+    
+    return jsonify({"message": "Comment counts synced successfully"}), 200
