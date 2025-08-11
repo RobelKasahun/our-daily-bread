@@ -26,6 +26,21 @@ def comments(post_id):
         
         # create comment
         return create_comment(content, post_id, current_user_id)
+    
+    
+# Get comment using a comment Id
+@comment_blue_print.route('/api/<int:comment_id>', methods=['GET'])
+@jwt_required()
+def get_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+    if not comment:
+        return jsonify({"error": "Comment not found"}), 404
+    
+    return jsonify({
+        "id": comment.id,
+        "content": comment.content,
+    }), 200
+    
 
 
 # update a comment

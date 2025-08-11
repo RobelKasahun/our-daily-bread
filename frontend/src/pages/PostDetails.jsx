@@ -320,8 +320,6 @@ export default function PostDetails() {
 
     const data = await response.json();
 
-    console.log(`data = ${data}`);
-
     if (response.ok) {
       // Update the response in the local state immediately
       setPostResponses((prevResponses) =>
@@ -633,6 +631,9 @@ export default function PostDetails() {
               onSave={handleSave}
               value={postResponse}
               setValue={setPostResponse}
+              postId={id}
+              currentUserId={currentUser}
+              commentId={commentId}
             />
           </div>
         </div>

@@ -1,5 +1,6 @@
 // Credit: ChatGPT
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { apiRequest } from "../utils/api";
 
 export default function EditResponseModal({
   isOpen,
@@ -7,8 +8,35 @@ export default function EditResponseModal({
   onSave,
   value,
   setValue,
+  postId,
+  currentUserId,
+  commentId,
 }) {
   const modalRef = useRef();
+
+  // load comment using commentId
+  useEffect(() => {
+    if (commentId === -1) return;
+
+    const handleCurrentComment = async () => {
+      const response = await apiRequest(
+        `http://localhost:8000/comments/api/${commentId}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setValue(data.content);
+      } else {
+        console.error("Failed to fetch current comment:", data.error);
+      }
+    };
+
+    handleCurrentComment();
+  }, [commentId]);
 
   // Close on outside click
   useEffect(() => {
