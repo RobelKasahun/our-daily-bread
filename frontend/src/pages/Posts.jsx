@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import CircleLoader from "react-spinners/CircleLoader";
 
+
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
