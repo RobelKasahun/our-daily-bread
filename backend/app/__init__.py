@@ -50,7 +50,7 @@ def create_app():
         to talk to this Flask backend (usually on localhost:5000).
     '''
     # allows the front end to talk to the backend
-    CORS(app, supports_credentials=True, origins=["https://holy-share-app.vercel.app", 'https://holy-share.onrender.com'])
+    CORS(app, supports_credentials=True, origins=["https://holy-share-app.vercel.app"])
     
     with app.app_context():
         from app.models import User, Post, Comment, Like
