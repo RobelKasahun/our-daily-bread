@@ -17,7 +17,7 @@ import {
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
-
+import { API_BASE_URL } from "../utils/config";
 
 import { method } from "lodash";
 
@@ -43,7 +43,7 @@ export default function PostDetails() {
   useEffect(() => {
     const handlePostResponses = async () => {
       const response = await apiRequest(
-        `http://localhost:8000/comments/${id}`,
+        `${API_BASE_URL}/comments/${id}`,
         {
           method: "GET",
         }
@@ -73,7 +73,7 @@ export default function PostDetails() {
   // leave comment on a post
   const handlePostResponse = async (post_id) => {
     const response = await apiRequest(
-      `http://localhost:8000/comments/${post_id}`,
+      `${API_BASE_URL}/comments/${post_id}`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -99,7 +99,7 @@ export default function PostDetails() {
   // Get all the saved posts
   useEffect(() => {
     const handleSavedPosts = async () => {
-      const response = await apiRequest(`http://localhost:8000/posts/saved`, {
+      const response = await apiRequest(`${API_BASE_URL}/posts/saved`, {
         method: "GET",
       });
 
@@ -119,7 +119,7 @@ export default function PostDetails() {
   // save posts
   const handleSavingPost = async (post_id) => {
     const response = await fetch(
-      `http://localhost:8000/posts/save/${post_id}`,
+      `${API_BASE_URL}/posts/save/${post_id}`,
       {
         method: "POST",
         credentials: "include", // to send cookies for JWT
@@ -138,7 +138,7 @@ export default function PostDetails() {
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
+      const response = await apiRequest("${API_BASE_URL}/users/current", {
         method: "GET",
       });
 
@@ -158,7 +158,7 @@ export default function PostDetails() {
     if (currentUser === null) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
-        `http://localhost:8000/followers/following/ids/${currentUser}`,
+        `${API_BASE_URL}/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -179,7 +179,7 @@ export default function PostDetails() {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const res = await apiRequest(`http://localhost:8000/posts/${id}`, {
+      const res = await apiRequest(`${API_BASE_URL}/posts/${id}`, {
         method: "GET",
       });
 
@@ -198,7 +198,7 @@ export default function PostDetails() {
   useEffect(() => {
     const fetchPostLikingIds = async (post_id) => {
       const res = await apiRequest(
-        `http://localhost:8000/likes/${post_id}/liking_ids`,
+        `${API_BASE_URL}/likes/${post_id}/liking_ids`,
         {
           method: "GET",
         }
@@ -217,7 +217,7 @@ export default function PostDetails() {
   }, [id]);
 
   const handleLikePost = async (post_id) => {
-    const res = await apiRequest(`http://localhost:8000/likes/${post_id}`, {
+    const res = await apiRequest(`${API_BASE_URL}/likes/${post_id}`, {
       method: "POST",
     });
 
@@ -234,7 +234,7 @@ export default function PostDetails() {
 
   const handleFollow = async (author_id) => {
     const response = await apiRequest(
-      `http://localhost:8000/followers/${author_id}`,
+      `${API_BASE_URL}/followers/${author_id}`,
       {
         method: "POST",
       }
@@ -251,7 +251,7 @@ export default function PostDetails() {
 
   const handleUnFollow = async (author_id) => {
     const response = await apiRequest(
-      `http://localhost:8000/followers/${author_id}`,
+      `${API_BASE_URL}/followers/${author_id}`,
       {
         method: "DELETE",
       }
@@ -268,7 +268,7 @@ export default function PostDetails() {
 
   const deletePost = async (post_id) => {
     const response = await apiRequest(
-      `http://localhost:8000/posts/${post_id}`,
+      `${API_BASE_URL}/posts/${post_id}`,
       {
         method: "DELETE",
       }
@@ -287,7 +287,7 @@ export default function PostDetails() {
   const deleteResponse = async (commentId, postId) => {
     // commentId/postId
     const response = await apiRequest(
-      `http://localhost:8000/comments/posts/${postId}/comments/${commentId}`,
+      `${API_BASE_URL}/comments/posts/${postId}/comments/${commentId}`,
       {
         method: "DELETE",
       }
@@ -311,7 +311,7 @@ export default function PostDetails() {
 
   const editResponse = async (postId, commentId) => {
     const response = await apiRequest(
-      `http://localhost:8000/comments/posts/${postId}/comments/${commentId}`,
+      `${API_BASE_URL}/comments/posts/${postId}/comments/${commentId}`,
       {
         method: "PUT",
         body: JSON.stringify({

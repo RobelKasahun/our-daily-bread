@@ -9,6 +9,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import _ from "lodash"; // for shuffling a list
 import CircleLoader from "react-spinners/CircleLoader";
 import UserInfo from "../components/UserInfo";
+import { API_BASE_URL } from "../utils/config";
 
 export default function Profile() {
   const { userId } = useParams();
@@ -23,7 +24,7 @@ export default function Profile() {
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
+      const response = await apiRequest(`${API_BASE_URL}/users/current`, {
         method: "GET",
       });
 
@@ -46,7 +47,7 @@ export default function Profile() {
         return;
 
       const response = await apiRequest(
-        `http://localhost:8000/users/${current_user}`,
+        `${API_BASE_URL}/users/${current_user}`,
         {
           method: "GET",
         }
@@ -70,7 +71,7 @@ export default function Profile() {
       setLoading(true);
 
       const response = await apiRequest(
-        `http://localhost:8000/posts/all/${userId}`,
+        `${API_BASE_URL}/posts/all/${userId}`,
         {
           method: "GET",
         }
@@ -97,7 +98,7 @@ export default function Profile() {
     if (!currentUser || currentUser === undefined || currentUser === -1) return;
     const fetchFollowingIds = async () => {
       const response = await fetch(
-        `http://localhost:8000/followers/following/ids/${currentUser}`,
+        `${API_BASE_URL}/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT

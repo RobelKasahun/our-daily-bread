@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigationbar from "../components/Navigationbar";
 import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
 
 export default function Post() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Post() {
 
   const handlePost = async (e) => {
     e.preventDefault();
-    const response = await apiRequest("http://localhost:8000/posts", {
+    const response = await apiRequest(`${API_BASE_URL}/posts`, {
       method: "POST",
       body: JSON.stringify(post),
     });

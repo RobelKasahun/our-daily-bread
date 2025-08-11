@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../utils/api";
 import Navigationbar from "../components/Navigationbar";
+import { API_BASE_URL } from "../utils/config";
 
 export default function Writers() {
   const [authors, setAuthors] = useState([]);
@@ -13,7 +14,7 @@ export default function Writers() {
     if (!currentUser || currentUser === undefined || currentUser === -1) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
-        `http://localhost:8000/followers/following/ids/${currentUser}`,
+        `${API_BASE_URL}/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT
@@ -35,7 +36,7 @@ export default function Writers() {
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
+      const response = await apiRequest(`${API_BASE_URL}/users/current`, {
         method: "GET",
       });
 
@@ -53,7 +54,7 @@ export default function Writers() {
   // load users
   useEffect(() => {
     const handleUsers = async (e) => {
-      const response = await apiRequest("http://localhost:8000/users", {
+      const response = await apiRequest(`${API_BASE_URL}/users`, {
         method: "GET",
       });
 
@@ -72,7 +73,7 @@ export default function Writers() {
   // handle follow
   const handleFollow = async (author_id) => {
     const response = await apiRequest(
-      `http://localhost:8000/followers/${author_id}`,
+      `${API_BASE_URL}/followers/${author_id}`,
       {
         method: "POST",
         credentials: "include", // includes JWT cookies
@@ -92,7 +93,7 @@ export default function Writers() {
   const handleUnFollow = async (author_id) => {
     console.log("author_id:", author_id);
     const response = await apiRequest(
-      `http://localhost:8000/followers/${author_id}`,
+      `${API_BASE_URL}/followers/${author_id}`,
       {
         method: "DELETE",
         credentials: "include", // includes JWT cookies

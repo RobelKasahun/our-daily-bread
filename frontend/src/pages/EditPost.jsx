@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navigationbar from "../components/Navigationbar";
 import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
 
 export default function Post() {
   const navigate = useNavigate();
@@ -24,12 +25,9 @@ export default function Post() {
     // wait until the post id contains actual post ID
     if (post === undefined) return;
     const handleLoadingPost = async () => {
-      const response = await apiRequest(
-        `http://localhost:8000/posts/${postId}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await apiRequest(`${API_BASE_URL}/posts/${postId}`, {
+        method: "GET",
+      });
 
       const data = await response.json();
 
@@ -51,7 +49,7 @@ export default function Post() {
 
   // edit a post
   const editPost = async () => {
-    const response = await apiRequest(`http://localhost:8000/posts/${postId}`, {
+    const response = await apiRequest(`${API_BASE_URL}/posts/${postId}`, {
       method: "PUT",
       body: JSON.stringify({
         title: post.title,

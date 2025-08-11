@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { apiRequest } from "../utils/api";
 import { Link } from "react-router-dom";
 import Card from "../components/Card";
+import { API_BASE_URL } from "../utils/config";
 
 export default function Story() {
   const [posts, setPosts] = useState([]);
@@ -13,7 +14,7 @@ export default function Story() {
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
+      const response = await apiRequest(`${API_BASE_URL}/users/current`, {
         method: "GET",
       });
 
@@ -36,7 +37,7 @@ export default function Story() {
 
     const handlePosts = async () => {
       const response = await apiRequest(
-        `http://localhost:8000/posts/all/${currentUserId}`,
+        `${API_BASE_URL}/posts/all/${currentUserId}`,
         {
           method: "GET",
         }

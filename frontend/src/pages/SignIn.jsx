@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { API_BASE_URL } from "../utils/config";
 
 export default function SignIn() {
   const [signinErrorMessage, setSigninErrorMessage] = useState("");
@@ -30,7 +31,7 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/auth/signin", {
+      const response = await fetch(`${API_BASE_URL}/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

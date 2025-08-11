@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
 import { apiRequest } from "../utils/api";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../utils/config";
 
 export default function SavedPosts() {
   const [savedPosts, setSavedPosts] = useState([]);
@@ -11,7 +12,7 @@ export default function SavedPosts() {
   // Get all the saved posts
   useEffect(() => {
     const handleSavedPosts = async () => {
-      const response = await apiRequest(`http://localhost:8000/posts/saved`, {
+      const response = await apiRequest(`${API_BASE_URL}/posts/saved`, {
         method: "GET",
       });
 

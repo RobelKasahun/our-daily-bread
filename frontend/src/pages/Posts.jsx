@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import CircleLoader from "react-spinners/CircleLoader";
+import { API_BASE_URL } from "../utils/config";
 
 
 export default function Posts() {
@@ -19,7 +20,7 @@ export default function Posts() {
   const handlePosts = async (e) => {
     setLoading(true);
 
-    const response = await apiRequest("http://localhost:8000/posts", {
+    const response = await apiRequest(`${API_BASE_URL}/posts`, {
       method: "GET",
     });
 
@@ -59,7 +60,7 @@ export default function Posts() {
     const syncLikeCounts = async () => {
       try {
         const res = await apiRequest(
-          `http://localhost:8000/posts/api/sync_like_counts`,
+          `${API_BASE_URL}/posts/api/sync_like_counts`,
           {
             method: "PUT",
           }
@@ -86,7 +87,7 @@ export default function Posts() {
     const syncCommentCounts = async () => {
       try {
         const response = await apiRequest(
-          `http://localhost:8000/posts/api/sync_comment_counts`,
+          `${API_BASE_URL}/posts/api/sync_comment_counts`,
           {
             method: "PUT",
           }
