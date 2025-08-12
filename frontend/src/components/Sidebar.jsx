@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { apiRequest } from "../utils/api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import _ from "lodash"; // for shuffling a list
+import { API_BASE_URL } from "../utils/config";
 
 export default function Sidebar() {
   const [authors, setAuthors] = useState([]);
@@ -19,7 +20,7 @@ export default function Sidebar() {
   // load users
   useEffect(() => {
     const handleUsers = async (e) => {
-      const response = await apiRequest("http://localhost:8000/users", {
+      const response = await apiRequest(`${API_BASE_URL}/users`, {
         method: "GET",
       });
 
@@ -38,7 +39,7 @@ export default function Sidebar() {
   // load posts
   useEffect(() => {
     const handlePosts = async (e) => {
-      const response = await apiRequest("http://localhost:8000/posts", {
+      const response = await apiRequest(`${API_BASE_URL}/posts`, {
         method: "GET",
       });
 
@@ -57,7 +58,7 @@ export default function Sidebar() {
   // Get all the saved posts
   useEffect(() => {
     const handleSavedPosts = async () => {
-      const response = await apiRequest(`http://localhost:8000/posts/saved`, {
+      const response = await apiRequest(`${API_BASE_URL}/posts/saved`, {
         method: "GET",
       });
 
@@ -76,7 +77,7 @@ export default function Sidebar() {
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
+      const response = await apiRequest(`${API_BASE_URL}/users/current`, {
         method: "GET",
       });
 
@@ -95,7 +96,7 @@ export default function Sidebar() {
   // handle follow
   const handleFollow = async (author_id) => {
     const response = await apiRequest(
-      `http://localhost:8000/followers/${author_id}`,
+      `${API_BASE_URL}/followers/${author_id}`,
       {
         method: "POST",
         credentials: "include", // includes JWT cookies
@@ -115,7 +116,7 @@ export default function Sidebar() {
   const handleUnFollow = async (author_id) => {
     console.log("author_id:", author_id);
     const response = await apiRequest(
-      `http://localhost:8000/followers/${author_id}`,
+      `${API_BASE_URL}/followers/${author_id}`,
       {
         method: "DELETE",
         credentials: "include", // includes JWT cookies
@@ -138,7 +139,7 @@ export default function Sidebar() {
     if (!currentUser || currentUser === undefined || currentUser === -1) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
-        `http://localhost:8000/followers/following/ids/${currentUser}`,
+        `${API_BASE_URL}/followers/following/ids/${currentUser}`,
         {
           method: "GET",
           credentials: "include", // to send cookies for JWT

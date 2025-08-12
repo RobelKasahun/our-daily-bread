@@ -1,6 +1,7 @@
 // Credit: ChatGPT
 import { useEffect, useRef, useState } from "react";
 import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
 
 export default function EditResponseModal({
   isOpen,
@@ -20,7 +21,7 @@ export default function EditResponseModal({
 
     const handleCurrentComment = async () => {
       const response = await apiRequest(
-        `http://localhost:8000/comments/api/${commentId}`,
+        `${API_BASE_URL}/comments/api/${commentId}`,
         {
           method: "GET",
         }

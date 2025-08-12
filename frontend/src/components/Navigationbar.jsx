@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
 import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
 
 const navigation = [{ name: "Write", href: "/new-post", current: true }];
 
@@ -31,7 +32,7 @@ export default function Navigationbar({
   // Get current user
   useEffect(() => {
     const handleCurrentUser = async () => {
-      const response = await apiRequest("http://localhost:8000/users/current", {
+      const response = await apiRequest(`${API_BASE_URL}/users/current`, {
         method: "GET",
       });
 

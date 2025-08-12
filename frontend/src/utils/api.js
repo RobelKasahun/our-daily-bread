@@ -1,4 +1,6 @@
 // utils/api.js
+import { API_BASE_URL } from "./config";
+
 export const apiRequest = async (url, options = {}) => {
     let token = localStorage.getItem("access_token");
 
@@ -36,7 +38,7 @@ export const apiRequest = async (url, options = {}) => {
 };
 
 const refreshAccessToken = async () => {
-    const res = await fetch("http://localhost:8000/auth/refresh", {
+    const res = await fetch(`${API_BASE_URL}/auth/refresh`, {
         method: "POST",
         credentials: "include",
     });

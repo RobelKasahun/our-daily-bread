@@ -28,6 +28,7 @@ def create_app():
         load database uri, secret key, and track object modification
     '''
     app.config.from_object(Config)
+    app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=1)
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)

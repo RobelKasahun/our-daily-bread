@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
 
 export default function Card({ post, style, user_id }) {
   const [postResponses, setPostResponses] = useState([]);
@@ -11,7 +12,7 @@ export default function Card({ post, style, user_id }) {
   useEffect(() => {
     const handlePostResponses = async () => {
       const response = await apiRequest(
-        `http://localhost:8000/comments/${post.id}`,
+        `${API_BASE_URL}/comments/${post.id}`,
         {
           method: "GET",
         }

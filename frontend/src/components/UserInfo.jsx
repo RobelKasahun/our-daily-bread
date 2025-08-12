@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
 
 export default function UserInfo({ userId }) {
   const [user, setUser] = useState([]);
@@ -7,12 +8,9 @@ export default function UserInfo({ userId }) {
   // load posts
   useEffect(() => {
     const handleUser = async (e) => {
-      const response = await apiRequest(
-        `http://localhost:8000/users/${userId}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await apiRequest(`${API_BASE_URL}/users/${userId}`, {
+        method: "GET",
+      });
 
       const data = await response.json();
 
