@@ -19,6 +19,8 @@ import {
 
 import { API_BASE_URL } from "../utils/config";
 
+import { method } from "lodash";
+
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
   const [post, setPost] = useState(null);
@@ -220,19 +222,7 @@ export default function PostDetails() {
     }
   };
 
-  // if (!post) {
-  //   setLoading(false);
-  // } else {
-  //   setLoading(true);
-  // }
-
-  // {
-  //   loading && (
-  //     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-  //       <CircleLoader loading size={100} speedMultiplier={2} />
-  //     </div>
-  //   );
-  // }
+  if (!post) return <div className="p-4">Loading...</div>;
 
   const handleFollow = async (author_id) => {
     const response = await apiRequest(
