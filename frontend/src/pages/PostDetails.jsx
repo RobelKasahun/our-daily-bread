@@ -16,7 +16,6 @@ import {
   faArrowLeft,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
-
 import { API_BASE_URL } from "../utils/config";
 import CircleLoader from "react-spinners/CircleLoader";
 
