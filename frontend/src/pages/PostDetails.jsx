@@ -7,15 +7,15 @@ import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
 import EditResponseModal from "../components/EditResponseModal";
-// import {
-//   faHeart,
-//   faComment,
-//   faBookmark,
-//   faTrash,
-//   faEdit,
-//   faArrowLeft,
-//   faPenToSquare,
-// } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faComment,
+  faBookmark,
+  faTrash,
+  faEdit,
+  faArrowLeft,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { API_BASE_URL } from "../utils/config";
 
@@ -42,12 +42,9 @@ export default function PostDetails() {
   // Get all comments that belongs to the post_id
   useEffect(() => {
     const handlePostResponses = async () => {
-      const response = await apiRequest(
-        `${API_BASE_URL}/comments/${id}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await apiRequest(`${API_BASE_URL}/comments/${id}`, {
+        method: "GET",
+      });
 
       const data = await response.json();
 
@@ -72,15 +69,12 @@ export default function PostDetails() {
 
   // leave comment on a post
   const handlePostResponse = async (post_id) => {
-    const response = await apiRequest(
-      `${API_BASE_URL}/comments/${post_id}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          content: responseData,
-        }),
-      }
-    );
+    const response = await apiRequest(`${API_BASE_URL}/comments/${post_id}`, {
+      method: "POST",
+      body: JSON.stringify({
+        content: responseData,
+      }),
+    });
 
     const data = await response.json();
 
@@ -118,13 +112,10 @@ export default function PostDetails() {
 
   // save posts
   const handleSavingPost = async (post_id) => {
-    const response = await fetch(
-      `${API_BASE_URL}/posts/save/${post_id}`,
-      {
-        method: "POST",
-        credentials: "include", // to send cookies for JWT
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/posts/save/${post_id}`, {
+      method: "POST",
+      credentials: "include", // to send cookies for JWT
+    });
 
     const data = await response.json();
 
@@ -267,12 +258,9 @@ export default function PostDetails() {
   };
 
   const deletePost = async (post_id) => {
-    const response = await apiRequest(
-      `${API_BASE_URL}/posts/${post_id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await apiRequest(`${API_BASE_URL}/posts/${post_id}`, {
+      method: "DELETE",
+    });
 
     const data = await response.json();
 
@@ -380,7 +368,7 @@ export default function PostDetails() {
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
       <div className="container mt-10 mx-auto w-[1060px] w-[95%] lg:w-[80%] xl:w-[55%] p-8">
-        <Link to={"/contents"}>
+        <Link to={`/contents`}>
           <FontAwesomeIcon
             title="Back"
             icon={faArrowLeft}
