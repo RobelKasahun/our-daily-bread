@@ -575,12 +575,13 @@ export default function PostDetails() {
             </button>
           </div>
 
+          {loading && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+              <CircleLoader loading size={100} speedMultiplier={2} />
+            </div>
+          )}
+
           <div className="mt-9">
-            {loading && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-                <CircleLoader loading size={100} speedMultiplier={2} />
-              </div>
-            )}
             {postResponses.length > 0 &&
               postResponses.map((response) => (
                 <div key={response.id} className="mb-1 p-3 bg-white shadow">
