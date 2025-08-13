@@ -17,7 +17,7 @@ import {
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../utils/config";
-import CircleLoader from "react-spinners/CircleLoader";
+import HashLoader from "react-spinners/HashLoader";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
@@ -222,7 +222,7 @@ export default function PostDetails() {
   if (!post)
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-        <CircleLoader loading size={100} speedMultiplier={2} />
+        <HashLoader size={55} />
       </div>
     );
 

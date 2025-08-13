@@ -5,7 +5,7 @@ import { apiRequest } from "../utils/api";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import CircleLoader from "react-spinners/CircleLoader";
+import HashLoader from "react-spinners/HashLoader";
 import { API_BASE_URL } from "../utils/config";
 
 export default function Posts() {
@@ -121,7 +121,7 @@ export default function Posts() {
           <div className="w-full md:w-3/4 lg:w-4/5">
             {loading && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-                <CircleLoader loading size={100} speedMultiplier={2} />
+                <HashLoader size={55} />
               </div>
             )}
             <div className="post">
