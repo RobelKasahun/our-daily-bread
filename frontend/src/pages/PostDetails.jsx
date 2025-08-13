@@ -542,6 +542,11 @@ export default function PostDetails() {
           />
         </div>
         <div className="post-content-wrapper w-[1000px] mt-5">
+          {loading && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+              <CircleLoader loading size={100} speedMultiplier={2} />
+            </div>
+          )}
           <p className="text-justify whitespace-pre-wrap py-5 pr-5">
             {post.content}
           </p>
@@ -574,12 +579,6 @@ export default function PostDetails() {
               Respond
             </button>
           </div>
-
-          {loading && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-              <CircleLoader loading size={100} speedMultiplier={2} />
-            </div>
-          )}
 
           <div className="mt-9">
             {postResponses.length > 0 &&
