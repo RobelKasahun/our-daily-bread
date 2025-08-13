@@ -11,7 +11,7 @@ import { API_BASE_URL } from "../utils/config";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const slicedPosts = filteredPosts.slice(0, filteredPosts.length).reverse();

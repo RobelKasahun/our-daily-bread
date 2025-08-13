@@ -20,6 +20,7 @@ import {
 import { API_BASE_URL } from "../utils/config";
 
 import { method } from "lodash";
+import CircleLoader from "react-spinners/CircleLoader";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
@@ -34,6 +35,7 @@ export default function PostDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postResponse, setPostResponse] = useState("");
   const [commentId, setCommentId] = useState(-1);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -221,7 +223,11 @@ export default function PostDetails() {
     }
   };
 
-  if (!post) return <div className="p-4">Loading...</div>;
+  if (!post) {
+    setLoading(false);
+  } else {
+    setLoading(true);
+  }
 
   const handleFollow = async (author_id) => {
     const response = await apiRequest(
@@ -570,6 +576,11 @@ export default function PostDetails() {
           </div>
 
           <div className="mt-9">
+            {loading && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+                <CircleLoader loading size={100} speedMultiplier={2} />
+              </div>
+            )}
             {postResponses.length > 0 &&
               postResponses.map((response) => (
                 <div key={response.id} className="mb-1 p-3 bg-white shadow">
