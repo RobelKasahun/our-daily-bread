@@ -19,10 +19,10 @@ export default function Navbar() {
       >
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">HolyShare</span>
+            <span className="sr-only">DailyBread</span>
             <img
               alt=""
-              src={"images/holyshare-logo.png"}
+              src={"images/dailybread-logo.png"}
               className="h-8 w-auto"
             />
           </Link>
@@ -64,10 +64,10 @@ export default function Navbar() {
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">HolyShare</span>
+              <span className="sr-only">DailyBread</span>
               <img
                 alt=""
-                src="images/holyshare-logo.png"
+                src="images/dailybread-logo.png"
                 className="h-8 w-auto"
               />
             </Link>
