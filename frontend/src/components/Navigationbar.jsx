@@ -77,10 +77,10 @@ export default function Navigationbar({
             <div className="flex shrink-0 items-center">
               <div className="flex lg:flex-1">
                 <Link to="/" className="-m-1.5 p-1.5">
-                  <span className="sr-only">HolyShare</span>
+                  <span className="sr-only">DailyBread</span>
                   <img
                     alt=""
-                    src={"../images/holyshare-logo.png"}
+                    src={"../images/dailybread-logo.png"}
                     className="h-8 w-auto"
                   />
                 </Link>
