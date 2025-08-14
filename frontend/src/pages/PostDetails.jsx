@@ -313,6 +313,8 @@ export default function PostDetails() {
 
     const data = await response.json();
 
+    console.log(data);
+
     if (response.ok) {
       // Update the response in the local state immediately
       setPostResponses((prevResponses) =>
