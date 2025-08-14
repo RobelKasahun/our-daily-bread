@@ -8,7 +8,6 @@ export const apiRequest = async (url, options = {}) => {
         ...options,
         headers: {
             ...options.headers,
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
         },
         credentials: "include", // for refresh token cookie
@@ -24,7 +23,6 @@ export const apiRequest = async (url, options = {}) => {
                 ...options,
                 headers: {
                     ...options.headers,
-                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
