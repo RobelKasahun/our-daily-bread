@@ -113,7 +113,7 @@ export default function SignIn() {
 
             <button
               type="submit"
-              className="w-full rounded-md bg-indigo-600 px-3 py-1.5 text-white font-semibold hover:bg-indigo-500"
+              className="w-full rounded-md bg-indigo-600 px-3 py-1.5 text-white font-semibold hover:bg-indigo-500 cursor-pointer"
             >
               Sign in
             </button>
