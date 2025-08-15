@@ -56,6 +56,9 @@ def authenticate_user(user, password):
         set_access_cookies(response, access_token)
         set_refresh_cookies(response, refresh_token)
         
+        # These headers are important for cross-site cookies
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        
         return response, 200
     else:
         # The user with email address does not exist
