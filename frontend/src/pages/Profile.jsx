@@ -5,11 +5,10 @@ import Card from "../components/Card";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { apiRequest } from "../utils/api";
-import { ToastContainer, toast, Bounce } from "react-toastify";
 import _ from "lodash"; // for shuffling a list
-import CircleLoader from "react-spinners/CircleLoader";
 import UserInfo from "../components/UserInfo";
 import { API_BASE_URL } from "../utils/config";
+import HashLoader from "react-spinners/HashLoader";
 
 export default function Profile() {
   const { userId } = useParams();
@@ -70,12 +69,9 @@ export default function Profile() {
     const handlePosts = async (e) => {
       setLoading(true);
 
-      const response = await apiRequest(
-        `${API_BASE_URL}/posts/all/${userId}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await apiRequest(`${API_BASE_URL}/posts/all/${userId}`, {
+        method: "GET",
+      });
 
       const data = await response.json();
 
@@ -136,7 +132,7 @@ export default function Profile() {
             <div className="username border-b border-gray-200"></div>
             {loading && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-                <CircleLoader loading size={100} speedMultiplier={2} />
+                <HashLoader size={55} />
               </div>
             )}
             <div className="post h-full">
