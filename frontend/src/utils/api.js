@@ -2,13 +2,13 @@
 import { API_BASE_URL } from "./config";
 
 export const apiRequest = async (url, options = {}) => {
-    let token = localStorage.getItem("access_token");
+    // let token = localStorage.getItem("access_token");
 
     const res = await fetch(url, {
         ...options,
         headers: {
             ...options.headers,
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
         },
         credentials: "include", // for refresh token cookie
@@ -24,7 +24,7 @@ export const apiRequest = async (url, options = {}) => {
                 ...options,
                 headers: {
                     ...options.headers,
-                    Authorization: `Bearer ${token}`,
+                    // Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
