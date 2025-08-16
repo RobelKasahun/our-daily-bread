@@ -240,7 +240,8 @@ export default function Sidebar() {
                 )
             )}
             <Link to={"/writers"} className="text-sm p-1">
-              See all ({authors.length})
+              {/* execlude the logged in current user */}
+              See all ({authors.length - 1})
             </Link>
           </nav>
         </div>

@@ -31,7 +31,13 @@ def create_app():
         to talk to this Flask backend (usually on localhost:5000).
     '''
     # allows the front end to talk to the backend
-    CORS(app, supports_credentials=True, origins=["https://holy-share-app.vercel.app"])
+    CORS(
+    app,
+    supports_credentials=True,
+    origins=["https://holy-share-app.vercel.app"],
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+)
 
     # load the configuration settings from the Config class
     '''
