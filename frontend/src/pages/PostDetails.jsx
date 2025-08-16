@@ -397,7 +397,7 @@ export default function PostDetails() {
                     handleUnFollow(post.user_id);
                     // Remove post.user_id from followedIds
                     setFollowedIds((prev) =>
-                      prev.filter((id) => id !== post.user_id)
+                      prev.filter((id) => id !== currentUser)
                     );
                     notify("Successful unfollowing...");
                   }}
@@ -411,7 +411,7 @@ export default function PostDetails() {
                     // follow post.user_id
                     handleFollow(post.user_id);
                     // Update UI state when a new author's id is added
-                    setFollowedIds((prev) => [...prev, post.user_id]);
+                    setFollowedIds((prev) => [...prev, currentUser]);
                     notify("Successful following...");
                   }}
                   className={`inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer`}
