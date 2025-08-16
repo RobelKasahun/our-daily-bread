@@ -369,6 +369,8 @@ export default function PostDetails() {
     }
   };
 
+  console.log(`currentUser: ${currentUser}`);
+
   return (
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
@@ -494,7 +496,6 @@ export default function PostDetails() {
                   )}
                 </button>
                 {/* show the delete and edit buttons on posts that belongs the current user */}
-                console.log(`currentUser: ${currentUser}`)
                 {currentUser === post.user_id && (
                   <>
                     <button
