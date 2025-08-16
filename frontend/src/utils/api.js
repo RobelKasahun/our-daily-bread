@@ -19,7 +19,7 @@ export const apiRequest = async (url, options = {}) => {
         const refreshed = await refreshAccessToken();
         if (refreshed) {
             // Retry the original request with new token
-            // token = localStorage.getItem("access_token");
+            accessToken = localStorage.getItem("access_token");
             return await fetch(url, {
                 ...options,
                 credentials: "include",
