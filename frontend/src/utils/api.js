@@ -1,15 +1,17 @@
 // utils/api.js
 import { API_BASE_URL } from "./config";
 
+let accessToken = null;
+
 export const apiRequest = async (url, options = {}) => {
-    let token = localStorage.getItem("access_token");
+    // let token = localStorage.getItem("access_token");
 
     const res = await fetch(url, {
         ...options,
         credentials: "include", // send cookies for every request
         headers: {
             ...options.headers,
-            Authorization: `Bearer ${token}`,
+            Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
             "Content-Type": "application/json",
         },
     });
@@ -19,13 +21,13 @@ export const apiRequest = async (url, options = {}) => {
         const refreshed = await refreshAccessToken();
         if (refreshed) {
             // Retry the original request with new token
-            token = localStorage.getItem("access_token");
+            // token = localStorage.getItem("access_token");
             return await fetch(url, {
                 ...options,
                 credentials: "include",
                 headers: {
                     ...options.headers,
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",
                 },
             });
@@ -45,7 +47,8 @@ const refreshAccessToken = async () => {
 
     if (res.ok) {
         const data = await res.json();
-        localStorage.setItem("access_token", data.access_token);
+        // localStorage.setItem("access_token", data.access_token);
+        accessToken = data.access_token;
         return true;
     } else {
         console.warn("Refresh failed. User must log in again.");
