@@ -438,7 +438,6 @@ export default function PostDetails() {
               <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
                 {postResponses.length > 0 ? postResponses.length : 0}
               </span>{" "}
-              {currentUser !== post.user_id} && (
               <button
                 onClick={() => {
                   handleLikePost(post.id);
@@ -494,7 +493,6 @@ export default function PostDetails() {
                     />
                   )}
                 </button>
-                )
                 {/* show the delete and edit buttons on posts that belongs the current user */}
                 {currentUser === post.user_id && (
                   <div>
