@@ -9,7 +9,7 @@ export const apiRequest = async (url, options = {}) => {
         credentials: "include", // send cookies for every request
         headers: {
             ...options.headers,
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
         },
     });
@@ -25,7 +25,7 @@ export const apiRequest = async (url, options = {}) => {
                 credentials: "include",
                 headers: {
                     ...options.headers,
-                    // Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
             });
