@@ -4,7 +4,7 @@ import { API_BASE_URL } from "./config";
 export const apiRequest = async (url, options = {}) => {
     // let token = localStorage.getItem("access_token");
 
-    const res = await fetch(`${API_BASE_URL}${url}`, {
+    const res = await fetch(`${url}`, {
         ...options,
         credentials: "include", // send cookies for every request
         headers: {
@@ -20,7 +20,7 @@ export const apiRequest = async (url, options = {}) => {
         if (refreshed) {
             // Retry the original request with new token
             // token = localStorage.getItem("access_token");
-            return await fetch(`${API_BASE_URL}${url}`, {
+            return await fetch(`${url}`, {
                 ...options,
                 credentials: "include",
                 headers: {
