@@ -53,7 +53,7 @@ def authenticate_user(user, password):
         # redirect to the landing page
         response = jsonify({'message': 'Login successful', 'access_token': access_token})
         
-        # set_access_cookies(response, access_token)
+        set_access_cookies(response, access_token)
         set_refresh_cookies(response, refresh_token)
         
         # These headers are important for cross-site cookies
