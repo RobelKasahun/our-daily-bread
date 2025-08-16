@@ -22,11 +22,8 @@ def login():
     email = data.get('email')
     password = data.get('password')
     
-    print(data.get('email'), data.get('password'))
-    
     # filter the user by email
     user = User.query.filter_by(email=email.lower()).first()
-    print(f'user: {user}')
     
     return authenticate_user(user=user, password=password)
 
@@ -36,7 +33,6 @@ def refresh():
     identity = get_jwt_identity()
     new_access_token = create_access_token(identity=str(identity))
     response = jsonify(access_token=new_access_token)
-    print(f'type(identity): {identity}', file=sys.stdout, flush=True)
     set_access_cookies(response, new_access_token)  # ✅ Set cookie again!
     return response, 200
     
