@@ -126,7 +126,6 @@ export default function PostDetails() {
 
   // Get current user
   useEffect(() => {
-    if (currentUser === null) return;
     const handleCurrentUser = async () => {
       const response = await apiRequest("${API_BASE_URL}/users/current", {
         method: "GET",
