@@ -7,6 +7,8 @@ import UserInfo from "../components/UserInfo";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
 import EditResponseModal from "../components/EditResponseModal";
+import { API_BASE_URL } from "../utils/config";
+import HashLoader from "react-spinners/HashLoader";
 import {
   faHeart,
   faComment,
@@ -16,8 +18,6 @@ import {
   faArrowLeft,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
-import { API_BASE_URL } from "../utils/config";
-import HashLoader from "react-spinners/HashLoader";
 
 export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
@@ -389,7 +389,7 @@ export default function PostDetails() {
             <span className="author-name">
               <UserInfo userId={post.user_id} />
             </span>
-            {currentUser != post.user_id &&
+            {currentUser !== post.user_id &&
               (followedIds.includes(post.user_id) ? (
                 <button
                   onClick={() => {
