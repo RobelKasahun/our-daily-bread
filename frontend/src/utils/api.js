@@ -2,16 +2,16 @@
 import { API_BASE_URL } from "./config";
 
 export const apiRequest = async (url, options = {}) => {
-    let accessToken = localStorage.getItem("access_token");
+    let token = localStorage.getItem("access_token");
 
     const res = await fetch(url, {
         ...options,
-        credentials: "include", // send cookies for every request
         headers: {
             ...options.headers,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
         },
+        credentials: "include", // for refresh token cookie
     });
 
     if (res.status === 401) {
@@ -19,15 +19,15 @@ export const apiRequest = async (url, options = {}) => {
         const refreshed = await refreshAccessToken();
         if (refreshed) {
             // Retry the original request with new token
-            accessToken = localStorage.getItem("access_token");
+            token = localStorage.getItem("access_token");
             return await fetch(url, {
                 ...options,
-                credentials: "include",
                 headers: {
                     ...options.headers,
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
             });
         } else {
             // Redirect to login or handle logout
