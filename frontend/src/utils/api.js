@@ -4,6 +4,8 @@ import { API_BASE_URL } from "./config";
 export const apiRequest = async (url, options = {}) => {
     // let token = localStorage.getItem("access_token");
 
+    console.log(`url: ${url}`);
+
     const res = await fetch(`${url}`, {
         ...options,
         credentials: "include", // send cookies for every request
@@ -38,6 +40,7 @@ export const apiRequest = async (url, options = {}) => {
 };
 
 const refreshAccessToken = async () => {
+    console.log(`${API_BASE_URL}/auth/refresh`);
     const res = await fetch(`${API_BASE_URL}/auth/refresh`, {
         method: "POST",
         credentials: "include"
