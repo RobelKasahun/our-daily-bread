@@ -4,14 +4,14 @@ import { API_BASE_URL } from "./config";
 export const apiRequest = async (url, options = {}) => {
     // let token = localStorage.getItem("access_token");
 
-    const res = await fetch(url, {
+    const res = await fetch(`${API_BASE_URL}${url}`, {
         ...options,
+        credentials: "include", // send cookies for every request
         headers: {
             ...options.headers,
             // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
         },
-        credentials: "include", // for refresh token cookie
     });
 
     if (res.status === 401) {
@@ -19,15 +19,15 @@ export const apiRequest = async (url, options = {}) => {
         const refreshed = await refreshAccessToken();
         if (refreshed) {
             // Retry the original request with new token
-            token = localStorage.getItem("access_token");
-            return await fetch(url, {
+            // token = localStorage.getItem("access_token");
+            return await fetch(`${API_BASE_URL}${url}`, {
                 ...options,
+                credentials: "include",
                 headers: {
                     ...options.headers,
                     // Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
-                credentials: "include",
             });
         } else {
             // Redirect to login or handle logout
@@ -40,17 +40,19 @@ export const apiRequest = async (url, options = {}) => {
 const refreshAccessToken = async () => {
     const res = await fetch(`${API_BASE_URL}/auth/refresh`, {
         method: "POST",
-        credentials: "include",
+        credentials: "include"
     });
 
-    if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem("access_token", data.access_token);
-        return true;
-    } else {
-        console.warn("Refresh failed. User must log in again.");
-        return false;
-    }
+    // if (res.ok) {
+    //     const data = await res.json();
+    //     localStorage.setItem("access_token", data.access_token);
+    //     return true;
+    // } else {
+    //     console.warn("Refresh failed. User must log in again.");
+    //     return false;
+    // }
+
+    return res.ok;
 };
 
 
