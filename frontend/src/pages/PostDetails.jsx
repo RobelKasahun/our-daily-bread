@@ -126,6 +126,7 @@ export default function PostDetails() {
 
   // Get current user
   useEffect(() => {
+    if (currentUser === null) return;
     const handleCurrentUser = async () => {
       const response = await apiRequest("${API_BASE_URL}/users/current", {
         method: "GET",
@@ -389,35 +390,36 @@ export default function PostDetails() {
             <span className="author-name">
               <UserInfo userId={post.user_id} />
             </span>
-            (followedIds.includes(post.user_id) ? (
-            <button
-              onClick={() => {
-                // unfollow post.user_id
-                handleUnFollow(post.user_id);
-                // Remove post.user_id from followedIds
-                setFollowedIds((prev) =>
-                  prev.filter((id) => id !== post.user_id)
-                );
-                notify("Successful unfollowing...");
-              }}
-              className="inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer"
-            >
-              Following
-            </button>
-            ) : (
-            <button
-              onClick={() => {
-                // follow post.user_id
-                handleFollow(post.user_id);
-                // Update UI state when a new author's id is added
-                setFollowedIds((prev) => [...prev, post.user_id]);
-                notify("Successful following...");
-              }}
-              className={`inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer`}
-            >
-              Follow
-            </button>
-            ))
+            {currentUser !== post.user_id &&
+              (followedIds.includes(post.user_id) ? (
+                <button
+                  onClick={() => {
+                    // unfollow post.user_id
+                    handleUnFollow(post.user_id);
+                    // Remove post.user_id from followedIds
+                    setFollowedIds((prev) =>
+                      prev.filter((id) => id !== post.user_id)
+                    );
+                    notify("Successful unfollowing...");
+                  }}
+                  className="inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer"
+                >
+                  Following
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    // follow post.user_id
+                    handleFollow(post.user_id);
+                    // Update UI state when a new author's id is added
+                    setFollowedIds((prev) => [...prev, post.user_id]);
+                    notify("Successful following...");
+                  }}
+                  className={`inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer`}
+                >
+                  Follow
+                </button>
+              ))}
             <span className="created_at ml-5">
               {formatDate(post.created_at)}
             </span>
