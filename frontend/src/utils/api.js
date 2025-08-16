@@ -2,7 +2,7 @@
 import { API_BASE_URL } from "./config";
 
 export const apiRequest = async (url, options = {}) => {
-    // let token = localStorage.getItem("access_token");
+    let token = localStorage.getItem("access_token");
 
     const res = await fetch(url, {
         ...options,
