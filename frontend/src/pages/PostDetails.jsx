@@ -493,8 +493,8 @@ export default function PostDetails() {
                     />
                   )}
                 </button>
-
                 {/* show the delete and edit buttons on posts that belongs the current user */}
+                console.log(`currentUser: ${currentUser}`)
                 {currentUser === post.user_id && (
                   <>
                     <button
@@ -512,7 +512,6 @@ export default function PostDetails() {
                     <button
                       onClick={() => {
                         deletePost(post.id);
-                        console.log(post.id);
                       }}
                     >
                       <FontAwesomeIcon
