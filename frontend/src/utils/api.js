@@ -1,4 +1,5 @@
 // utils/api.js
+
 import { API_BASE_URL } from "./config";
 
 export const apiRequest = async (url, options = {}) => {
@@ -52,5 +53,3 @@ const refreshAccessToken = async () => {
         return false;
     }
 };
-
-
