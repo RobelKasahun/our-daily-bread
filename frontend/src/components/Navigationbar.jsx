@@ -198,7 +198,6 @@
 //   );
 // }
 
-
 import {
   Disclosure,
   DisclosureButton,
@@ -210,18 +209,16 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Navigationbar({
+  setQuery,
+  showSearchBar = true,
+  showWriteButton = false,
+  showPublishButton = false,
+}) {
   return (
     <Disclosure
       as="nav"
@@ -254,21 +251,18 @@ export default function Example() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-950/50 text-white"
-                        : "text-gray-300 hover:bg-white/5 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {/* Search Bar */}
+                {showSearchBar && (
+                  <form className="mx-8">
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      // value={input}
+                      // onChange={handleSearchInputChange}
+                      className="w-full border border-gray-300 rounded-md px-4 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
+                    />
+                  </form>
+                )}
               </div>
             </div>
           </div>
