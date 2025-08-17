@@ -1,18 +1,18 @@
-// import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-// import Sidebar from "./Sidebar";
-// import { useState, useEffect } from "react";
-// import { apiRequest } from "../utils/api";
-// import { API_BASE_URL } from "../utils/config";
-// import {
-//   Disclosure,
-//   DisclosureButton,
-//   DisclosurePanel,
-//   Menu,
-//   MenuButton,
-//   MenuItem,
-//   MenuItems,
-// } from "@headlessui/react";
+import Sidebar from "./Sidebar";
+import { useState, useEffect } from "react";
+import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
 
 // const navigation = [{ name: "Write", href: "/new-post", current: true }];
 
