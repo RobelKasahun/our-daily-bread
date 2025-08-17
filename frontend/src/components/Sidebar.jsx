@@ -160,7 +160,7 @@ export default function Sidebar() {
   }, [currentUser]);
 
   return (
-    <div className="sidebar float-right h-full">
+    <div className="sidebar hidden lg:block float-right h-full">
       <div className="relative w-full h-full max-w-[20rem] flex-col border-l border-gray-200 p-4 text-gray-700">
         <div className="saved-stories">
           <div className="mx-3">
