@@ -1,18 +1,18 @@
-// import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-// import { Link } from "react-router-dom";
-// import Sidebar from "./Sidebar";
-// import { useState, useEffect } from "react";
-// import { apiRequest } from "../utils/api";
-// import { API_BASE_URL } from "../utils/config";
-// import {
-//   Disclosure,
-//   DisclosureButton,
-//   DisclosurePanel,
-//   Menu,
-//   MenuButton,
-//   MenuItem,
-//   MenuItems,
-// } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import { useState, useEffect } from "react";
+import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
 
 // const navigation = [{ name: "Write", href: "/new-post", current: true }];
 
@@ -267,14 +267,15 @@ export default function Navigationbar({
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              type="button"
-              className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
-            </button>
+            {showWriteButton && (
+              <Link
+                to="/new-post"
+                className="bg-gray-900 text-white text-gray-300 hover:bg-gray-700
+                  hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              >
+                Write
+              </Link>
+            )}
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
@@ -335,6 +336,16 @@ export default function Navigationbar({
                 className="w-full border border-gray-300 rounded-md px-4 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
               />
             </form>
+          )}
+
+          {showWriteButton && (
+            <Link
+              to="/new-post"
+              className="bg-gray-900 text-white text-gray-300 hover:bg-gray-700
+                  hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+            >
+              Write
+            </Link>
           )}
         </div>
       </DisclosurePanel>
