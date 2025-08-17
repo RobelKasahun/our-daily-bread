@@ -66,7 +66,7 @@ export default function Register() {
               >
                 First Name
               </label>
-              <div className="mt-2">
+              <div className="input">
                 <input
                   id="firstname"
                   name="first_name"
@@ -87,7 +87,7 @@ export default function Register() {
               >
                 Last Name
               </label>
-              <div className="mt-2">
+              <div className="input">
                 <input
                   id="lastname"
                   name="last_name"
@@ -108,7 +108,7 @@ export default function Register() {
               >
                 Username
               </label>
-              <div className="mt-2">
+              <div className="input">
                 <input
                   id="username"
                   name="username"
@@ -129,7 +129,7 @@ export default function Register() {
               >
                 Email address
               </label>
-              <div className="mt-2">
+              <div className="input">
                 <input
                   id="email"
                   name="email"
@@ -152,7 +152,7 @@ export default function Register() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="input">
                 <input
                   id="password"
                   name="password"
