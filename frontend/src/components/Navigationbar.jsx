@@ -247,8 +247,8 @@ export default function Example() {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
               <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                alt="DailyBread"
+                src="../images/dailybread-logo.png"
                 className="h-8 w-auto"
               />
             </div>
