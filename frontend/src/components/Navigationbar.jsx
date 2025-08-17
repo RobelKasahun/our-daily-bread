@@ -198,10 +198,6 @@ import {
 //   );
 // }
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Navigationbar({
   setQuery,
   showSearchBar = true,
