@@ -284,8 +284,8 @@ export default function Navigationbar({
                     <input
                       type="text"
                       placeholder="Search"
-                      // value={input}
-                      // onChange={handleSearchInputChange}
+                      value={input}
+                      onChange={handleSearchInputChange}
                       className="w-full border border-gray-300 rounded-md px-4 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
                     />
                   </form>
