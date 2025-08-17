@@ -324,7 +324,7 @@ export default function Navigationbar({
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
-          {navigation.map((item) => (
+          {/* {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
               as="a"
@@ -339,7 +339,7 @@ export default function Navigationbar({
             >
               {item.name}
             </DisclosureButton>
-          ))}
+          ))} */}
         </div>
       </DisclosurePanel>
     </Disclosure>
