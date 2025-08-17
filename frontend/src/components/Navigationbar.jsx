@@ -219,6 +219,33 @@ export default function Navigationbar({
   showWriteButton = false,
   showPublishButton = false,
 }) {
+  const [currentUser, setCurrentUser] = useState(-1);
+  const [input, setInput] = useState("");
+
+  // Get current user
+  useEffect(() => {
+    const handleCurrentUser = async () => {
+      const response = await apiRequest(`${API_BASE_URL}/users/current`, {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCurrentUser(data.current_user);
+      } else {
+        console.error("Failed to fetch current user:", data.error);
+      }
+    };
+
+    handleCurrentUser();
+  }, []);
+
+  const handleSearchInputChange = (e) => {
+    const value = e.target.value;
+    setInput(value);
+    setQuery(value);
+  };
   return (
     <Disclosure
       as="nav"
