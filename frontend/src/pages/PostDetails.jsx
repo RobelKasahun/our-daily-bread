@@ -473,7 +473,7 @@ export default function PostDetails() {
               <span className="post-likes text-sm text-gray-500 ml-1">
                 {post.like_count}
               </span>{" "}
-              <div className="float-right">
+              <div className="float-right overflow-hidden">
                 <button
                   onClick={() => {
                     {
