@@ -141,9 +141,10 @@ export default function PostDetails() {
     };
 
     handleCurrentUser();
-  }, []);
+  }, [API_BASE_URL]);
 
   useEffect(() => {
+    if (currentUser <= 0) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
         `${API_BASE_URL}/followers/following/ids/${currentUser}`,
@@ -163,7 +164,7 @@ export default function PostDetails() {
     };
 
     fetchFollowedIds();
-  }, [currentUser]);
+  }, [currentUser, API_BASE_URL]);
 
   useEffect(() => {
     const fetchPost = async () => {
