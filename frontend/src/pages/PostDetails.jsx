@@ -373,155 +373,174 @@ export default function PostDetails() {
   return (
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
-
-      {/* Post Container */}
-      <div className="container mt-10 mx-auto w-full px-4 sm:w-[95%] lg:w-4/5 xl:w-3/5">
+      <div className="container mt-10 mx-auto w-[1060px] w-[95%] lg:w-[80%] xl:w-[55%] p-8">
         <Link to={`/contents`}>
           <FontAwesomeIcon
             title="Back"
             icon={faArrowLeft}
-            className="ml-2 text-gray-500 cursor-pointer mb-8 text-2xl sm:text-3xl"
+            className="ml-2 text-gray-500 cursor-pointer mb-10 text-3xl relative right-13"
             style={{ color: "#06100d" }}
           />
         </Link>
-
-        {/* Post Header */}
         <div className="post-headers">
-          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-start">
+          <h1 className="text-5xl w-200 font-bold box-content text-start">
             {post.title}
           </h1>
-
-          <div className="text-xs sm:text-sm my-5 flex flex-wrap items-center gap-3">
+          <div className="text-sm w-100 my-5">
             <span className="author-name">
               <UserInfo userId={post.user_id} />
             </span>
-
-            {/* Follow / Unfollow */}
             {currentUser !== post.user_id &&
               (followedIds.includes(post.user_id) ? (
                 <button
                   onClick={() => {
+                    // unfollow post.user_id
                     handleUnFollow(post.user_id);
+                    // Remove post.user_id from followedIds
                     setFollowedIds((prev) =>
                       prev.filter((id) => id !== post.user_id)
                     );
                     notify("Successful unfollowing...");
                   }}
-                  className="bg-gray-200 px-4 py-1 rounded-full text-xs sm:text-sm"
+                  className="inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer"
                 >
                   Following
                 </button>
               ) : (
                 <button
                   onClick={() => {
+                    // follow post.user_id
                     handleFollow(post.user_id);
+                    // Update UI state when a new author's id is added
                     setFollowedIds((prev) => [...prev, post.user_id]);
                     notify("Successful following...");
                   }}
-                  className="bg-gray-200 px-4 py-1 rounded-full text-xs sm:text-sm"
+                  className={`inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer`}
                 >
                   Follow
                 </button>
               ))}
-
-            <span className="created_at text-gray-500">
+            <span className="created_at ml-5">
               {formatDate(post.created_at)}
             </span>
           </div>
         </div>
-
-        {/* Post Info (Likes, Comments, Save) */}
-        <div className="border-y border-gray-200 py-2 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            {/* Comments */}
-            <button onClick={toggleResponses}>
-              <FontAwesomeIcon
-                title="Leave Comment"
-                icon={faComment}
-                size="lg"
-                className="text-gray-500 cursor-pointer"
-              />
-            </button>
-            <span className="text-sm text-gray-500">
-              {postResponses.length || 0}
-            </span>
-
-            {/* Likes */}
-            <button
-              onClick={() => {
-                handleLikePost(post.id);
-                if (likesPostsIds.includes(currentUser)) {
-                  setLikesPostsIds((prev) =>
-                    prev.filter((id) => id !== currentUser)
-                  );
-                  setPost((prev) => ({
-                    ...prev,
-                    like_count: prev.like_count > 0 ? prev.like_count - 1 : 0,
-                  }));
-                  notifyAlready("Post unliked");
-                } else {
-                  setLikesPostsIds((prev) => [...prev, currentUser]);
-                  setPost((prev) => ({
-                    ...prev,
-                    like_count: prev.like_count + 1,
-                  }));
-                  notify(`Success! post liked`);
-                }
-              }}
-            >
-              <FontAwesomeIcon
-                title="Clap"
-                icon={faHeart}
-                size="lg"
-                className="text-gray-500 cursor-pointer"
-              />
-            </button>
-            <span className="text-sm text-gray-500">{post.like_count}</span>
-          </div>
-
-          {/* Save / Edit / Delete */}
-          <div className="flex items-center space-x-2">
-            {currentUser !== post.user_id && (
-              <button
-                onClick={() => {
-                  !savedPostsIds.includes(post.id)
-                    ? notify("Post saved!")
-                    : notifyAlready("Post already saved");
-                  handleSavingPost(post.id);
-                }}
-              >
+        <div className="claps-comments-wrapper">
+          <div className="post-info border-y border-gray-200">
+            <div className="p-2">
+              <button onClick={toggleResponses}>
                 <FontAwesomeIcon
-                  title="Save"
-                  icon={faBookmark}
+                  title="Leave Comment"
+                  icon={faComment}
+                  size="lg"
                   className="text-gray-500 cursor-pointer"
                 />
               </button>
-            )}
+              <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
+                {postResponses.length > 0 ? postResponses.length : 0}
+              </span>{" "}
+              <button
+                onClick={() => {
+                  handleLikePost(post.id);
+                  if (likesPostsIds.includes(currentUser)) {
+                    setLikesPostsIds((prev) =>
+                      prev.filter((id) => id !== currentUser)
+                    );
+                    setPost((prev) => ({
+                      ...prev,
+                      like_count: prev.like_count > 0 ? prev.like_count - 1 : 0,
+                    }));
 
-            {currentUser === post.user_id && (
-              <>
-                <button onClick={() => navigate(`/edit-post/${post.id}`)}>
-                  <FontAwesomeIcon
-                    title="Edit"
-                    icon={faEdit}
-                    className="text-gray-500 cursor-pointer"
-                  />
+                    notifyAlready("Post unliked");
+                  } else {
+                    setLikesPostsIds((prev) => [...prev, currentUser]);
+
+                    setPost((prev) => ({
+                      ...prev,
+                      like_count: prev.like_count + 1,
+                    }));
+
+                    notify(`Success! post liked`);
+                  }
+                }}
+              >
+                <FontAwesomeIcon
+                  title="Clap"
+                  icon={faHeart}
+                  size="lg"
+                  className="text-gray-500 cursor-pointer"
+                />
+              </button>
+              <span className="post-likes text-sm text-gray-500 ml-1">
+                {post.like_count}
+              </span>{" "}
+              <div className="float-right">
+                <button
+                  onClick={() => {
+                    {
+                      !savedPostsIds.includes(post.id)
+                        ? notify("Post saved!")
+                        : notifyAlready("Post already saved");
+                    }
+
+                    handleSavingPost(post.id);
+                  }}
+                >
+                  {currentUser !== post.user_id && (
+                    <FontAwesomeIcon
+                      title="Save"
+                      icon={faBookmark}
+                      className="text-gray-500 cursor-pointer"
+                    />
+                  )}
                 </button>
-                <button onClick={() => deletePost(post.id)}>
-                  <FontAwesomeIcon
-                    title="Delete"
-                    icon={faTrash}
-                    className="text-gray-500 cursor-pointer"
-                  />
-                </button>
-              </>
-            )}
+                {/* show the delete and edit buttons on posts that belongs the current user */}
+                {currentUser === post.user_id && (
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate(`/edit-post/${post.id}`);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        title="Edit"
+                        icon={faEdit}
+                        className="ml-2 text-gray-500 cursor-pointer"
+                      />
+                    </button>
+                    <button
+                      onClick={() => {
+                        deletePost(post.id);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        title="Save"
+                        icon={faTrash}
+                        className="ml-2 text-gray-500 cursor-pointer"
+                      />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
         </div>
-
-        {/* Post Content */}
-        <div className="mt-6">
-          <p className="text-justify whitespace-pre-wrap py-5 text-base sm:text-lg">
+        <div className="post-content-wrapper w-[1000px] mt-5">
+          <p className="text-justify whitespace-pre-wrap py-5 pr-5">
             {post.content}
           </p>
         </div>
@@ -529,21 +548,22 @@ export default function PostDetails() {
 
       {/* Responses Section */}
       {showResponses && (
-        <div className="fixed top-0 right-0 w-full sm:w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4">
-          <h1 className="text-lg font-semibold mb-4 border-b border-gray-200">
-            Responses ({postResponses.length || 0})
+        <div className="fixed top-0 right-0 w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4">
+          <h1 className="text-lg font-semibold mb-4 pb-4 border-b border-gray-200">
+            Responses{" "}
+            {"(" + (postResponses.length > 0 ? postResponses.length : 0) + ")"}
           </h1>
           <textarea
             required
             name="comment"
-            className="w-full p-2 border border-gray-200 rounded resize-none h-32 text-sm"
+            className="w-full p-2 border border-gray-200 rounded resize-none h-44 text-sm"
             value={responseData}
             onChange={(e) => setResponseData(e.target.value)}
             placeholder="What are your thoughts?"
-          />
+          ></textarea>
           <div className="flex justify-end">
             <button
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer text-sm"
               onClick={() => {
                 handlePostResponse(post.id);
                 setResponseData((prev) => [...prev, post.user_id]);
@@ -553,51 +573,62 @@ export default function PostDetails() {
             </button>
           </div>
 
-          {/* Responses List */}
-          <div className="mt-6">
-            {postResponses.map((response) => (
-              <div
-                key={response.id}
-                className="mb-3 p-3 bg-gray-50 rounded shadow-sm"
-              >
-                <div className="text-sm text-gray-700 flex justify-between">
-                  <div>
-                    <span className="mr-2 font-bold">
-                      <UserInfo userId={response.user_id} />
-                    </span>
-                    {formatDate(response.created_at)}
-                  </div>
-                  {response.user_id === currentUser && (
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() =>
-                          deleteResponse(response.id, response.post_id)
-                        }
-                      >
-                        <FontAwesomeIcon
-                          title="Delete"
-                          icon={faTrash}
-                          className="text-gray-500 cursor-pointer"
-                        />
-                      </button>
-                      <button
-                        onClick={() => {
-                          setIsModalOpen(true);
-                          setCommentId(response.id);
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          title="Edit"
-                          icon={faPenToSquare}
-                          className="text-gray-500 cursor-pointer"
-                        />
-                      </button>
+          <div className="mt-9">
+            {postResponses.length > 0 &&
+              postResponses.map((response) => (
+                <div key={response.id} className="mb-1 p-3 bg-white shadow">
+                  <div className="text-sm text-gray-700 flex justify-between">
+                    <div>
+                      <span className="mr-3 font-bold">
+                        <UserInfo userId={response.user_id} />
+                      </span>
+                      {formatDate(response.created_at)}
                     </div>
-                  )}
+                    {response.user_id === currentUser && (
+                      <div>
+                        <button
+                          onClick={() => {
+                            deleteResponse(response.id, response.post_id);
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            title="Delete"
+                            icon={faTrash}
+                            className="ml-2 text-gray-500 cursor-pointer"
+                            style={{ color: "#06100d" }}
+                          />
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setIsModalOpen(true);
+                            setCommentId(response.id);
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            title="Edit"
+                            icon={faPenToSquare}
+                            className="ml-2 text-gray-500 cursor-pointer"
+                            style={{ color: "#06100d" }}
+                          />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-800">{response.content}</p>
                 </div>
-                <p className="text-sm text-gray-800 mt-1">{response.content}</p>
-              </div>
-            ))}
+              ))}
+
+            <EditResponseModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onSave={handleSave}
+              value={postResponse}
+              setValue={setPostResponse}
+              postId={id}
+              currentUserId={currentUser}
+              commentId={commentId}
+            />
           </div>
         </div>
       )}
