@@ -126,7 +126,6 @@ export default function PostDetails() {
 
   // Get current user
   useEffect(() => {
-    if (currentUser === -1) return;
     const handleCurrentUser = async () => {
       const response = await apiRequest("${API_BASE_URL}/users/current", {
         method: "GET",
@@ -145,7 +144,6 @@ export default function PostDetails() {
   }, []);
 
   useEffect(() => {
-    if (currentUser === -1) return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
         `${API_BASE_URL}/followers/following/ids/${currentUser}`,
