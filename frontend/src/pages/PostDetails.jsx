@@ -486,7 +486,7 @@ export default function PostDetails() {
                     handleSavingPost(post.id);
                   }}
                 >
-                  {currentUser !== post.user_id && (
+                  {currentUser === post.user_id && (
                     <FontAwesomeIcon
                       title="Save"
                       icon={faBookmark}
@@ -495,7 +495,7 @@ export default function PostDetails() {
                   )}
                 </button>
                 {/* show the delete and edit buttons on posts that belongs the current user */}
-                {currentUser === post.user_id && (
+                {currentUser !== post.user_id && (
                   <div>
                     <button
                       type="button"
