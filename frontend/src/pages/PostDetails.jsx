@@ -143,6 +143,8 @@ export default function PostDetails() {
     handleCurrentUser();
   }, []);
 
+  console.log(`currentUser: ${currentUser}`);
+
   useEffect(() => {
     if (currentUser === -1 || currentUser === undefined || currentUser === null)
       return;
