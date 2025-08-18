@@ -373,7 +373,7 @@ export default function PostDetails() {
   return (
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
-      <div className="container mt-10 mx-auto w-[1060px] w-[95%] lg:w-[80%] xl:w-[55%] p-8">
+      <div className="container mx-auto w-[95%] lg:w-[80%] xl:w-[76%] p-8">
         <Link to={`/contents`}>
           <FontAwesomeIcon
             title="Back"
