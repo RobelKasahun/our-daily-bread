@@ -337,6 +337,15 @@ export default function Navigationbar({
 
                 <MenuItem>
                   <Link
+                    to="/writers"
+                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                  >
+                    Writers
+                  </Link>
+                </MenuItem>
+
+                <MenuItem>
+                  <Link
                     to="/signout"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >

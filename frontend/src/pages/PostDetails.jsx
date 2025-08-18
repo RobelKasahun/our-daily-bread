@@ -23,7 +23,7 @@ export default function PostDetails() {
   const { id } = useParams(); // <-- Get post ID from the URL
   const [post, setPost] = useState(null);
   const [followedIds, setFollowedIds] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(-1);
   const [savedPostsIds, setSavedPostsIds] = useState([]);
   const [likesPostsIds, setLikesPostsIds] = useState([]);
   const [showResponses, setShowResponses] = useState(false);
@@ -144,7 +144,8 @@ export default function PostDetails() {
   }, []);
 
   useEffect(() => {
-    if (currentUser === null) return;
+    if (currentUser === -1 || currentUser === undefined || currentUser === null)
+      return;
     const fetchFollowedIds = async () => {
       const response = await fetch(
         `${API_BASE_URL}/followers/following/ids/${currentUser}`,
