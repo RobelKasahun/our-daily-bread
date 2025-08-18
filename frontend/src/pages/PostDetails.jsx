@@ -143,8 +143,6 @@ export default function PostDetails() {
     handleCurrentUser();
   }, []);
 
-  console.log(`currentUser: ${currentUser}`);
-
   useEffect(() => {
     if (currentUser === -1 || currentUser === undefined || currentUser === null)
       return;
@@ -375,12 +373,12 @@ export default function PostDetails() {
   return (
     <>
       <Navigationbar showWriteButton={true} showSearchBar={false} />
-      <div className="container mt-10 mx-auto w-[1060px] w-[95%] lg:w-[80%] xl:w-[55%] p-8">
+      <div className="container mt-10 mx-auto w-full px-4 sm:w-[95%] lg:w-4/5 xl:w-3/5">
         <Link to={`/contents`}>
           <FontAwesomeIcon
             title="Back"
             icon={faArrowLeft}
-            className="ml-2 text-gray-500 cursor-pointer mb-10 text-3xl relative right-13"
+            className="ml-2 text-gray-500 cursor-pointer mb-10 relative text-2xl sm:text-3xl md:text-4xl right-4 sm:right-6 md:right-10"
             style={{ color: "#06100d" }}
           />
         </Link>
