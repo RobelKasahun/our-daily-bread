@@ -424,91 +424,120 @@ export default function PostDetails() {
             </span>
           </div>
         </div>
-        <div className="post-info border-y border-gray-200">
-          <div className="p-2 flex items-center justify-between">
-            <button
-              onClick={toggleResponses}
-              className="text-gray-500 cursor-pointer"
-            >
-              <FontAwesomeIcon
-                title="Leave Comment"
-                icon={faComment}
-                size="lg"
-              />
-            </button>
-            <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
-              {postResponses.length > 0 ? postResponses.length : 0}
-            </span>
-            <button
-              onClick={() => {
-                handleLikePost(post.id);
-                if (likesPostsIds.includes(currentUser)) {
-                  setLikesPostsIds((prev) =>
-                    prev.filter((id) => id !== currentUser)
-                  );
-                  setPost((prev) => ({
-                    ...prev,
-                    like_count: prev.like_count > 0 ? prev.like_count - 1 : 0,
-                  }));
-                  notifyAlready("Post unliked");
-                } else {
-                  setLikesPostsIds((prev) => [...prev, currentUser]);
-                  setPost((prev) => ({
-                    ...prev,
-                    like_count: prev.like_count + 1,
-                  }));
-                  notify(`Success! post liked`);
-                }
-              }}
-              className="text-gray-500 cursor-pointer ml-3"
-            >
-              <FontAwesomeIcon title="Clap" icon={faHeart} size="lg" />
-            </button>
-            <span className="post-likes text-sm text-gray-500 ml-1">
-              {post.like_count}
-            </span>
-            <div className="flex items-center space-x-2">
+        <div className="claps-comments-wrapper">
+          <div className="post-info border-y border-gray-200">
+            <div className="p-2">
+              <button onClick={toggleResponses}>
+                <FontAwesomeIcon
+                  title="Leave Comment"
+                  icon={faComment}
+                  size="lg"
+                  className="text-gray-500 cursor-pointer"
+                />
+              </button>
+              <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
+                {postResponses.length > 0 ? postResponses.length : 0}
+              </span>{" "}
               <button
                 onClick={() => {
-                  !savedPostsIds.includes(post.id)
-                    ? notify("Post saved!")
-                    : notifyAlready("Post already saved");
-                  handleSavingPost(post.id);
+                  handleLikePost(post.id);
+                  if (likesPostsIds.includes(currentUser)) {
+                    setLikesPostsIds((prev) =>
+                      prev.filter((id) => id !== currentUser)
+                    );
+                    setPost((prev) => ({
+                      ...prev,
+                      like_count: prev.like_count > 0 ? prev.like_count - 1 : 0,
+                    }));
+
+                    notifyAlready("Post unliked");
+                  } else {
+                    setLikesPostsIds((prev) => [...prev, currentUser]);
+
+                    setPost((prev) => ({
+                      ...prev,
+                      like_count: prev.like_count + 1,
+                    }));
+
+                    notify(`Success! post liked`);
+                  }
                 }}
               >
-                {currentUser !== post.user_id && (
-                  <FontAwesomeIcon
-                    title="Save"
-                    icon={faBookmark}
-                    className="text-gray-500 cursor-pointer"
-                  />
-                )}
+                <FontAwesomeIcon
+                  title="Clap"
+                  icon={faHeart}
+                  size="lg"
+                  className="text-gray-500 cursor-pointer"
+                />
               </button>
-              {currentUser === post.user_id && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/edit-post/${post.id}`)}
-                  >
+              <span className="post-likes text-sm text-gray-500 ml-1">
+                {post.like_count}
+              </span>{" "}
+              <div className="float-right">
+                <button
+                  onClick={() => {
+                    {
+                      !savedPostsIds.includes(post.id)
+                        ? notify("Post saved!")
+                        : notifyAlready("Post already saved");
+                    }
+
+                    handleSavingPost(post.id);
+                  }}
+                >
+                  {currentUser !== post.user_id && (
                     <FontAwesomeIcon
-                      title="Edit"
-                      icon={faEdit}
+                      title="Save"
+                      icon={faBookmark}
                       className="text-gray-500 cursor-pointer"
                     />
-                  </button>
-                  <button onClick={() => deletePost(post.id)}>
-                    <FontAwesomeIcon
-                      title="Delete"
-                      icon={faTrash}
-                      className="text-gray-500 cursor-pointer"
-                    />
-                  </button>
-                </>
-              )}
+                  )}
+                </button>
+                {/* show the delete and edit buttons on posts that belongs the current user */}
+                {currentUser === post.user_id && (
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate(`/edit-post/${post.id}`);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        title="Edit"
+                        icon={faEdit}
+                        className="ml-2 text-gray-500 cursor-pointer"
+                      />
+                    </button>
+                    <button
+                      onClick={() => {
+                        deletePost(post.id);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        title="Save"
+                        icon={faTrash}
+                        className="ml-2 text-gray-500 cursor-pointer"
+                      />
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
         </div>
-
         <div className="post-content-wrapper w-[1000px] mt-5">
           <p className="text-justify whitespace-pre-wrap py-5 pr-5">
             {post.content}
