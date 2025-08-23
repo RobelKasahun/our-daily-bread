@@ -377,15 +377,16 @@ export default function PostDetails() {
           <FontAwesomeIcon
             title="Back"
             icon={faArrowLeft}
-            className="ml-2 text-gray-500 cursor-pointer mb-10 relative text-2xl sm:text-3xl md:text-4xl right-4 sm:right-6 md:right-10"
+            className="ml-2 text-gray-500 cursor-pointer mb-6 relative text-2xl sm:text-3xl md:text-4xl right-2 sm:right-4 md:right-6"
             style={{ color: "#06100d" }}
           />
         </Link>
+
         <div className="post-headers">
-          <h1 className="text-5xl w-200 font-bold box-content text-start">
+          <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-3 break-words text-start">
             {post.title}
           </h1>
-          <div className="text-sm w-100 my-5">
+          <div className="text-sm flex flex-wrap items-center gap-3 my-5">
             <span className="author-name">
               <UserInfo userId={post.user_id} />
             </span>
@@ -393,109 +394,99 @@ export default function PostDetails() {
               (followedIds.includes(post.user_id) ? (
                 <button
                   onClick={() => {
-                    // unfollow post.user_id
                     handleUnFollow(post.user_id);
-                    // Remove post.user_id from followedIds
                     setFollowedIds((prev) =>
                       prev.filter((id) => id !== post.user_id)
                     );
                     notify("Successful unfollowing...");
                   }}
-                  className="inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer"
+                  className="bg-gray-200 px-3 py-1 rounded-full text-sm"
                 >
                   Following
                 </button>
               ) : (
                 <button
                   onClick={() => {
-                    // follow post.user_id
                     handleFollow(post.user_id);
-                    // Update UI state when a new author's id is added
                     setFollowedIds((prev) => [...prev, post.user_id]);
                     notify("Successful following...");
                   }}
-                  className={`inline-block ml-5 follow-btn bg-gray-200 p-2 w-20 rounded-full cursor-pointer`}
+                  className="bg-gray-200 px-3 py-1 rounded-full text-sm"
                 >
                   Follow
                 </button>
               ))}
-            <span className="created_at ml-5">
-              {formatDate(post.created_at)}
-            </span>
+            <span className="created_at">{formatDate(post.created_at)}</span>
           </div>
         </div>
+
         <div className="claps-comments-wrapper">
           <div className="post-info border-y border-gray-200">
-            <div className="p-2">
-              <button onClick={toggleResponses}>
-                <FontAwesomeIcon
-                  title="Leave Comment"
-                  icon={faComment}
-                  size="lg"
-                  className="text-gray-500 cursor-pointer"
-                />
-              </button>
-              <span className="post-comments text-sm text-gray-500 ml-1 mr-2">
-                {postResponses.length > 0 ? postResponses.length : 0}
-              </span>{" "}
-              <button
-                onClick={() => {
-                  handleLikePost(post.id);
-                  if (likesPostsIds.includes(currentUser)) {
-                    setLikesPostsIds((prev) =>
-                      prev.filter((id) => id !== currentUser)
-                    );
-                    setPost((prev) => ({
-                      ...prev,
-                      like_count: prev.like_count > 0 ? prev.like_count - 1 : 0,
-                    }));
-
-                    notifyAlready("Post unliked");
-                  } else {
-                    setLikesPostsIds((prev) => [...prev, currentUser]);
-
-                    setPost((prev) => ({
-                      ...prev,
-                      like_count: prev.like_count + 1,
-                    }));
-
-                    notify(`Success! post liked`);
-                  }
-                }}
-              >
-                <FontAwesomeIcon
-                  title="Clap"
-                  icon={faHeart}
-                  size="lg"
-                  className="text-gray-500 cursor-pointer"
-                />
-              </button>
-              <span className="post-likes text-sm text-gray-500 ml-1">
-                {post.like_count}
-              </span>{" "}
-              <div className="float-right">
+            <div className="flex items-center justify-between p-2">
+              <div className="flex items-center space-x-3">
+                <button onClick={toggleResponses}>
+                  <FontAwesomeIcon
+                    title="Leave Comment"
+                    icon={faComment}
+                    size="lg"
+                    className="text-gray-500 cursor-pointer"
+                  />
+                </button>
+                <span className="text-sm text-gray-500">
+                  {postResponses.length > 0 ? postResponses.length : 0}
+                </span>
                 <button
                   onClick={() => {
-                    {
+                    handleLikePost(post.id);
+                    if (likesPostsIds.includes(currentUser)) {
+                      setLikesPostsIds((prev) =>
+                        prev.filter((id) => id !== currentUser)
+                      );
+                      setPost((prev) => ({
+                        ...prev,
+                        like_count:
+                          prev.like_count > 0 ? prev.like_count - 1 : 0,
+                      }));
+                      notifyAlready("Post unliked");
+                    } else {
+                      setLikesPostsIds((prev) => [...prev, currentUser]);
+                      setPost((prev) => ({
+                        ...prev,
+                        like_count: prev.like_count + 1,
+                      }));
+                      notify(`Success! post liked`);
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon
+                    title="Clap"
+                    icon={faHeart}
+                    size="lg"
+                    className="text-gray-500 cursor-pointer"
+                  />
+                </button>
+                <span className="text-sm text-gray-500">{post.like_count}</span>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                {currentUser !== post.user_id && (
+                  <button
+                    onClick={() => {
                       !savedPostsIds.includes(post.id)
                         ? notify("Post saved!")
                         : notifyAlready("Post already saved");
-                    }
-
-                    handleSavingPost(post.id);
-                  }}
-                >
-                  {currentUser !== post.user_id && (
+                      handleSavingPost(post.id);
+                    }}
+                  >
                     <FontAwesomeIcon
                       title="Save"
                       icon={faBookmark}
                       className="text-gray-500 cursor-pointer"
                     />
-                  )}
-                </button>
-                {/* show the delete and edit buttons on posts that belongs the current user */}
+                  </button>
+                )}
                 {currentUser === post.user_id && (
-                  <div>
+                  <>
                     <button
                       type="button"
                       onClick={() => {
@@ -505,7 +496,7 @@ export default function PostDetails() {
                       <FontAwesomeIcon
                         title="Edit"
                         icon={faEdit}
-                        className="ml-2 text-gray-500 cursor-pointer"
+                        className="text-gray-500 cursor-pointer"
                       />
                     </button>
                     <button
@@ -514,12 +505,12 @@ export default function PostDetails() {
                       }}
                     >
                       <FontAwesomeIcon
-                        title="Save"
+                        title="Delete"
                         icon={faTrash}
-                        className="ml-2 text-gray-500 cursor-pointer"
+                        className="text-gray-500 cursor-pointer"
                       />
                     </button>
-                  </div>
+                  </>
                 )}
               </div>
             </div>
@@ -538,8 +529,9 @@ export default function PostDetails() {
             transition={Bounce}
           />
         </div>
-        <div className="post-content-wrapper w-[1000px] mt-5">
-          <p className="text-justify whitespace-pre-wrap py-5 pr-5">
+
+        <div className="post-content-wrapper w-full mt-5">
+          <p className="text-justify whitespace-pre-wrap py-5 pr-2 sm:pr-5">
             {post.content}
           </p>
         </div>
