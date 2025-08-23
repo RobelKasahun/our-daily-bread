@@ -43,16 +43,15 @@ export default function Card({ post, style, user_id }) {
     <div className="card-wrapper w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
       <div className={style}>
         <div className="post-author flex items-center">
-          {/* <span className="inline-block mr-2 bg-indigo-100 p-3 rounded-full">
-          {"Av"}
-        </span> */}
           <h2>
             <UserInfo userId={user_id} />
           </h2>
         </div>
 
         <div className="post-header sm:max-w-screen-md">
-          <h1 className="font-bold text-3xl mt-3">{post.title}</h1>
+          <h1 className="font-bold text-3xl mt-3 break-words truncate sm:whitespace-normal">
+            {post.title}
+          </h1>
         </div>
 
         <div className="post-content text-gray-500 mt-2">
