@@ -37,10 +37,10 @@ export default function Post() {
   return (
     <>
       <Navigationbar showSearchBar={false} />
-      <div className="container p-3 my-9 flex items-center justify-center mx-auto w-fit">
+      <div className="container p-3 my-9 flex items-center justify-center mx-auto w-full">
         <form
           onSubmit={handlePost}
-          className="space-y-4 items-center justify-center p-3 w-300"
+          className="space-y-4 p-3 w-full max-w-md sm:max-w-lg md:max-w-2xl"
         >
           <div>
             <input
@@ -48,10 +48,10 @@ export default function Post() {
               name="title"
               id="title"
               value={post.title}
-              onChange={handleChange} // <-- update state on change
+              onChange={handleChange}
               required
               placeholder="Enter a title"
-              className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-0"
+              className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -59,18 +59,16 @@ export default function Post() {
             <textarea
               name="content"
               id="content"
-              rows="26"
+              rows="12"
               required
               value={post.content}
-              onChange={handleChange} // <-- update state on change
+              onChange={handleChange}
               placeholder="Write your content here..."
-              className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-0 resize-none"
+              className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
             />
           </div>
-          <button
-            className="bg-gray-900 text-white text-gray-300 hover:bg-gray-700
-                  hover:text-white rounded-md px-3 py-2 text-sm font-medium bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
-          >
+
+          <button className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md">
             Publish
           </button>
         </form>
