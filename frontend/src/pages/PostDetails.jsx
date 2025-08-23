@@ -545,6 +545,15 @@ export default function PostDetails() {
             {"(" + (postResponses.length > 0 ? postResponses.length : 0) + ")"}
           </h1>
 
+          <button onClick={toggleResponses}>
+            <FontAwesomeIcon
+              title="Leave Comment"
+              icon={faComment}
+              size="lg"
+              className="text-gray-500 cursor-pointer"
+            />
+          </button>
+
           <textarea
             required
             name="comment"
