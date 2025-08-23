@@ -11,12 +11,9 @@ export default function Card({ post, style, user_id }) {
   // Get all comments that belongs to the post_id
   useEffect(() => {
     const handlePostResponses = async () => {
-      const response = await apiRequest(
-        `${API_BASE_URL}/comments/${post.id}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await apiRequest(`${API_BASE_URL}/comments/${post.id}`, {
+        method: "GET",
+      });
 
       const data = await response.json();
 
@@ -54,7 +51,7 @@ export default function Card({ post, style, user_id }) {
           </h2>
         </div>
 
-        <div className="post-header">
+        <div className="post-header sm:max-w-screen-md">
           <h1 className="font-bold text-3xl mt-3">{post.title}</h1>
         </div>
 
