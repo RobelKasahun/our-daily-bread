@@ -17,6 +17,7 @@ import {
   faEdit,
   faArrowLeft,
   faPenToSquare,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function PostDetails() {
