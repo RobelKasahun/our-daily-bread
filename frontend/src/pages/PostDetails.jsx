@@ -539,22 +539,24 @@ export default function PostDetails() {
 
       {/* Responses Section */}
       {showResponses && (
-        <div className="fixed top-0 right-0 w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4">
-          <h1 className="text-lg font-semibold mb-4 pb-4 border-b border-gray-200">
+        <div className="fixed top-0 right-0 w-full sm:w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4 z-50">
+          <h1 className="text-base sm:text-lg font-semibold mb-4 pb-4 border-b border-gray-200">
             Responses{" "}
             {"(" + (postResponses.length > 0 ? postResponses.length : 0) + ")"}
           </h1>
+
           <textarea
             required
             name="comment"
-            className="w-full p-2 border border-gray-200 rounded resize-none h-44 text-sm"
+            className="w-full p-2 border border-gray-200 rounded resize-none h-32 sm:h-44 text-sm"
             value={responseData}
             onChange={(e) => setResponseData(e.target.value)}
             placeholder="What are your thoughts?"
           ></textarea>
+
           <div className="flex justify-end">
             <button
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer text-sm"
+              className="mt-2 px-3 sm:px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer text-sm"
               onClick={() => {
                 handlePostResponse(post.id);
                 setResponseData((prev) => [...prev, post.user_id]);
@@ -564,19 +566,20 @@ export default function PostDetails() {
             </button>
           </div>
 
-          <div className="mt-9">
+          <div className="mt-9 space-y-3">
             {postResponses.length > 0 &&
               postResponses.map((response) => (
-                <div key={response.id} className="mb-1 p-3 bg-white shadow">
-                  <div className="text-sm text-gray-700 flex justify-between">
-                    <div>
-                      <span className="mr-3 font-bold">
+                <div key={response.id} className="p-3 bg-white shadow rounded">
+                  <div className="text-sm text-gray-700 flex justify-between flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2">
+                      <span className="font-bold">
                         <UserInfo userId={response.user_id} />
                       </span>
-                      {formatDate(response.created_at)}
+                      <span>{formatDate(response.created_at)}</span>
                     </div>
+
                     {response.user_id === currentUser && (
-                      <div>
+                      <div className="flex space-x-2">
                         <button
                           onClick={() => {
                             deleteResponse(response.id, response.post_id);
@@ -585,11 +588,10 @@ export default function PostDetails() {
                           <FontAwesomeIcon
                             title="Delete"
                             icon={faTrash}
-                            className="ml-2 text-gray-500 cursor-pointer"
+                            className="text-gray-500 cursor-pointer"
                             style={{ color: "#06100d" }}
                           />
                         </button>
-
                         <button
                           onClick={() => {
                             setIsModalOpen(true);
@@ -599,14 +601,16 @@ export default function PostDetails() {
                           <FontAwesomeIcon
                             title="Edit"
                             icon={faPenToSquare}
-                            className="ml-2 text-gray-500 cursor-pointer"
+                            className="text-gray-500 cursor-pointer"
                             style={{ color: "#06100d" }}
                           />
                         </button>
                       </div>
                     )}
                   </div>
-                  <p className="text-sm text-gray-800">{response.content}</p>
+                  <p className="text-sm text-gray-800 break-words">
+                    {response.content}
+                  </p>
                 </div>
               ))}
 
