@@ -540,19 +540,23 @@ export default function PostDetails() {
       {/* Responses Section */}
       {showResponses && (
         <div className="fixed top-0 right-0 w-full sm:w-[400px] h-screen bg-white shadow-lg overflow-y-auto p-4 z-50">
-          <h1 className="text-base sm:text-lg font-semibold mb-4 pb-4 border-b border-gray-200">
-            Responses{" "}
-            {"(" + (postResponses.length > 0 ? postResponses.length : 0) + ")"}
-          </h1>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
+            <h1 className="text-base sm:text-lg font-semibold">
+              Responses{" "}
+              {"(" +
+                (postResponses.length > 0 ? postResponses.length : 0) +
+                ")"}
+            </h1>
 
-          <button onClick={toggleResponses}>
-            <FontAwesomeIcon
-              title="Leave Comment"
-              icon={faComment}
-              size="lg"
-              className="text-gray-500 cursor-pointer"
-            />
-          </button>
+            <button onClick={toggleResponses}>
+              <FontAwesomeIcon
+                title="Close"
+                icon={faXmark}
+                size="lg"
+                className="text-gray-500 cursor-pointer hover:text-gray-700"
+              />
+            </button>
+          </div>
 
           <textarea
             required
