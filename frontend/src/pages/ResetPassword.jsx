@@ -10,12 +10,14 @@ export default function ResetPassword() {
           <img
             src="/images/dailybread-logo.png"
             alt="DailyBread"
-            className="mx-auto h-10 w-auto"
+            className="mb-2 h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold text-gray-900">
             Forgot Password
           </h2>
-          <p>Type your email address, so we can send you reset instructions.</p>
+          <p className="text-center">
+            Type your email address, so we can send you reset instructions.
+          </p>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -55,15 +57,6 @@ export default function ResetPassword() {
               {signinErrorMessage}
             </p>
           )} */}
-
-          <div className="text-sm mt-4 text-center">
-            <Link
-              to="#"
-              className="font-semibold text-indigo-600 hover:text-indigo-500"
-            >
-              Forgot password?
-            </Link>
-          </div>
         </div>
       </div>
     </>
