@@ -72,10 +72,9 @@ export default function ResetPassword() {
               Reset My Password
             </button>
           </form>
-          {message &&
-            (<p className="mt-4 text-center text-sm text-red-500">
-            {signinErrorMessage}
-          </p>)}
+          {message && (
+            <p className="mt-4 text-center text-sm text-red-500">{message}</p>
+          )}
         </div>
       </div>
     </>
