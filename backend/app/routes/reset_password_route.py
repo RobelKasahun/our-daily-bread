@@ -65,7 +65,11 @@ def reset_password():
         body=f"Click the link to reset your password: {reset_url}"
     )
     
-    with current_app.app_context():
-        mail.send(msg)
+    try:
+        with current_app.app_context():
+            mail.send(msg)
+    except Exception as e:
+        print(f"Mail sending failed: {e}")
+        return jsonify({"message": "Failed to send email. Contact support."}), 500
     
     return jsonify({"message": f'A password reset link has been sent to {user.email}.'}), 200
