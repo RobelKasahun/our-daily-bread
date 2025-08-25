@@ -2,9 +2,43 @@ from app import db
 from flask import jsonify, request, Blueprint
 from app.models import User
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies
+from itsdangerous import URLSafeTimedSerializer
+import app
+from flask_mail import Message
+from app import mail
+from flask import url_for
 
 # create Flask Blueprint named auth
 reset_password_blueprint = Blueprint('reset_password', __name__)
+
+def generate_reset_token(email):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    return serializer.dumps(email, salt='password-reset-salt')
+
+def verify_reset_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    try:
+        email = serializer.loads(token, salt='password-reset-salt', max_age=expiration)
+    except Exception:
+        return None
+    return email
+
+@reset_password_blueprint.route('/reset/<token>', methods=['GET', 'POST'])
+def reset_with_token(token):
+    email = verify_reset_token(token)
+    if not email:
+        return jsonify({"message": "Invalid or expired token."}), 400
+
+    if request.method == 'POST':
+        data = request.get_json()
+        new_password = data.get('password')
+        user = User.query.filter_by(email=email).first()
+        user.set_password(new_password) 
+        db.session.commit()
+        return jsonify({"message": "Password successfully updated."}), 200
+
+    return jsonify({"message": "Token valid. Render password reset form."})
+
 
 @reset_password_blueprint.route('/reset-password', methods=['POST'])
 def reset_password():
@@ -19,4 +53,16 @@ def reset_password():
     if not user:
         return jsonify({'message': f'A user with the given email address [ {email} ] does not exist.'}), 404
     
-    return jsonify({'message': f'Success!!! there is a user asscociated with [ {email} ].'}), 200
+    # Generate reset token
+    token = generate_reset_token(user.email)
+    # Create reset link
+    reset_url = url_for('reset_password.reset_with_token', token=token, _external=True)
+    # Send email
+    msg = Message(
+        subject="Password Reset Request",
+        recipients=[user.email],
+        body=f"Click the link to reset your password: {reset_url}"
+    )
+    mail.send(msg)
+    
+    return jsonify({"message": f'A password reset link has been sent to {user.email}.'}), 200

@@ -1,6 +1,7 @@
 from app import db
 from datetime import datetime, timezone
 from sqlalchemy.sql import func
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -32,6 +33,14 @@ class User(db.Model):
             'email': self.email,
             'created_at': self.created_at
         }
+        
+    def set_password(self, password):
+         """Hash the password and store it in password_hash"""
+         self.password_hash = generate_password_hash(password=password)
+        
+    def check_password(self, password):
+        """Verify a plaintext password against the stored hash"""
+        return check_password_hash(self.password_hash, password)
     
     # List of authors the user following 
     following = db.relationship(
