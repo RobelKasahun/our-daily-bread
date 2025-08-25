@@ -8,21 +8,21 @@ export default function ResetPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleResetPassword = async => (e) {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
 
     try {
       const response = await apiRequest(`${API_BASE_URL}/reset-password`, {
-        method: 'POST', 
-        body: JSON.stringify({email})
-      })
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
 
       const data = response.json();
-      setMessage(data.message)
+      setMessage(data.message);
     } catch (error) {
       setMessage("Something went wrong. Try again.");
     }
-  }
+  };
   return (
     <>
       <Navbar />
