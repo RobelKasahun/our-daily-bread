@@ -12,18 +12,6 @@ from flask import current_app
 # create Flask Blueprint named reset_password
 reset_password_blueprint = Blueprint('reset_password', __name__)
 
-def generate_reset_token(email):
-    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-    return serializer.dumps(email, salt='password-reset-salt')
-
-def verify_reset_token(token, expiration=3600):
-    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-    try:
-        email = serializer.loads(token, salt='password-reset-salt', max_age=expiration)
-    except Exception:
-        return None
-    return email
-
 @reset_password_blueprint.route('/reset/<token>', methods=['GET', 'POST'])
 def reset_with_token(token):
     email = verify_reset_token(token)
@@ -73,3 +61,15 @@ def reset_password():
         return jsonify({"message": "Failed to send email. Contact support."}), 500
     
     return jsonify({"message": f'A password reset link has been sent to {user.email}.'}), 200
+
+def generate_reset_token(email):
+    serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    return serializer.dumps(email, salt='password-reset-salt')
+
+def verify_reset_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    try:
+        email = serializer.loads(token, salt='password-reset-salt', max_age=expiration)
+    except Exception:
+        return None
+    return email
