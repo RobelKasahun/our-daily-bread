@@ -19,6 +19,8 @@ export default function ResetPassword() {
 
       const data = response.json();
       setMessage(data.message);
+
+      console.log(`message: ${message}`);
     } catch (error) {
       setMessage("Something went wrong. Try again.");
     }
