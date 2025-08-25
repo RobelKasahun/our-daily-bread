@@ -1,8 +1,6 @@
-import sys
 from app import db
 from flask import jsonify, request, Blueprint
 from app.models import User
-from app.controllers.auth_controller import register_user, authenticate_user
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies
 
 # create Flask Blueprint named auth
@@ -18,4 +16,10 @@ def reset_password():
     # Get a user with the given or specified email
     user = User.query.filter_by(email=email.lower()).first()
     
+    # user with the given email does not exist
+    if not user:
+        return jsonify({'message': f'A user with the given email address [ {email} ] does not exist.'})
+    
     print(f'user: {user}')
+    
+    return jsonify({'message': f'Success!!! there is a user asscociated with [ {email} ].'})
