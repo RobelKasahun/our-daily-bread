@@ -20,6 +20,8 @@ db = SQLAlchemy()
 '''
 migrate = Migrate()
 
+mail = Mail()
+
 def create_app():
     # initialize Flask app
     app = Flask(__name__)
@@ -53,11 +55,11 @@ def create_app():
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
     app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_USERNAME')
     
     
     
-    mail = Mail(app)
+    mail.init_app(app)
     
     jwt = JWTManager(app)
     

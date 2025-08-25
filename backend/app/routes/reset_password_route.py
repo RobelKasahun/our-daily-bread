@@ -7,8 +7,9 @@ import app
 from flask_mail import Message
 from app import mail
 from flask import url_for
+from flask import current_app
 
-# create Flask Blueprint named auth
+# create Flask Blueprint named reset_password
 reset_password_blueprint = Blueprint('reset_password', __name__)
 
 def generate_reset_token(email):
@@ -63,6 +64,8 @@ def reset_password():
         recipients=[user.email],
         body=f"Click the link to reset your password: {reset_url}"
     )
-    mail.send(msg)
+    
+    with current_app.app_context():
+        mail.send(msg)
     
     return jsonify({"message": f'A password reset link has been sent to {user.email}.'}), 200
