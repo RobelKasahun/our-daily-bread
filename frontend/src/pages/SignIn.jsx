@@ -127,7 +127,7 @@ export default function SignIn() {
 
           <div className="text-sm mt-4 text-center">
             <Link
-              to="#"
+              to="/reset-password"
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
               Forgot password?
