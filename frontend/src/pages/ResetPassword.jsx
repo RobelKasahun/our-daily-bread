@@ -12,10 +12,13 @@ export default function ResetPassword() {
     e.preventDefault();
 
     try {
-      const response = await apiRequest(`${API_BASE_URL}/reset-password`, {
-        method: "POST",
-        body: JSON.stringify({ email }),
-      });
+      const response = await apiRequest(
+        `${API_BASE_URL}/reset_password/reset-password`,
+        {
+          method: "POST",
+          body: JSON.stringify({ email }),
+        }
+      );
 
       const data = await response.json();
 
