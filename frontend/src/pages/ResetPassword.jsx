@@ -21,6 +21,8 @@ export default function ResetPassword() {
 
       if (response.ok) {
         setMessage(data.message);
+      } else {
+        setMessage(data.message);
       }
     } catch (error) {
       setMessage("Something went wrong. Try again.");
