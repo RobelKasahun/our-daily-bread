@@ -17,10 +17,8 @@ export default function ResetPassword() {
         body: JSON.stringify({ email }),
       });
 
-      const data = response.json();
+      const data = await response.json();
       setMessage(data.message);
-
-      console.log(`message: ${message}`);
     } catch (error) {
       setMessage("Something went wrong. Try again.");
     }
@@ -46,7 +44,7 @@ export default function ResetPassword() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             className="space-y-6"
-            // onSubmit={handleSignIn}
+            onSubmit={handleResetPassword}
             autoComplete="off"
           >
             <div>
