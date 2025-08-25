@@ -10,7 +10,7 @@ export default function ResetPassword() {
           <img
             src="/images/dailybread-logo.png"
             alt="DailyBread"
-            className="mb-2 h-10 w-auto"
+            className="mx-auto h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold text-gray-900">
             Forgot Password
