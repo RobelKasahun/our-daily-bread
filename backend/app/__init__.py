@@ -20,8 +20,6 @@ db = SQLAlchemy()
 '''
 migrate = Migrate()
 
-mail = Mail()
-
 def create_app():
     # initialize Flask app
     app = Flask(__name__)
@@ -35,7 +33,7 @@ def create_app():
     '''
     # allows the front end to talk to the backend
     # https://holy-share-app.vercel.app
-    CORS(app, supports_credentials=True, origins=["https://holy-share-app.vercel.app", "http://localhost:5173", "http://127.0.0.1:5173"])
+    CORS(app, supports_credentials=True, origins=["https://holy-share-app.vercel.app"])
 
     # load the configuration settings from the Config class
     '''
@@ -59,7 +57,7 @@ def create_app():
     
     
     
-    mail.init_app(app)
+    mail = Mail(app)
     
     jwt = JWTManager(app)
     
