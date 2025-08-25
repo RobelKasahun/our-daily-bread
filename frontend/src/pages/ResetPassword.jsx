@@ -18,7 +18,10 @@ export default function ResetPassword() {
       });
 
       const data = await response.json();
-      setMessage(data.message);
+
+      if (response.ok) {
+        setMessage(data.message);
+      }
     } catch (error) {
       setMessage("Something went wrong. Try again.");
     }
