@@ -52,7 +52,7 @@ export default function ChangePassword() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             className="space-y-6"
-            // onSubmit={handleSignIn}
+            onSubmit={handleChangePassword}
             autoComplete="off"
           >
             <div>
@@ -66,8 +66,8 @@ export default function ChangePassword() {
                 id="password"
                 name="password"
                 type="password"
-                // value={form.email}
-                // onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="mt-2 block w-full rounded-md px-3 py-1.5 text-gray-900 shadow-sm outline outline-1 outline-gray-300 focus:outline-indigo-600"
               />
@@ -84,8 +84,8 @@ export default function ChangePassword() {
                 id="confirm_password"
                 name="confirm_password"
                 type="password"
-                // value={form.password}
-                // onChange={handleChange}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 className="mt-2 block w-full rounded-md px-3 py-1.5 text-gray-900 shadow-sm outline outline-1 outline-gray-300 focus:outline-indigo-600"
               />
