@@ -45,12 +45,13 @@ def reset_password():
     # Generate reset token
     token = generate_reset_token(user.email)
     # Create reset link
-    reset_url = url_for('reset_password.reset_with_token', token=token, _external=True)
+    frontend_reset_url = f"https://holy-share-app.vercel.app/reset_password/reset/{token}"
+    
     # Send email
     msg = Message(
         subject="Password Reset Request",
         recipients=[user.email],
-        body=f"Click the link to reset your password: {reset_url}"
+        body=f"Click the link to reset your password: {frontend_reset_url}"
     )
     
     try:
