@@ -1,6 +1,39 @@
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { apiRequest } from "../utils/api";
+import { API_BASE_URL } from "../utils/config";
+import { method } from "lodash";
+import { useState } from "react";
 
 export default function ChangePassword() {
+  const { token } = useParams();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (password.toLowerCase() !== confirmPassword.toLowerCase()) {
+      setMessage("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await apiRequest(
+        `${API_BASE_URL}/reset_password/reset/${token}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ password }),
+        }
+      );
+
+      const data = await response.json();
+      setMessage(data.message);
+    } catch (error) {
+      setMessage("Something went wrong. Try again.");
+    }
+  };
   return (
     <>
       <Navbar />
@@ -42,7 +75,7 @@ export default function ChangePassword() {
 
             <div>
               <label
-                htmlFor="password"
+                htmlFor="confirm_password"
                 className="block text-sm font-medium text-gray-900"
               >
                 Confirm Password
@@ -65,6 +98,9 @@ export default function ChangePassword() {
               Submit Password Change
             </button>
           </form>
+          {message && (
+            <p className="mt-4 text-center text-sm text-red-500">{message}</p>
+          )}
         </div>
       </div>
     </>
