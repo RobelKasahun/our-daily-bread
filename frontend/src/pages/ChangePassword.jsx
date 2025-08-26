@@ -32,7 +32,9 @@ export default function ChangePassword() {
       if (response.ok) {
         setMessage(data.message);
         //  Navigate to the SignIn page after successful password change
-        navigate("/signin");
+        setTimeout(() => {
+          navigate("/sign-in"); // Redirect to Sign In page
+        }, 2000);
       } else {
         setMessage(data.message || "Something went wrong.");
       }
