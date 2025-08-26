@@ -12,7 +12,7 @@ export default function ChangePassword() {
             className="mx-auto h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold text-gray-900">
-            Sign in to your account
+            Reset Password
           </h2>
         </div>
 
@@ -24,15 +24,15 @@ export default function ChangePassword() {
           >
             <div>
               <label
-                htmlFor="email"
+                htmlFor="password"
                 className="block text-sm font-medium text-gray-900"
               >
-                Email address
+                Password
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="password"
+                name="password"
+                type="password"
                 // value={form.email}
                 // onChange={handleChange}
                 required
@@ -45,11 +45,11 @@ export default function ChangePassword() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-900"
               >
-                Password
+                Confirm Password
               </label>
               <input
-                id="password"
-                name="password"
+                id="confirm_password"
+                name="confirm_password"
                 type="password"
                 // value={form.password}
                 // onChange={handleChange}
@@ -62,7 +62,7 @@ export default function ChangePassword() {
               type="submit"
               className="w-full rounded-md bg-indigo-600 px-3 py-1.5 text-white font-semibold hover:bg-indigo-500 cursor-pointer"
             >
-              Change Password
+              Submit Password Change
             </button>
           </form>
         </div>
