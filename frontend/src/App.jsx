@@ -15,6 +15,7 @@ import Profile from "./pages/Profile.jsx";
 import Story from "./pages/Story.jsx";
 import EditPost from "./pages/EditPost.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
+import ChangePassword from "./pages/ChangePassword.jsx";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/edit-post/:postId" element={<EditPost />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ChangePassword />} />
       </Routes>
     </BrowserRouter>
   );

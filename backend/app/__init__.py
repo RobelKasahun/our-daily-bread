@@ -50,6 +50,8 @@ def create_app():
     app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # False For development
     app.config['JWT_COOKIE_SECURE'] = True # Set to True in production with HTTPS
     app.config["JWT_COOKIE_SAMESITE"] = "None"    # required for Chrome/Safari
+    
+    # for Reset password instructions link
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
