@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { apiRequest } from "../utils/api";
 import { API_BASE_URL } from "../utils/config";
@@ -9,6 +9,7 @@ export default function ChangePassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
@@ -28,7 +29,13 @@ export default function ChangePassword() {
       );
 
       const data = await response.json();
-      setMessage(data.message);
+      if (response.ok) {
+        setMessage(data.message);
+        //  Navigate to the SignIn page after successful password change
+        navigate("/signin");
+      } else {
+        setMessage(data.message || "Something went wrong.");
+      }
     } catch (error) {
       setMessage("Something went wrong. Try again.");
     }
