@@ -14,7 +14,7 @@ export default function ChangePassword() {
   const handleChangePassword = async (e) => {
     e.preventDefault();
 
-    if (password.toLowerCase() !== confirmPassword.toLowerCase()) {
+    if (password !== confirmPassword) {
       setMessage("Passwords do not match!");
       return;
     }
