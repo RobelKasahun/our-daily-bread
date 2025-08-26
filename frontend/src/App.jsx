@@ -55,7 +55,10 @@ function App() {
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/edit-post/:postId" element={<EditPost />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/reset_password/:token" element={<ChangePassword />} />
+        <Route
+          path="/reset_password/reset/:token"
+          element={<ChangePassword />}
+        />
       </Routes>
     </BrowserRouter>
   );
