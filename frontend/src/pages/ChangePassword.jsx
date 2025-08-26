@@ -2,18 +2,13 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { apiRequest } from "../utils/api";
 import { API_BASE_URL } from "../utils/config";
-import { method } from "lodash";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
 
 export default function ChangePassword() {
   const { token } = useParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
-
-  const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
@@ -69,7 +64,7 @@ export default function ChangePassword() {
               <input
                 id="password"
                 name="password"
-                type={isVisible ? "text" : "password"}
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -87,7 +82,7 @@ export default function ChangePassword() {
               <input
                 id="confirm_password"
                 name="confirm_password"
-                type={isVisible ? "text" : "password"}
+                type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -96,7 +91,6 @@ export default function ChangePassword() {
             </div>
 
             <button
-              onClick={toggleVisibility}
               type="submit"
               className="w-full rounded-md bg-indigo-600 px-3 py-1.5 text-white font-semibold hover:bg-indigo-500 cursor-pointer"
             >
