@@ -101,11 +101,6 @@ export default function ChangePassword() {
               className="w-full rounded-md bg-indigo-600 px-3 py-1.5 text-white font-semibold hover:bg-indigo-500 cursor-pointer"
             >
               Submit Password Change
-              {isVisible ? (
-                <EyeOff size={20} aria-hidden="true" />
-              ) : (
-                <Eye size={20} aria-hidden="true" />
-              )}
             </button>
           </form>
           {message && (
