@@ -35,7 +35,7 @@ def create_app():
     '''
     # allows the front end to talk to the backend
     # https://holy-share-app.vercel.app
-    CORS(app, supports_credentials=True, origins=["https://holy-share-app.vercel.app"])
+    CORS(app, supports_credentials=True, origins=["https://ourdailybread.app"])
 
     # load the configuration settings from the Config class
     '''
