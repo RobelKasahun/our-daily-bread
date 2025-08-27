@@ -14,6 +14,7 @@ export default function ChangePassword() {
   const handleChangePassword = async (e) => {
     e.preventDefault();
 
+    //   password and confirmPassword must be equal
     if (password !== confirmPassword) {
       setMessage("Passwords do not match!");
       return;
@@ -29,6 +30,7 @@ export default function ChangePassword() {
       );
 
       const data = await response.json();
+
       if (response.ok) {
         setMessage(data.message);
         //  Navigate to the SignIn page after successful password change
@@ -42,6 +44,7 @@ export default function ChangePassword() {
       setMessage("Something went wrong. Try again.");
     }
   };
+
   return (
     <>
       <Navbar />

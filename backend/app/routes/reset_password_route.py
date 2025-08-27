@@ -1,23 +1,24 @@
 from app import db
-from flask import jsonify, request, Blueprint
+from flask import jsonify, request, Blueprint, current_app, url_for
 from app.models import User
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies
 from itsdangerous import URLSafeTimedSerializer
 import app
 from flask_mail import Message
 from app import mail
-from flask import url_for
-from flask import current_app
 
 # create Flask Blueprint named reset_password
 reset_password_blueprint = Blueprint('reset_password', __name__)
 
 @reset_password_blueprint.route('/reset/<token>', methods=['GET', 'POST'])
 def reset_with_token(token):
+    # extract the original email using the given token
     email = verify_reset_token(token)
+    
     if not email:
         return jsonify({"message": "Invalid or expired token."}), 400
 
+    # change password
     if request.method == 'POST':
         data = request.get_json()
         new_password = data.get('password')
@@ -64,10 +65,15 @@ def reset_password():
     return jsonify({"message": f'A password reset link has been sent to {user.email}.'}), 200
 
 def generate_reset_token(email):
+    ''' 
+        Creates a secure, time-sensitive token that encodes a user’s email 
+        creates a reset link token that will later be emailed to the user
+    '''
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return serializer.dumps(email, salt='password-reset-salt')
 
 def verify_reset_token(token, expiration=3600):
+    ''' Validates and decodes the token back into the user’s email '''
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
         email = serializer.loads(token, salt='password-reset-salt', max_age=expiration)
