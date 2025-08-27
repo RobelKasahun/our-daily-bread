@@ -1,9 +1,7 @@
 from app import db
 from flask import jsonify, request, Blueprint, current_app, url_for
 from app.models import User
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies
 from itsdangerous import URLSafeTimedSerializer
-import app
 from flask_mail import Message
 from app import mail
 
@@ -12,6 +10,9 @@ reset_password_blueprint = Blueprint('reset_password', __name__)
 
 @reset_password_blueprint.route('/reset/<token>', methods=['GET', 'POST'])
 def reset_with_token(token):
+    '''
+        Function that changes a user's password
+    '''
     # extract the original email using the given token
     email = verify_reset_token(token)
     
@@ -32,6 +33,9 @@ def reset_with_token(token):
 
 @reset_password_blueprint.route('/reset-password', methods=['POST'])
 def reset_password():
+    '''
+        Send a reset password link
+    '''
     # get email data from user
     data = request.get_json()
     email = data.get('email')
