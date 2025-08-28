@@ -47,12 +47,12 @@ def reset_password():
     if not user:
         return jsonify({'message': f'A user with the given email address [ {email} ] does not exist.'}), 404
     
-    # Generate reset token
+    # Generate reset token using the user's email
     token = generate_reset_token(user.email)
     # Create reset link
     frontend_reset_url = f"https://holy-share-app.vercel.app/reset_password/reset/{token}"
     
-    # Send email
+    # Send the reset password link
     msg = Message(
         subject="Password Reset Request",
         recipients=[user.email],
