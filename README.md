@@ -14,3 +14,10 @@ By combining learning with community engagement, OurDailyBread fosters an enviro
 
 ## Live Demo  
 [OurDailyBread App](https://ourdailybread.app/)  
+
+## Features
+## Tech Stack
+## Installation & Setup
+## Usage
+## Roadmap / Future Improvements
+## Acknowledgments / Credits
