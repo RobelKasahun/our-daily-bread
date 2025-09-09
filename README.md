@@ -64,6 +64,7 @@ Follow the steps below to set up **OurDailyBread** locally.
 - The project is devided into folder (Frontend and Backend), therefore open two terminal windows one for frontend and one for backend
 - cd frontend
 - npm install
+- run frontend --> npm run dev
 ## Create & activate a virtual environment
 - python -m venv venv
 - source venv/bin/activate   # On macOS/Linux
