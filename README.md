@@ -25,6 +25,25 @@ By combining learning with community engagement, OurDailyBread fosters an enviro
 - 📌 **Saved Posts** – Save posts to read later.  
 
 ## Tech Stack
+**Frontend:**  
+- React  
+- Tailwind CSS (for styling)  
+
+**Backend:**  
+- Python  
+- Flask (RESTful API development)  
+- SQLAlchemy (ORM for database interaction)  
+
+**Database:**  
+- PostgreSQL  
+
+**Deployment & Hosting:**  
+- Vercel (Frontend)  
+- Render (Backend)  
+
+**Design & Collaboration:**  
+- Figma (UI/UX Design)  
+- Git & GitHub (Version Control)
 ## Installation & Setup
 ## Usage
 ## Roadmap / Future Improvements
