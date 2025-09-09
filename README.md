@@ -76,3 +76,9 @@ Follow the steps below to set up **OurDailyBread** locally.
 - Create a .env file in the root directory and add:
 - SECRET_KEY=your_secret_key
 - DATABASE_URL=postgres://username:password@localhost:5432/ourdailybread
+- MAIL_USERNAME=yourgmail.com
+- MAIL_PASSWORD=yourgmail.compassword
+- MAIL_DEFAULT_SENDER=yourgmail.comemail
+## Run [ make sure to cd frontend and cd backend ]
+- Frontend --> npm run dev
+- Backend --> python3 main.py
