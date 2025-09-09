@@ -49,6 +49,7 @@ def reset_password():
     
     # Generate reset token using the user's email
     token = generate_reset_token(user.email)
+    
     # Create reset link
     frontend_reset_url = f"https://holy-share-app.vercel.app/reset_password/reset/{token}"
     
