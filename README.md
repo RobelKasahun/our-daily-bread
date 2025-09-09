@@ -16,6 +16,14 @@ By combining learning with community engagement, OurDailyBread fosters an enviro
 [OurDailyBread App](https://ourdailybread.app/)  
 
 ## Features
+- 🔑 **User Authentication** – Register, sign in, and reset password.  
+- 📝 **Post Management** – Create, edit, update, and delete posts.  
+- 🔍 **Search** – Search post content using the search input.  
+- 👥 **Follow System** – Follow and unfollow content creators.  
+- ❤️ **Likes** – Like and unlike creators’ posts.  
+- 💬 **Comments** – Leave comments on posts, as well as edit and delete them.  
+- 📌 **Saved Posts** – Save posts to read later.  
+
 ## Tech Stack
 ## Installation & Setup
 ## Usage
