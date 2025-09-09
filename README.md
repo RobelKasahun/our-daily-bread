@@ -56,9 +56,22 @@ By combining learning with community engagement, OurDailyBread fosters an enviro
 - Git & GitHub (Version Control)
 
 ## Installation & Setup
-
-## Usage
-
-## Roadmap / Future Improvements
-
-## Acknowledgments / Credits
+Follow the steps below to set up **OurDailyBread** locally.
+### 1. Clone the repository
+- git clone https://github.com/RobelKasahun/our-daily-bread.git
+- open the project using your favorite IDE
+## Install frontend dependencies
+- The project is devided into folder (Frontend and Backend), therefore open two terminal windows one for frontend and one for backend
+- cd frontend
+- npm install
+## Create & activate a virtual environment
+- python -m venv venv
+- source venv/bin/activate   # On macOS/Linux
+- venv\Scripts\activate      # On Windows
+## Install backend dependencies
+- create requirements.txt file if it's not present
+- pip install -r requirements.txt
+## Set up environment variables
+- Create a .env file in the root directory and add:
+- SECRET_KEY=your_secret_key
+- DATABASE_URL=postgres://username:password@localhost:5432/ourdailybread
